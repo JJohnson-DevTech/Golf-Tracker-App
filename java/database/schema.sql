@@ -91,11 +91,11 @@ CREATE TABLE tee_times (
 );
 
 
-ALTER TABLE leagues ADD CONSTRAINT FK_leagues_league_members FOREIGN KEY (league_host) REFERENCES league_members(member_id);
-ALTER TABLE users_golf_course ADD CONSTRAINT FK_user_golf_course_users FOREIGN KEY (user_id) REFERENCES users(user_id);
-ALTER TABLE users_golf_course ADD CONSTRAINT FK_user_golf_course_golf_course FOREIGN KEY (course_id) REFERENCES golf_course(course_id)
+--ALTER TABLE leagues ADD CONSTRAINT FK_leagues_league_members FOREIGN KEY (league_host) REFERENCES league_members(member_id);
+ALTER TABLE user_golf_course ADD CONSTRAINT FK_user_golf_course_users FOREIGN KEY (user_id) REFERENCES users(user_id);
+ALTER TABLE user_golf_course ADD CONSTRAINT FK_user_golf_course_golf_course FOREIGN KEY (course_id) REFERENCES golf_course(course_id);
 ALTER TABLE league_members ADD CONSTRAINT FK_league_members_users FOREIGN KEY (member_id) REFERENCES users(user_id);
-ALTER TABLE league_members ADD CONSTRAINT FK_league_members_leagues FOREIGN KEY (league_id) REFERENCES league(league_id);
+ALTER TABLE league_members ADD CONSTRAINT FK_league_members_leagues FOREIGN KEY (league_id) REFERENCES leagues(league_id);
 ALTER TABLE scores ADD CONSTRAINT FK_scores_users FOREIGN KEY (user_id) REFERENCES users(user_id);
 ALTER TABLE scores ADD CONSTRAINT FK_scores_golf_course FOREIGN KEY (course_id) REFERENCES golf_course(course_id);
 ALTER TABLE scores ADD CONSTRAINT FK_scores_leagues FOREIGN KEY (league_id) REFERENCES leagues(league_id);
