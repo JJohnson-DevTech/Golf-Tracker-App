@@ -1,6 +1,6 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS user_favorites, league_members, scores, leaderboards, tee_times, leagues, golf_course, users CASCADE;
 
 CREATE TABLE users (
 	id SERIAL PRIMARY KEY,
