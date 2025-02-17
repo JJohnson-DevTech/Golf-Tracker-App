@@ -1,6 +1,6 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS user_favorites, league_members, scores, leaderboards, tee_times, leagues, golf_course, users CASCADE;
+DROP TABLE IF EXISTS user_favorites, league_members, scores, leaderboards, tee_times, leagues, golf_course, users;
 
 CREATE TABLE users (
 	id SERIAL PRIMARY KEY,
@@ -82,27 +82,4 @@ CREATE TABLE tee_times (
 );
 
 
-<<<<<<< HEAD
---ALTER TABLE leagues ADD CONSTRAINT FK_leagues_league_members FOREIGN KEY (league_host) REFERENCES league_members(member_id);
-ALTER TABLE user_favorites ADD CONSTRAINT FK_user_golf_course_users FOREIGN KEY (user_id) REFERENCES users(user_id);
-ALTER TABLE user_favorites ADD CONSTRAINT FK_user_golf_course_golf_course FOREIGN KEY (course_id) REFERENCES golf_course(course_id);
-ALTER TABLE league_members ADD CONSTRAINT FK_league_members_users FOREIGN KEY (member_id) REFERENCES users(user_id);
-ALTER TABLE league_members ADD CONSTRAINT FK_league_members_leagues FOREIGN KEY (league_id) REFERENCES leagues(league_id);
-ALTER TABLE scores ADD CONSTRAINT FK_scores_users FOREIGN KEY (user_id) REFERENCES users(user_id);
-ALTER TABLE scores ADD CONSTRAINT FK_scores_golf_course FOREIGN KEY (course_id) REFERENCES golf_course(course_id);
-ALTER TABLE scores ADD CONSTRAINT FK_scores_leagues FOREIGN KEY (league_id) REFERENCES leagues(league_id);
-ALTER TABLE leaderboards ADD CONSTRAINT FK_scores_leagues FOREIGN KEY (league_id) REFERENCES leagues(league_id);
-ALTER TABLE leaderboards ADD CONSTRAINT FK_leaderboards_golf_course FOREIGN KEY (course_id) REFERENCES golf_course(course_id);
-ALTER TABLE leaderboards ADD CONSTRAINT FK_leaderboards_leagues FOREIGN KEY (league_id) REFERENCES leagues(league_id);
-ALTER TABLE tee_times ADD CONSTRAINT FK_tee_times_golf_course FOREIGN KEY (course_id) REFERENCES golf_course(course_id);
-ALTER TABLE tee_times ADD CONSTRAINT FK_tee_times_users FOREIGN KEY (user_id) REFERENCES users(user_id);
-ALTER TABLE tee_times ADD CONSTRAINT FK_tee_times_leagues FOREIGN KEY (league_id) REFERENCES leagues(league_id);
-
-
-
-
---ROLLBACK;
-
-=======
->>>>>>> 953fbb320849b9bbc9bd5bb69e1a306f88ecf160
 COMMIT TRANSACTION;
