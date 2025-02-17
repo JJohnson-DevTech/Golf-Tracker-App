@@ -14,14 +14,20 @@ public class User {
    private String password;
    @JsonIgnore
    private boolean activated;
+   private String firstName;
+   private String lastName;
+   private String email;
    private Set<Authority> authorities = new HashSet<>();
 
    public User() { }
 
-   public User(int id, String username, String password, String authorities) {
+   public User(int id, String username, String password, String authorities, String firstName, String lastName, String email) {
       this.id = id;
       this.username = username;
       this.password = password;
+      this.firstName = firstName;
+      this.lastName = lastName;
+      this.email = email;
       if (authorities != null) this.setAuthorities(authorities);
       this.activated = true;
    }
@@ -66,6 +72,18 @@ public class User {
       this.authorities = authorities;
    }
 
+   public String getFirstName() { return firstName; }
+
+   public void setFirstName(String firstName) { this.firstName = firstName; }
+
+   public String getLastName() { return lastName; }
+
+   public void setLastName(String lastName) { this.lastName = lastName; }
+
+   public String getEmail() { return email; }
+
+   public void setEmail(String email) { this.email = email; }
+
    public void setAuthorities(String authorities) {
       String[] roles = authorities.split(",");
       for (String role : roles) {
@@ -88,7 +106,7 @@ public class User {
 
    @Override
    public int hashCode() {
-      return Objects.hash(id, username, password, activated, authorities);
+      return Objects.hash(id, username, password, activated, authorities, firstName, lastName, email);
    }
 
    @Override
@@ -98,6 +116,9 @@ public class User {
               ", username='" + username + '\'' +
               ", activated=" + activated +
               ", authorities=" + authorities +
+              ", firstName='" + firstName + '\'' +
+              ", lastName='" + lastName + '\'' +
+              ", email='" + email + '\'' +
               '}';
    }
 }
