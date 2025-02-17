@@ -6,6 +6,18 @@
         {{ registrationErrorMsg }}
       </div>
       <div class="form-input-group">
+        <label for="firstName">First Name</label>
+        <input type="text" id="firstName" v-model="user.firstName" required autofocus />
+      </div>
+      <div class="form-input-group">
+        <label for="lastName">Last Name</label>
+        <input type="text" id="lastName" v-model="user.lastName" required />
+      </div>
+      <div class="form-input-group">
+        <label for="email">Email</label>
+        <input type="text" id="email" v-model="user.email" required />
+      </div>
+      <div class="form-input-group">
         <label for="username">Username</label>
         <input type="text" id="username" v-model="user.username" required autofocus />
       </div>
