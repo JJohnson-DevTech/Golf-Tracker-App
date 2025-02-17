@@ -4,6 +4,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+
+    };
+  },
   created() {
     this.$store.commit("LOGOUT");
     this.$router.push("/login");
