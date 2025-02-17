@@ -1,6 +1,6 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS user_favorites, league_members, scores, leaderboards, tee_times, leagues, golf_course, users CASCADE;
+DROP TABLE IF EXISTS users, golf_courses, user_favorites, leagues, league_members, scores, leaderboards, tee_times;
 
 CREATE TABLE users (
 	id SERIAL PRIMARY KEY,
@@ -35,6 +35,7 @@ CREATE TABLE leagues (
     league_name varchar(75) NOT NULL,
     league_host INT NOT NULL,
     match_time TIMESTAMP NOT NULL,
+    is_active BOOLEAN DEFAULT TRUE,
     CONSTRAINT fk_league_host FOREIGN KEY (league_host) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -80,6 +81,5 @@ CREATE TABLE tee_times (
     CONSTRAINT fk_tee_times_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fk_tee_times_league FOREIGN KEY (league_id) REFERENCES leagues(id) ON DELETE SET NULL ON UPDATE CASCADE
 );
-
 
 COMMIT TRANSACTION;

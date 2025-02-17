@@ -12,9 +12,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class JdbcUserDaoTest extends BaseDaoTest {
-    protected static final User USER_1 = new User(1, "user1", "user1", "ROLE_USER");
-    protected static final User USER_2 = new User(2, "user2", "user2", "ROLE_USER");
-    private static final User USER_3 = new User(3, "user3", "user3", "ROLE_USER");
+    protected static final User USER_1 = new User(1, "user1", "user1", "ROLE_USER", "Bruce", "Banner", "JDoe@gmail.com");
+    protected static final User USER_2 = new User(2, "user2", "user2", "ROLE_USER", "Peter", "Parker", "PParker@gmail.com");
+    private static final User USER_3 = new User(3, "user3", "user3", "ROLE_USER", "Thor", "Odinson","TThunder@gmail.com");
 
     private JdbcUserDao sut;
 
@@ -123,11 +123,75 @@ public class JdbcUserDaoTest extends BaseDaoTest {
         user.setUsername("new");
         user.setPassword("user");
         user.setRole("ROLE_USER");
+        user.setFirstName("Bruce");
+        user.setLastName("Wayne");
+        user.setEmail("BWayne@gmail.com");
+
         User createdUser = sut.createUser(user);
 
         assertNotNull(createdUser);
+        assertEquals("Bruce", createdUser.getFirstName());
+        assertEquals("Wayne", createdUser.getLastName());
+        assertEquals("bruce.wayne@example.com", createdUser.getEmail());
+
 
         User retrievedUser = sut.getUserByUsername(createdUser.getUsername());
         assertEquals(retrievedUser, createdUser);
+    }
+
+    @Test
+    public void createUser_with_null_firstName_lastName_email() {
+        try {
+            RegisterUserDto registerUserDto = new RegisterUserDto();
+            registerUserDto.setUsername("newuser");
+            registerUserDto.setPassword("newpassword");
+            registerUserDto.setRole("ROLE_USER");
+            registerUserDto.setFirstName(null);
+            registerUserDto.setLastName(null);
+            registerUserDto.setEmail(null);
+
+            sut.createUser(registerUserDto);
+            fail("Expected IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            // expected
+        } catch (Exception e) {
+            fail("Expected IllegalArgumentException");
+        }
+    }
+
+    @Test
+    public void createUser_with_invalid_email_throws_exception() {
+        try {
+            RegisterUserDto registerUserDto = new RegisterUserDto();
+            registerUserDto.setUsername("newuser");
+            registerUserDto.setPassword("newpassword");
+            registerUserDto.setRole("ROLE_USER");
+            registerUserDto.setEmail("invalid-email");
+
+            sut.createUser(registerUserDto);
+            fail("Expected IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            // expected
+        } catch (Exception e) {
+            fail("Expected IllegalArgumentException");
+        }
+    }
+
+    @Test
+    public void createUser_with_existing_email_throws_exception() {
+        try {
+            RegisterUserDto registerUserDto = new RegisterUserDto();
+            registerUserDto.setUsername("newuser");
+            registerUserDto.setPassword("newpassword");
+            registerUserDto.setRole("ROLE_USER");
+            registerUserDto.setEmail(USER_1.getEmail()); // Using existing email
+
+            sut.createUser(registerUserDto);
+            fail("Expected DaoException");
+        } catch (DaoException e) {
+            // expected
+        } catch (Exception e) {
+            fail("Expected DaoException");
+        }
     }
 }
