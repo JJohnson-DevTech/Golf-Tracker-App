@@ -5,6 +5,8 @@
       <div role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
       </div>
+      <br>
+      <br>
       <div class="form-input-group">
         <label for="firstName">First Name</label>
         <input type="text" id="firstName" v-model="user.firstName" required autofocus />
@@ -93,5 +95,17 @@ export default {
 }
 label {
   margin-right: 0.5rem;
+  display: block;
+}
+form{
+  margin: 0 auto;
+  text-align: left;
+  width: 10vw;
+  max-width: 500px;
+  min-width: 300px;
+}
+.text-center {
+  text-align: center;
+  margin-top: 10%
 }
 </style>
