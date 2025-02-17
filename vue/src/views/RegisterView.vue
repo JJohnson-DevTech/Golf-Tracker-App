@@ -15,7 +15,7 @@
       </div>
       <div class="form-input-group">
         <label for="email">Email</label>
-        <input type="text" id="email" v-model="user.email" required />
+        <input type="email" id="email" v-model="user.email" required />
       </div>
       <div class="form-input-group">
         <label for="username">Username</label>
@@ -42,6 +42,9 @@ export default {
   data() {
     return {
       user: {
+        firstName: '',
+        lastName: '',
+        email: '',
         username: '',
         password: '',
         confirmPassword: '',
