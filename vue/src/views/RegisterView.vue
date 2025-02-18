@@ -108,4 +108,8 @@ form{
   text-align: center;
   margin-top: 10%
 }
+a:hover{
+  color: blue;
+  cursor: pointer;
+}
 </style>
