@@ -9,8 +9,24 @@
 export default {
   data() {
     return {
-      
+
     };
   },
 };
 </script>
+
+<style scoped>
+h1 {
+  font-family: 'Fugaz One', serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #fcf400;
+  margin-bottom: 0;
+}
+
+p {
+  font-family: 'Sriracha', serif;
+  font-weight: 400;
+  font-style: normal;
+}
+</style>
