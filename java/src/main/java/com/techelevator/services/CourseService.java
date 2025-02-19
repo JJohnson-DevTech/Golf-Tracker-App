@@ -1,6 +1,9 @@
 package com.techelevator.services;
 
-//public class CourseService {
-//
-//    private static final String API_BASE_URL =
-//}
+import com.techelevator.model.Courses;
+import org.springframework.web.client.RestTemplate;
+
+public class CourseService {
+
+    private static final String API_BASE_URL =
+}
