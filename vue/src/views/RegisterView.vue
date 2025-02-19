@@ -108,8 +108,13 @@ form{
   text-align: center;
   margin-top: 10%
 }
+a:visited {
+  color: black
+}
+
 a:hover{
-  color: blue;
+  color: limegreen;
   cursor: pointer;
 }
+
 </style>
