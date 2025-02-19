@@ -62,11 +62,31 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Fugaz+One&family=Sriracha&display=swap');
+
+h1 {
+  font-family: 'Fugaz One', serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #fcf400;
+  margin-bottom: 0;
+}
+
+.form-input-group {
+  font-family: "Sriracha", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+router-link {
+  border-bottom: none;
+}
+
 .form-input-group {
   margin-bottom: 1rem;
 }
 
-form{
+form {
   margin: 0 auto;
   text-align: left;
   width: 10vw;
@@ -79,7 +99,7 @@ a:visited {
 }
 
 a:hover {
-  color: white;
+  color: #fcf400;
 }
 
 label {

@@ -32,7 +32,7 @@
         <input type="password" id="confirmPassword" v-model="user.confirmPassword" required />
       </div>
       <button type="submit">Create Account</button>
-      <p><router-link v-bind:to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
+      <p><router-link id="router-login" v-bind:to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
     </form>
   </div>
 </template>
@@ -91,7 +91,8 @@ export default {
 
 <style scoped>
 .form-input-group {
-  margin-bottom: 1rem;
+  margin-bottom: .5rem;
+  font-family: 'Sriracha', serif;
 }
 label {
   margin-right: 0.5rem;
@@ -104,17 +105,23 @@ form{
   max-width: 500px;
   min-width: 300px;
 }
+h1 {
+  font-family: 'Fugaz One', serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #fcf400;
+  margin-bottom: -20px;
+}
 .text-center {
   text-align: center;
   margin-top: 10%
 }
-a:visited {
-  color: black
-}
 
-a:hover{
-  color: limegreen;
-  cursor: pointer;
+#router-login {
+  color: black;
+}
+#router-login:hover {
+  color: #fcf400;
 }
 
 </style>
