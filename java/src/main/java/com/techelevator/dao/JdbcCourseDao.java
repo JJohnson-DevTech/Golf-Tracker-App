@@ -18,6 +18,25 @@ public class JdbcCourseDao implements CourseDao{
     public JdbcCourseDao(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate = jdbcTemplate;
     }
+
+    @Override
+    public Courses getCourseById(int courseId) {
+        if(courseId == 0) throw new IllegalArgumentException("Course Id cannot be 0");
+        Courses course = new Courses();
+        String sql = "SELECT club_name, course_name, address, yardage, par, holes FROM golf_courses WHERE id = ?;";
+        try{
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, courseId);
+            if(results.next()){
+                course = mapRowToCourse(results);
+            }
+        } catch (CannotGetJdbcConnectionException e){
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (Exception e){
+            throw new DaoException("Issue with getCourseById", e);
+        }
+        return course;
+    }
+
     @Override
     public List<Courses> getCourses() {
         List<Courses> courses = new ArrayList<>();
@@ -31,7 +50,7 @@ public class JdbcCourseDao implements CourseDao{
         } catch (CannotGetJdbcConnectionException e){
             throw new DaoException("Unable to connect to server or database", e);
         } catch (Exception e){
-            throw new DaoException("Issue with getCourses");
+            throw new DaoException("Issue with getCourses", e);
         }
 
         return courses;
@@ -52,7 +71,7 @@ public class JdbcCourseDao implements CourseDao{
         } catch (CannotGetJdbcConnectionException e){
             throw new DaoException("Unable to connect to server or database", e);
         } catch (Exception e){
-            throw new DaoException("Issue with getCoursesByState");
+            throw new DaoException("Issue with getCoursesByState", e);
         }
         return courses;
     }
@@ -72,7 +91,7 @@ public class JdbcCourseDao implements CourseDao{
         } catch (CannotGetJdbcConnectionException e){
             throw new DaoException("Unable to connect to server or database", e);
         } catch (Exception e){
-            throw new DaoException("Issue with getCoursesByCity");
+            throw new DaoException("Issue with getCoursesByCity", e);
         }
 
         return courses;
@@ -92,7 +111,7 @@ public class JdbcCourseDao implements CourseDao{
         } catch (CannotGetJdbcConnectionException e){
             throw new DaoException("Unable to connect to server or database", e);
         } catch (Exception e){
-            throw new DaoException("Issue with getCoursesByName");
+            throw new DaoException("Issue with getCoursesByName", e);
         }
         return courses;
     }
@@ -109,7 +128,7 @@ public class JdbcCourseDao implements CourseDao{
         } catch (CannotGetJdbcConnectionException e){
             throw new DaoException("Unable to connect to server or database", e);
         } catch (Exception e){
-            throw new DaoException("Issue with getCourseYardage");
+            throw new DaoException("Issue with getCourseYardage", e);
         }
         return course;
     }
@@ -127,7 +146,7 @@ public class JdbcCourseDao implements CourseDao{
         } catch (CannotGetJdbcConnectionException e){
             throw new DaoException("Unable to connect to server or database", e);
         } catch (Exception e){
-            throw new DaoException("Issue with getCoursePar");
+            throw new DaoException("Issue with getCoursePar", e);
         }
         //Returning course here will return the object as a whole if we want just the yardage/par then we should
         // just return the int value of par or yardage
@@ -147,7 +166,7 @@ public class JdbcCourseDao implements CourseDao{
         } catch (CannotGetJdbcConnectionException e){
             throw new DaoException("Unable to connect to server or database", e);
         } catch (Exception e){
-            throw new DaoException("Issue with getCourseHoles");
+            throw new DaoException("Issue with getCourseHoles", e);
         }
         return course;
     }
@@ -164,7 +183,7 @@ public class JdbcCourseDao implements CourseDao{
         } catch (CannotGetJdbcConnectionException e){
             throw new DaoException("Unable to connect to server or database", e);
         } catch (Exception e){
-            throw new DaoException("Issue with getClubNameByCourse");
+            throw new DaoException("Issue with getClubNameByCourse", e);
         }
         return course;
     }
@@ -183,7 +202,23 @@ public class JdbcCourseDao implements CourseDao{
         } catch (CannotGetJdbcConnectionException e){
             throw new DaoException("Unable to connect to server or database", e);
         } catch (Exception e){
-            throw new DaoException("Issue with getCourseByAddress");
+            throw new DaoException("Issue with getCourseByAddress", e);
+        }
+        return course;
+    }
+
+    @Override
+    public Courses createCourse() {
+        Courses course = new Courses();
+        String sql = "INSERT INTO golf_courses (club_name, course_name, address, city, state_ab, yardage, par, holes, country) " +
+                "VALUES (LOWER(TRIM(?)), ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id;";
+        try{
+            int newCourseId = jdbcTemplate.queryForObject(sql, int.class, course.getClubName(), course.getCourseName(), course.getAddress(), course.getCity(), course.getState(), course.getYardage(), course.getPar(), course.getHoles(), course.getCountry());
+            course = getCourseById(newCourseId);
+        }catch (CannotGetJdbcConnectionException e){
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (Exception e){
+            throw new DaoException("Issue with createCourse");
         }
         return course;
     }

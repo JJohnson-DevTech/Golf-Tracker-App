@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface CourseDao {
 
+    Courses getCourseById(int courseId);
+
     List<Courses> getCourses();
 
     List<Courses> getCoursesByState(String state);
@@ -24,6 +26,8 @@ public interface CourseDao {
     Courses getClubNameByCourse(int courseId);
 
     Courses getCourseByAddress(String address);
+
+    Courses createCourse();
 
 
 }
