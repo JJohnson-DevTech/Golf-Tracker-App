@@ -1,24 +1,29 @@
 package com.techelevator.dao;
 
 
-import com.techelevator.model.CoursesDb;
+import com.techelevator.model.Courses;
 
 import java.util.List;
 
 public interface CourseDao {
 
-    List<CoursesDb> getCourses();
+    List<Courses> getCourses();
 
-    List<CoursesDb> getCoursesByState(String stateAb);
+    List<Courses> getCoursesByState(String state);
 
-    List<CoursesDb> getCoursesByCity(String city);
+    List<Courses> getCoursesByCity(String city);
 
-    List<CoursesDb> getCoursesByName(String courseName);
+    List<Courses> getCoursesByName(String courseName);
 
-    CoursesDb getCourseYardage(int courseId);
+    Courses getCourseYardage(int courseId);
 
-    CoursesDb getCoursePar(int courseId);
+    Courses getCoursePar(int courseId);
 
-    CoursesDb getCourseHoles(int courseId);
+    Courses getCourseHoles(int courseId);
+
+    Courses getClubNameByCourse(int courseId);
+
+    Courses getCourseByAddress(String address);
+
 
 }

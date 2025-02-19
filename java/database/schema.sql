@@ -21,7 +21,8 @@ CREATE TABLE golf_courses (
     state_ab char(2) NOT NULL,
     yardage int NOT NULL,
     par int NOT NULL,
-    holes int DEFAULT 18 NOT NULL
+    holes int DEFAULT 18 NOT NULL,
+    country varchar(30) NOT NULL
 );
 
 CREATE TABLE user_favorites (
