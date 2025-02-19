@@ -14,7 +14,9 @@ CREATE TABLE users (
 
 CREATE TABLE golf_courses (
     id SERIAL PRIMARY KEY,
+    club_name varchar(75) NOT NULL,
     course_name varchar(75) NOT NULL,
+    address TEXT,
     city varchar(50) NOT NULL,
     state_ab char(2) NOT NULL,
     yardage int NOT NULL,
