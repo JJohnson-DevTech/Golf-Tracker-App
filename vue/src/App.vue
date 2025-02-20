@@ -8,7 +8,7 @@
   </div>
 </template>
 
-<style>
+<!--<style>
 
 html {
   background-color: #005e23;
@@ -35,3 +35,4 @@ html {
 }
 
 </style>
+-->
