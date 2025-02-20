@@ -10,13 +10,22 @@ public class Leagues {
 
     private int leagueHost;
 
+    private int courseId;
+
     private Timestamp matchTime;
 
-    public Leagues(int leagueId, String leagueName, int leagueHost, Timestamp matchTime) {
+    private boolean isActive;
+
+    private int maxPlayers;
+
+    public Leagues(int leagueId, String leagueName, int leagueHost, int courseId, Timestamp matchTime, boolean isActive, int maxPlayers) {
         this.leagueId = leagueId;
         this.leagueName = leagueName;
         this.leagueHost = leagueHost;
+        this.courseId = courseId;
         this.matchTime = matchTime;
+        this.isActive = isActive;
+        this.maxPlayers = maxPlayers;
     }
 
     public int getLeagueId() {
@@ -43,6 +52,10 @@ public class Leagues {
         this.leagueHost = leagueHost;
     }
 
+    public int getCourseId() { return courseId; }
+
+    public void setCourseId(int courseId) { this.courseId = courseId; }
+
     public Timestamp getMatchTime() {
         return matchTime;
     }
@@ -50,4 +63,13 @@ public class Leagues {
     public void setMatchTime(Timestamp matchTime) {
         this.matchTime = matchTime;
     }
+
+    public boolean getIsActive() { return isActive; }
+
+    public void setIsActive(boolean isActive) { this.isActive = isActive; }
+
+    public int getMaxPlayers() { return maxPlayers; }
+
+    public void setMaxPlayers(int maxPlayers) { this.maxPlayers = maxPlayers; }
+
 }

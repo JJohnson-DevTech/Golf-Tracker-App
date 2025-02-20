@@ -2,18 +2,25 @@ package com.techelevator.dao;
 
 import com.techelevator.model.Leagues;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 public interface LeaguesDao {
 
-    List<Leagues> getLeagues();
+    void createLeague (Leagues league);
+
+    void inviteUserToLeague(int leagueId, int hostId, String email);
+
+    boolean acceptInvitation(String inviteLink, int userId);
 
     Leagues getLeagueById(int leagueId);
 
-    Leagues getLeagueByName(String leagueName);
+    List<Leagues> getLeaguesForUser(int userId);
 
-    Leagues createLeague(String leagueName,int leagueHost);
+    List<Leagues> getActiveLeaguesNotFull();
 
-    Leagues createMatchTime(Timestamp matchTime);
+    boolean joinLeague(int leagueId, int userId);
+
+    void updateLeague(Leagues league);
+
+    void deactivateLeague(int leagueId);
 }
