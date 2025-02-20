@@ -40,7 +40,7 @@ CREATE TABLE leagues (
     course_id INT NOT NULL,
     match_time TIMESTAMP NOT NULL,
     is_active BOOLEAN DEFAULT TRUE,
-    max_players INT DEFAULT 24,
+    max_players INT DEFAULT 24, -- should be min_players 4
     CONSTRAINT fk_league_host FOREIGN KEY (league_host) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fk_course_id FOREIGN KEY (course_id) REFERENCES golf_courses(course_id) ON DELETE CASCADE ON UPDATE CASCADE
 );

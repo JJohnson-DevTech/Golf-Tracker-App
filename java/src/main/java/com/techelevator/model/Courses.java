@@ -83,7 +83,6 @@ public class Courses {
         this.courseId = courseId;
     }
 
-
     public void setCourseName(String courseName) {
         this.courseName = courseName;
     }
