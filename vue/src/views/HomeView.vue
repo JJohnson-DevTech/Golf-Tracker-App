@@ -1,12 +1,14 @@
 <template>
   <div class="home">
     <h1>Home</h1>
+    <router-link to="/courses">Course List</router-link>
     <p>You must be authenticated to see this</p>
   </div>
 </template>
 
 <script>
 export default {
+  name: 'HomeView',
   data() {
     return {
 
