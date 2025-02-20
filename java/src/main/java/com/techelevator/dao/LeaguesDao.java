@@ -6,9 +6,12 @@ import java.util.List;
 
 public interface LeaguesDao {
 
+    String generateInviteLink(int leagueId);
+
     void createLeague (Leagues league);
 
-    void inviteUserToLeague(int leagueId, int hostId, String email);
+    //TODO later date
+//    void inviteUserToLeague(int leagueId, int hostId, String email);
 
     boolean acceptInvitation(String inviteLink, int userId);
 
@@ -16,7 +19,8 @@ public interface LeaguesDao {
 
     List<Leagues> getLeaguesForUser(int userId);
 
-    List<Leagues> getActiveLeaguesNotFull();
+    //TODO we could add this back in later but not necessary for trello functionality
+//    List<Leagues> getActiveLeaguesNotFull();
 
     boolean joinLeague(int leagueId, int userId);
 
