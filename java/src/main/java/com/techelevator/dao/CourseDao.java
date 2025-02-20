@@ -27,7 +27,5 @@ public interface CourseDao {
 
     Courses getCourseByAddress(String address);
 
-    Courses createCourse();
-
-
+    Courses createCourse(Courses course);
 }
