@@ -8,12 +8,7 @@
   </div>
 </template>
 
-<!--<style>
-
-html {
-  background-color: #005e23;
-  width: 100vh;
-}
+<style scoped>
 
 #capstone-app {
   color: #fcf400;
