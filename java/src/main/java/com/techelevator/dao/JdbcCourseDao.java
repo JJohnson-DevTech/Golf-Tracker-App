@@ -23,7 +23,7 @@ public class JdbcCourseDao implements CourseDao{
     public Courses getCourseById(int courseId) {
         if(courseId == 0) throw new IllegalArgumentException("Course Id cannot be 0");
         Courses course = new Courses();
-        String sql = "SELECT club_name, course_name, address, yardage, par, holes FROM golf_courses WHERE id = ?;";
+        String sql = "SELECT club_name, course_name, address, yardage, par, holes FROM golf_courses WHERE course_id = ?;";
         try{
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, courseId);
             if(results.next()){
@@ -120,7 +120,7 @@ public class JdbcCourseDao implements CourseDao{
     public Courses getCourseYardage(int courseId) {
         if(courseId == 0) throw new IllegalArgumentException("Course id Cannot be 0");
         Courses course = new Courses();
-        String sql = "SELECT yardage FROM golf_courses WHERE id = ?";
+        String sql = "SELECT yardage FROM golf_courses WHERE course_id = ?";
 
         try{
             int yardage = jdbcTemplate.queryForObject(sql, int.class, courseId);
@@ -138,7 +138,7 @@ public class JdbcCourseDao implements CourseDao{
         if(courseId == 0) throw new IllegalArgumentException("Course Id cannot be 0.");
 
         Courses course = new Courses();
-        String sql = "SELECT par FROM golf_courses WHERE id = ?";
+        String sql = "SELECT par FROM golf_courses WHERE course_id = ?";
 
         try{
             int par = jdbcTemplate.queryForObject(sql, int.class, courseId);
@@ -158,7 +158,7 @@ public class JdbcCourseDao implements CourseDao{
         if(courseId == 0) throw new IllegalArgumentException("Course Id cannot be 0.");
 
         Courses course = new Courses();
-        String sql = "SELECT holes FROM golf_courses WHERE id = ?";
+        String sql = "SELECT holes FROM golf_courses WHERE course_id = ?";
 
         try{
             int holes = jdbcTemplate.queryForObject(sql, int.class, courseId);
@@ -175,7 +175,7 @@ public class JdbcCourseDao implements CourseDao{
     public Courses getClubNameByCourse(int courseId) {
         if(courseId == 0) throw new IllegalArgumentException("Course Id cannot be 0");
         Courses course = new Courses();
-        String sql = "SELECT club_name FROM golf_courses WHERE id = ?";
+        String sql = "SELECT club_name FROM golf_courses WHERE course_id = ?";
 
         try{
             String clubName = jdbcTemplate.queryForObject(sql, String.class, courseId);
@@ -211,7 +211,7 @@ public class JdbcCourseDao implements CourseDao{
     public Courses createCourse() {
         Courses course = new Courses();
         String sql = "INSERT INTO golf_courses (club_name, course_name, address, city, state_ab, yardage, par, holes, country) " +
-                "VALUES (LOWER(TRIM(?)), ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id;";
+                "VALUES (LOWER(TRIM(?)), ?, ?, ?, ?, ?, ?, ?, ?) RETURNING course_id;";
         try{
             int newCourseId = jdbcTemplate.queryForObject(sql, int.class, course.getClubName(), course.getCourseName(), course.getAddress(), course.getCity(), course.getState(), course.getYardage(), course.getPar(), course.getHoles(), course.getCountry());
             course = getCourseById(newCourseId);
