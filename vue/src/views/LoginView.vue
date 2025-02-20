@@ -1,27 +1,48 @@
 <template>
-  <div id="login">
-    <form v-on:submit.prevent="login">
-      <h1>Please Sign In</h1>
-      <div role="alert" v-if="invalidCredentials">
-        Invalid username and password!
+  <body>
+    <div class="background-image">
+      <img src="@/assets/GolfHole3.png" />
+    </div>
+
+    <div id="login">
+      <div class="login_form-card">
+        <img src="@/assets/Scorecard.png" />
       </div>
-      <div role="alert" v-if="this.$route.query.registration">
-        Thank you for registering, please sign in.
-      </div>
-      <div class="form-input-group">
-        <label for="username">Username</label>
-        <input type="text" id="username" v-model="user.username" required autofocus />
-      </div>
-      <div class="form-input-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" v-model="user.password" required />
-      </div>
-      <button type="submit">Sign in</button>
-      <p>
-        <router-link v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link>
-      </p>
-    </form>
-  </div>
+      <form v-on:submit.prevent="login">
+        <div role="alert" v-if="invalidCredentials">
+          Invalid username and password!
+        </div>
+        <div role="alert" v-if="this.$route.query.registration">
+          Thank you for registering, please sign in.
+        </div>
+        <div class="form-input-group-username">
+          <label for="username"></label>
+          <input
+            type="text"
+            id="username" placeholder="Username"
+            v-model="user.username"
+            required
+            autofocus
+          />
+        </div>
+        <div class="form-input-group-password">
+          <label for="password"></label>
+          <input
+            type="password"
+            id="password" placeholder="Password"
+            v-model="user.password"
+            required
+          />
+        </div>
+        <button type="submit">Sign in</button>
+        <p>
+          <router-link v-bind:to="{ name: 'register' }"
+            >Need an account? Sign up.</router-link
+          >
+        </p>
+      </form>
+    </div>
+  </body>
 </template>
 
 <script>
@@ -33,76 +54,152 @@ export default {
     return {
       user: {
         username: "",
-        password: ""
+        password: "",
       },
-      invalidCredentials: false
+      invalidCredentials: false,
     };
   },
   methods: {
     login() {
       authService
         .login(this.user)
-        .then(response => {
+        .then((response) => {
           if (response.status == 200) {
             this.$store.commit("SET_AUTH_TOKEN", response.data.token);
             this.$store.commit("SET_USER", response.data.user);
             this.$router.push("/");
           }
         })
-        .catch(error => {
+        .catch((error) => {
           const response = error.response;
 
           if (response.status === 401) {
             this.invalidCredentials = true;
           }
         });
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Fugaz+One&family=Sriracha&display=swap');
+  body {
+    font-family: "Sriracha", serif;
+    font-weight: 400;
+    font-style: normal;
+    color: #fcf400;
+    margin: 0;
+    padding: 0;
+    background-image: url("@/assets/GolfHole3.png");
+  }
 
-h1 {
-  font-family: 'Fugaz One', serif;
-  font-weight: 400;
-  font-style: normal;
-  color: #fcf400;
-  margin-bottom: 0;
-}
+  .background-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
 
-.form-input-group {
-  font-family: "Sriracha", serif;
-  font-weight: 400;
-  font-style: normal;
-}
+  .background-image img {
+    width: 100%;
+    height: 100%;
+  }
+.login_form-card{
+    position: fixed;
+    top: 60vh;
+    left: 29vw;
+    padding: -10px;
+    margin: 0;
+  } 
 
-router-link {
-  border-bottom: none;
-}
+  .login_form-card img{
+    width: 34vw;
+    height: 50vh;
+  }
 
-.form-input-group {
-  margin-bottom: 1rem;
-}
+  #login {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+  }
 
-form {
-  margin: 0 auto;
-  text-align: left;
-  width: 10vw;
-  max-width: 500px;
-  min-width: 300px;
-}
+  form {
+    position: absolute;
+    top: 71vh;
+    left: 35vw;
+    
+    
+  }
 
-a:visited {
-  color: black;
-}
+  h1 {
+    font-family: "Fugaz One", serif;
+    font-weight: 400;
+    font-style: normal;
+    color: #fcf400;
+    margin-bottom: 0;
+  }
 
-a:hover {
-  color: #fcf400;
-}
+  .form-input-group-username {
+    margin-bottom: 15px;
+    padding-top: 7px;
+    opacity: 0.5;
+    display: flex;
+    flex-grow: ;
+  }
 
-label {
-  margin-right: 0.5rem;
-}
+  .form-input-group-password {
+    margin-bottom: 15px;
+    padding-top: 10px;
+  }
+
+  label {
+    font-family: "Fugaz One", serif;
+    font-weight: 400;
+    font-style: normal;
+    color: #fcf400;
+  }
+
+  
+
+  input {
+    width: 100%;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #fcf400;
+  }
+
+  button {
+    width: 100%;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #fcf400;
+    background-color: #fcf400;
+    color: #005e23;
+    font-family: "Fugaz One", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  button:hover {
+    background-color: #005e23;
+    color: #fcf400;
+  }
+
+  p {
+    font-family: "Fugaz One", serif;
+    font-weight: 400;
+    font-style: normal;
+    color: #fcf400;
+  }
+
+  a {
+    font-family: "Fugaz One", serif;
+    font-weight: 400;
+  }
 </style>
