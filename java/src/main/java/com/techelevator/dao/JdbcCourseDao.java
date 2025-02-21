@@ -2,11 +2,9 @@ package com.techelevator.dao;
 
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Courses;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -212,7 +210,16 @@ public class JdbcCourseDao implements CourseDao{
     }
 
     @Override
-    public Courses createCourse(Courses course) {
+    public boolean courseExists(int courseId){
+        if(courseId <= 0) throw new IllegalArgumentException("Course Id needs to be greater than 0");
+        String sql = "SELECT COUNT(*) FROM golf_courses WHERE course_id = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, courseId);
+        return count != null && count > 0;
+    }
+
+
+    @Override
+    public Courses createCourse(Courses course) throws DaoException {
         if (course == null) {
             throw new IllegalArgumentException("Course object cannot be null");
         }
