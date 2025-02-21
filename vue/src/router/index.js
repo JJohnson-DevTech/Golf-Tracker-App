@@ -7,6 +7,7 @@ import LoginView from '../views/LoginView.vue';
 import LogoutView from '../views/LogoutView.vue';
 import RegisterView from '../views/RegisterView.vue';
 import CourseListView from '../views/CourseListView.vue';
+import UserProfileView from '../views/UserProfileView.vue';
 import LeagueView from '../views/LeagueView.vue';
 
 /**
@@ -59,6 +60,14 @@ const routes = [
     }
   },
   {
+    path: "/user",
+    name: "user",
+    component: UserProfileView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
     path: "/leagues",
     name: "Leagues",
     component: LeagueView,
@@ -66,6 +75,7 @@ const routes = [
       requiresAuth: true
     }
   }
+  
 ];
 
 // Create the router
