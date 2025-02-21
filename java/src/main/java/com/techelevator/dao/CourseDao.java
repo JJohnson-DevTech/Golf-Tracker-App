@@ -17,7 +17,7 @@ public interface CourseDao {
 
     List<Courses> getCoursesByName(String courseName);
 
-    Courses getCourseYardage(int courseId);
+    Courses getCourseTotalYards(int courseId);
 
     Courses getCoursePar(int courseId);
 

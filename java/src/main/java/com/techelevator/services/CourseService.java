@@ -2,9 +2,20 @@ package com.techelevator.services;
 
 import com.techelevator.dao.JdbcCourseDao;
 import com.techelevator.model.Courses;
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+import java.util.Map;
 
+@Service
 public class CourseService {
 
     private static final String API_BASE_URL = "https://api.golfcourseapi.com/v1/";
@@ -13,31 +24,49 @@ public class CourseService {
 
     private final JdbcCourseDao jdbcCourseDao;
 
+    @Value( "${golfcourseapi.key}")
+    private String apiKey;
+
+    @Autowired
     public CourseService(JdbcCourseDao jdbcCourseDao) {
         this.jdbcCourseDao = jdbcCourseDao;
     }
 
-    public Courses[] getCourseById(int courseId){
-        return restTemplate.getForObject(API_BASE_URL +  "courses/" + courseId, Courses[].class);
-    }
+    public void fetchAndStoreCourses() {
+        String url = API_BASE_URL + "courses";
 
-    public Courses[] getCourseByName(String courseName){
-        courseName = courseName.replace(" ", "%20");
-        return restTemplate.getForObject(API_BASE_URL + "courses?course_name=" + courseName, Courses[].class);
-    }
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", apiKey);
+        HttpEntity<?> entity = new HttpEntity<String>(headers);
 
-    public Courses[] getCourseByClubName(String clubName){
-        clubName = clubName.replace(" ", "%20");
-        return restTemplate.getForObject(API_BASE_URL + "courses?club_name=" + clubName, Courses[].class);
-    }
+        ResponseEntity<Map> response = restTemplate.exchange(url, HttpMethod.GET, entity, Map.class);
 
-    public void insertApiCoursesToDb(){
-        Courses[] courses = restTemplate.getForObject(API_BASE_URL + "courses", Courses[].class);
-            if(courses != null){
-                for(Courses apiCourse: courses){
-                    jdbcCourseDao.createCourse(apiCourse);
-                }
+        if(response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
+            List<Map<String, Object>> courses = (List<Map<String, Object>>) response.getBody().get("courses");
+            for (Map<String, Object> course : courses) {
+                int courseId = (int) course.get("id");
+                String clubName = (String) course.get("club_name");
+                String courseName = (String) course.get("course_name");
+
+                Map<String, Object> location = (Map<String, Object>) course.get("location");
+                String address = (String) location.get("address");
+                String city = (String) location.get("city");
+                String state = (String) location.get("state");
+                String country = (String) location.get("country");
+
+                // Set defaults if yards/par/holes are not available in api\
+                int totalYards = course.containsKey("total_yards") ? (int) course.get("total_yards") : 0;
+                int par = course.containsKey("par") ? (int) course.get("par") : 0;
+                int holes = course.containsKey("holes") ? (int) course.get("holes") : 18;
+
+                // Insert into PostgreSQL
+                jdbcCourseDao.createCourse(new Courses(courseId, clubName, courseName, address, city, state, country, totalYards, par, holes));
             }
+        }
     }
 
+//    @PostConstruct
+//    public void initialize() {
+//        System.out.println("API Key: " + apiKey);
+//        fetchAndStoreCourses(); }
 }
