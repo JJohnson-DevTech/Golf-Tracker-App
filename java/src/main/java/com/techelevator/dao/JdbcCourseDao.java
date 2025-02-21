@@ -2,6 +2,7 @@ package com.techelevator.dao;
 
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Courses;
+import com.techelevator.services.CourseService;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -208,8 +209,7 @@ public class JdbcCourseDao implements CourseDao{
     }
 
     @Override
-    public Courses createCourse() {
-        Courses course = new Courses();
+    public Courses createCourse(Courses course) {
         String sql = "INSERT INTO golf_courses (club_name, course_name, address, city, state_ab, yardage, par, holes, country) " +
                 "VALUES (LOWER(TRIM(?)), ?, ?, ?, ?, ?, ?, ?, ?) RETURNING course_id;";
         try{
@@ -222,6 +222,21 @@ public class JdbcCourseDao implements CourseDao{
         }
         return course;
     }
+
+    //TODO MAYBE COME BACK LATER
+//    public Courses insertApiDataToDb(){
+//        List<Integer> newIds = new ArrayList<>();
+//
+//        String sql = "INSERT INTO golf_courses (club_name, course_name, address, city, state_ab, yardage, par, holes, country)" +
+//                " VALUES (?, ?, ?, ?, ?, ?, ?,?, ?) RETURNING course_id;";
+//        Courses[] course = service.listCourses();
+//        SqlRowSet newCourseIds = jdbcTemplate.queryForRowSet(sql, course.getClubName(), course.getCourseName(), course.getAddress(), course.getCity(), course.getState(), course.getYardage(), course.getPar(), course.getHoles(), course.getCountry());
+//
+//        for(Courses c : courses) {
+//            SqlRowSet newCourseIds = jdbcTemplate.queryForRowSet(sql, course.getClubName(), course.getCourseName(), course.getAddress(), course.getCity(), course.getState(), course.getYardage(), course.getPar(), course.getHoles(), course.getCountry());)
+//        }
+//
+//    }
 
 
     private Courses mapRowToCourse(SqlRowSet rs) {
