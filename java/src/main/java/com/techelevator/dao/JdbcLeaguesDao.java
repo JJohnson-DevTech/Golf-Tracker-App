@@ -31,7 +31,7 @@ public class JdbcLeaguesDao implements LeaguesDao {
                             rs.getInt("course_id"),
                             rs.getTimestamp("match_time"),
                             rs.getBoolean("is_active"),
-                            rs.getInt("max_players")
+                            rs.getInt("min_players")
                     ));
         } catch (EmptyResultDataAccessException e) {
             throw new DaoException("Nothing was returned.");
@@ -138,7 +138,7 @@ public class JdbcLeaguesDao implements LeaguesDao {
                             rs.getInt("course_id"),
                             rs.getTimestamp("match_time"),
                             rs.getBoolean("is_active"),
-                            rs.getInt("max_players")
+                            rs.getInt("min_players")
                     ), leagueId);
         } catch (EmptyResultDataAccessException e) {
             return null;
