@@ -9,13 +9,13 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Map;
 
-@Service
+@Component
 public class CourseService {
 
     private static final String API_BASE_URL = "https://api.golfcourseapi.com/v1/";
@@ -65,8 +65,8 @@ public class CourseService {
         }
     }
 
-//    @PostConstruct
-//    public void initialize() {
-//        System.out.println("API Key: " + apiKey);
-//        fetchAndStoreCourses(); }
+    @PostConstruct
+    public void initialize() {
+        System.out.println("API Key: " + apiKey);
+        fetchAndStoreCourses(); }
 }
