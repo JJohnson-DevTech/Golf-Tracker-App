@@ -2,15 +2,17 @@ package com.techelevator.dao;
 
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Courses;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+@Repository
 public class JdbcCourseDao implements CourseDao{
 
     private final JdbcTemplate jdbcTemplate;
@@ -21,13 +23,15 @@ public class JdbcCourseDao implements CourseDao{
 
     @Override
     public Courses getCourseById(int courseId) {
-        if(courseId == 0) throw new IllegalArgumentException("Course Id cannot be 0");
-        Courses course = new Courses();
+        if(courseId <= 0) throw new IllegalArgumentException("Course Id must be a positive integer.");
+        Courses course = null;
         String sql = "SELECT course_id, club_name, course_name, address, total_yards, par, holes FROM golf_courses WHERE course_id = ?;";
         try{
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, courseId);
             if(results.next()){
                 course = mapRowToCourse(results);
+            } else {
+                throw new DaoException("No course found with course ID: " + courseId);
             }
         } catch (CannotGetJdbcConnectionException e){
             throw new DaoException("Unable to connect to server or database", e);
@@ -209,18 +213,47 @@ public class JdbcCourseDao implements CourseDao{
 
     @Override
     public Courses createCourse(Courses course) {
+        if (course == null) {
+            throw new IllegalArgumentException("Course object cannot be null");
+        }
+        // Validation on required fields before proceeding
+        if (course.getClubName() == null || course.getClubName().trim().isEmpty()) {
+            throw new IllegalArgumentException("Club Name cannot be null or empty.");
+        }
+        if (course.getCourseName() == null || course.getCourseName().trim().isEmpty()) {
+            throw new IllegalArgumentException("Course Name cannot be null or empty.");
+        }
+        if (course.getAddress() == null || course.getAddress().trim().isEmpty()) {
+            throw new IllegalArgumentException("Address cannot be null or empty.");
+        }
+        if (course.getCity() == null || course.getState() == null || course.getCountry() == null) {
+            throw new IllegalArgumentException("City, State, and Country cannot be null.");
+        }
+
         String sql = "INSERT INTO golf_courses (club_name, course_name, address, city, state_ab, country, total_yards, par, holes) " +
                 "VALUES (LOWER(TRIM(?)), ?, ?, ?, ?, ?, ?, ?, ?) RETURNING course_id;";
-        try{
-            int newCourseId = jdbcTemplate.queryForObject(sql, int.class, course.getClubName(), course.getCourseName(), course.getAddress(), course.getCity(), course.getState(), course.getTotalYards(), course.getPar(), course.getHoles(), course.getCountry());
+        try {
+            int newCourseId = jdbcTemplate.queryForObject(sql, int.class,
+                    course.getClubName().trim(),
+                    course.getCourseName().trim(),
+                    course.getAddress().trim(),
+                    course.getCity().trim(),
+                    course.getState().trim(),
+                    course.getCountry().trim(),
+                    course.getTotalYards(),
+                    course.getPar(),
+                    course.getHoles());
+
+            // Fetch the inserted course using the new course ID
             course = getCourseById(newCourseId);
-        }catch (CannotGetJdbcConnectionException e){
+        } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
-        } catch (Exception e){
-            throw new DaoException("Issue with createCourse");
+        } catch (Exception e) {
+            throw new DaoException("Issue with createCourse", e);
         }
         return course;
     }
+
 
     //TODO MAYBE COME BACK LATER
 //    public Courses insertApiDataToDb(){
@@ -240,7 +273,7 @@ public class JdbcCourseDao implements CourseDao{
 
     private Courses mapRowToCourse(SqlRowSet rs) {
         Courses courses = new Courses();
-        courses.setCourseId(rs.getInt("id"));
+        courses.setCourseId(rs.getInt("course_id"));
         courses.setClubName(rs.getString("club_name"));
         courses.setCourseName(rs.getString("course_name"));
         courses.setAddress(rs.getString("address"));

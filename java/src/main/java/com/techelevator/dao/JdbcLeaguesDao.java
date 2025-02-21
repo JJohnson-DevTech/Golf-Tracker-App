@@ -166,11 +166,11 @@ public class JdbcLeaguesDao implements LeaguesDao {
         String checkLeague = "SELECT min_players, is_active FROM leagues WHERE league_id = ?";
         Map<String, Object> leagueInfo = jdbcTemplate.queryForMap(checkLeague, leagueId);
 
-        Integer maxPlayers = (Integer) leagueInfo.get("min_players");
+        Integer minPlayers = (Integer) leagueInfo.get("min_players");
         Boolean isActive = (Boolean) leagueInfo.get("is_active");
 
         // League is not active or doesn't exist, cannot join
-        if (maxPlayers == null || isActive == null || !isActive) {
+        if (minPlayers == null || isActive == null || !isActive) {
             return false;
         }
 
@@ -179,7 +179,7 @@ public class JdbcLeaguesDao implements LeaguesDao {
         Integer currentPlayers = jdbcTemplate.queryForObject(playerCount, Integer.class, leagueId);
 
         // If league is not full allow players to join
-        if (currentPlayers < maxPlayers) {
+        if (currentPlayers < minPlayers) {
             String joinLeagueSql = "INSERT INTO league_members (league_id, member_id) VALUES (?, ?)";
             jdbcTemplate.update(joinLeagueSql, leagueId, userId);
             return true;

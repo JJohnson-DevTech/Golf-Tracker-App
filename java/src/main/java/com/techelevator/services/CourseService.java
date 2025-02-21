@@ -2,6 +2,8 @@ package com.techelevator.services;
 
 import com.techelevator.dao.JdbcCourseDao;
 import com.techelevator.model.Courses;
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -25,6 +27,7 @@ public class CourseService {
     @Value( "${golfcourseapi.key}")
     private String apiKey;
 
+    @Autowired
     public CourseService(JdbcCourseDao jdbcCourseDao) {
         this.jdbcCourseDao = jdbcCourseDao;
     }
@@ -40,24 +43,30 @@ public class CourseService {
 
         if(response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
             List<Map<String, Object>> courses = (List<Map<String, Object>>) response.getBody().get("courses");
-            saveCoursesToDatabase(courses);
+            for (Map<String, Object> course : courses) {
+                int courseId = (int) course.get("id");
+                String clubName = (String) course.get("club_name");
+                String courseName = (String) course.get("course_name");
+
+                Map<String, Object> location = (Map<String, Object>) course.get("location");
+                String address = (String) location.get("address");
+                String city = (String) location.get("city");
+                String state = (String) location.get("state");
+                String country = (String) location.get("country");
+
+                // Set defaults if yards/par/holes are not available in api\
+                int totalYards = course.containsKey("total_yards") ? (int) course.get("total_yards") : 0;
+                int par = course.containsKey("par") ? (int) course.get("par") : 0;
+                int holes = course.containsKey("holes") ? (int) course.get("holes") : 18;
+
+                // Insert into PostgreSQL
+                jdbcCourseDao.createCourse(new Courses(courseId, clubName, courseName, address, city, state, country, totalYards, par, holes));
+            }
         }
     }
 
-    private void saveCoursesToDatabase(List<Map<String, Object>> courses) {
-        for (Map<String, Object> course : courses) {
-            int courseId = (int) course.get("id");
-            String clubName = (String) course.get("club_name");
-            String courseName = (String) course.get("course_name");
-
-            Map<String, Object> location = (Map<String, Object>) course.get("location");
-            String address = (String) location.get("address");
-            String city = (String) location.get("city");
-            String state = (String) location.get("state");
-            String country = (String) location.get("country");
-
-            // Insert into PostgreSQL
-            jdbcCourseDao.createCourse(new Courses(courseId, clubName, courseName, address, city, state, 0, country, 0, 0));
-        }
-    }
+//    @PostConstruct
+//    public void initialize() {
+//        System.out.println("API Key: " + apiKey);
+//        fetchAndStoreCourses(); }
 }
