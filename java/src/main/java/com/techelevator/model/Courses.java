@@ -1,5 +1,8 @@
 package com.techelevator.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties({"totalYards", "par", "holes"})
 public class Courses {
 
     private int courseId;
@@ -14,7 +17,7 @@ public class Courses {
 
     private String state;
 
-    private int yardage;
+    private int totalYards;
 
     private String country;
 
@@ -22,15 +25,15 @@ public class Courses {
 
     private int holes;
 
-    public Courses(int courseId, String clubName, String courseName, String address, String city, String state, int yardage, String country, int par, int holes) {
+    public Courses(int courseId, String clubName, String courseName, String address, String city, String state, int totalYards, String country, int par, int holes) {
         this.courseId = courseId;
         this.clubName = clubName;
         this.courseName = courseName;
         this.address = address;
         this.city = city;
         this.state = state;
-        this.yardage = yardage;
         this.country = country;
+        this.totalYards = totalYards;
         this.par = par;
         this.holes = holes;
     }
@@ -39,13 +42,9 @@ public class Courses {
 
     }
 
-    public int getYardage() {
-        return yardage;
-    }
+    public int getTotalYards() { return totalYards; }
 
-    public void setYardage(int yardage) {
-        this.yardage = yardage;
-    }
+    public void setTotalYards(int totalYards) { this.totalYards = totalYards; }
 
     public int getCourseId() {
         return courseId;

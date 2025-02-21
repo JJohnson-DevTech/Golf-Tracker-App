@@ -2,9 +2,18 @@ package com.techelevator.services;
 
 import com.techelevator.dao.JdbcCourseDao;
 import com.techelevator.model.Courses;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+import java.util.Map;
 
+@Service
 public class CourseService {
 
     private static final String API_BASE_URL = "https://api.golfcourseapi.com/v1/";
@@ -13,31 +22,42 @@ public class CourseService {
 
     private final JdbcCourseDao jdbcCourseDao;
 
+    @Value( "${golfcourseapi.key}")
+    private String apiKey;
+
     public CourseService(JdbcCourseDao jdbcCourseDao) {
         this.jdbcCourseDao = jdbcCourseDao;
     }
 
-    public Courses[] getCourseById(int courseId){
-        return restTemplate.getForObject(API_BASE_URL +  "courses/" + courseId, Courses[].class);
+    public void fetchAndStoreCourses() {
+        String url = API_BASE_URL + "courses";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", apiKey);
+        HttpEntity<?> entity = new HttpEntity<String>(headers);
+
+        ResponseEntity<Map> response = restTemplate.exchange(url, HttpMethod.GET, entity, Map.class);
+
+        if(response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
+            List<Map<String, Object>> courses = (List<Map<String, Object>>) response.getBody().get("courses");
+            saveCoursesToDatabase(courses);
+        }
     }
 
-    public Courses[] getCourseByName(String courseName){
-        courseName = courseName.replace(" ", "%20");
-        return restTemplate.getForObject(API_BASE_URL + "courses?course_name=" + courseName, Courses[].class);
-    }
+    private void saveCoursesToDatabase(List<Map<String, Object>> courses) {
+        for (Map<String, Object> course : courses) {
+            int courseId = (int) course.get("id");
+            String clubName = (String) course.get("club_name");
+            String courseName = (String) course.get("course_name");
 
-    public Courses[] getCourseByClubName(String clubName){
-        clubName = clubName.replace(" ", "%20");
-        return restTemplate.getForObject(API_BASE_URL + "courses?club_name=" + clubName, Courses[].class);
-    }
+            Map<String, Object> location = (Map<String, Object>) course.get("location");
+            String address = (String) location.get("address");
+            String city = (String) location.get("city");
+            String state = (String) location.get("state");
+            String country = (String) location.get("country");
 
-    public void insertApiCoursesToDb(){
-        Courses[] courses = restTemplate.getForObject(API_BASE_URL + "courses", Courses[].class);
-            if(courses != null){
-                for(Courses apiCourse: courses){
-                    jdbcCourseDao.createCourse(apiCourse);
-                }
-            }
+            // Insert into PostgreSQL
+            jdbcCourseDao.createCourse(new Courses(courseId, clubName, courseName, address, city, state, 0, country, 0, 0));
+        }
     }
-
 }

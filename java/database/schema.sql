@@ -19,10 +19,10 @@ CREATE TABLE golf_courses (
     address TEXT,
     city varchar(50) NOT NULL,
     state_ab char(2) NOT NULL,
-    yardage int NOT NULL,
-    par int NOT NULL,
-    holes int DEFAULT 18 NOT NULL,
-    country varchar(30) NOT NULL
+    country varchar(30) NOT NULL,
+    total_yards int,
+    par int,
+    holes int DEFAULT 18 NOT NULL
 );
 
 CREATE TABLE user_favorites (
@@ -40,7 +40,7 @@ CREATE TABLE leagues (
     course_id INT NOT NULL,
     match_time TIMESTAMP NOT NULL,
     is_active BOOLEAN DEFAULT TRUE,
-    max_players INT DEFAULT 24, -- should be min_players 4
+    min_players INT DEFAULT 4,
     CONSTRAINT fk_league_host FOREIGN KEY (league_host) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fk_course_id FOREIGN KEY (course_id) REFERENCES golf_courses(course_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
