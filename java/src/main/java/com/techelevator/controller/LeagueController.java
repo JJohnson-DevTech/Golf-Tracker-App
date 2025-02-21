@@ -1,21 +1,30 @@
 package com.techelevator.controller;
 
+import com.techelevator.dao.JdbcLeaguesDao;
 import com.techelevator.dao.LeaguesDao;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.techelevator.model.Leagues;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:5173/")
+@RequestMapping("/api/leagues")
 public class LeagueController {
 
     private final LeaguesDao leaguesDao;
+    private final JdbcLeaguesDao jdbcLeaguesDao;
 
 
 
-    public LeagueController(LeaguesDao leaguesDao) {
+    public LeagueController(LeaguesDao leaguesDao, JdbcLeaguesDao jdbcLeaguesDao) {
         this.leaguesDao = leaguesDao;
+        this.jdbcLeaguesDao = jdbcLeaguesDao;
+    }
+
+
+    @GetMapping()
+    public List<Leagues> getAllLeagues(){
+        return jdbcLeaguesDao.getAllLeagues();
     }
 
     @GetMapping(path = "/invite")

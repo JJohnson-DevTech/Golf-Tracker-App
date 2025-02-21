@@ -1,10 +1,14 @@
 package com.techelevator.dao;
 
+import com.techelevator.exception.DaoException;
 import com.techelevator.model.Leagues;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.SqlOutParameter;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
 import java.util.UUID;
 
 import java.util.List;
@@ -18,6 +22,39 @@ public class JdbcLeaguesDao implements LeaguesDao {
 
     public JdbcLeaguesDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+
+//    @Override
+//    public List<Leagues> getAllLeagues() {
+//        String sql = "SELECT * FROM leagues;";
+//
+//        try{
+//             return jdbcTemplate.queryForObject(sql,
+//                     ());
+//
+//        }
+//
+//    }
+    @Override
+    public List<Leagues> getAllLeagues() {
+        String sql = "SELECT * FROM leagues;";
+        try {
+            return jdbcTemplate.query(sql,
+                    (rs, rowNum) -> new Leagues(
+                            rs.getInt("league_id"),
+                            rs.getString("league_name"),
+                            rs.getInt("league_host"),
+                            rs.getInt("course_id"),
+                            rs.getTimestamp("match_time"),
+                            rs.getBoolean("is_active"),
+                            rs.getInt("max_players")
+                    ));
+        } catch (EmptyResultDataAccessException e) {
+            throw new DaoException("Nothing was returned.");
+        } catch (Exception e){
+            throw new DaoException("issue with getAllLeagues");
+        }
     }
 
     @Override

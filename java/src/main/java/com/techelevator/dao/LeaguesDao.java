@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface LeaguesDao {
 
+    List<Leagues> getAllLeagues();
+
     String generateInviteLink(int leagueId);
 
     void createLeague (Leagues league);
@@ -27,4 +29,5 @@ public interface LeaguesDao {
     void updateLeague(Leagues league);
 
     void deactivateLeague(int leagueId);
+
 }
