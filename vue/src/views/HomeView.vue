@@ -1,18 +1,16 @@
 <template>
-  <div class="home">
-    <h1>Home</h1>
-    <router-link to="/courses">Course List</router-link>
-    <p>You must be authenticated to see this</p>
-  </div>
-  <body>
-    <div class="background-iamge">
-      <img src="@/assets/GolfHole3.png">
-    </div>
+  <div class="home-container">
+    <div class="home-image"></div>
     <div class="home">
       <h1>Home</h1>
-      <p>You must be authenticated to see this</p>
+      <router-link class="page-link" to="/courses">View Courses</router-link>
+      <router-link class="page-link" to="">Create Tee Time</router-link>
+      <router-link class="page-link" to="">Match Results</router-link>
+      <router-link class="page-link" to="/leagues">Leagues</router-link>
+      <router-link class="page-link" to="">MyProfile</router-link>
+      
     </div>
-  </body>
+  </div>
 </template>
 
 <script>
@@ -27,8 +25,25 @@ export default {
 </script>
 
 <style scoped>
+.home-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin-left: -100px;
+}
 
-
+.home-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-image: url('@/assets/GolfHole3.png');
+  background-size: cover; /* Ensures the image covers the container */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+}
 
 h1 {
   font-family: 'Fugaz One', serif;
@@ -42,5 +57,14 @@ p {
   font-family: 'Sriracha', serif;
   font-weight: 400;
   font-style: normal;
+}
+
+.page-link {
+  font-family: 'Sriracha', serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #fcf400;
+  text-decoration: none;
+  margin-right: 20px;
 }
 </style>
