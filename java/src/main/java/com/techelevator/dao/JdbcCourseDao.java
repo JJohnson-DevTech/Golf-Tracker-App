@@ -25,7 +25,7 @@ public class JdbcCourseDao implements CourseDao{
     public Courses getCourseById(int courseId) {
         if(courseId <= 0) throw new IllegalArgumentException("Course Id must be a positive integer.");
         Courses course = null;
-        String sql = "SELECT course_id, club_name, course_name, address, total_yards, par, holes FROM golf_courses WHERE course_id = ?;";
+        String sql = "SELECT course_id, club_name, course_name, address, city, state_ab, country, total_yards, par, holes FROM golf_courses WHERE course_id = ?;";
         try{
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, courseId);
             if(results.next()){
@@ -44,7 +44,7 @@ public class JdbcCourseDao implements CourseDao{
     @Override
     public List<Courses> getCourses() {
         List<Courses> courses = new ArrayList<>();
-        String sql = "SELECT course_id, club_name, course_name, address, total_yards, par, holes FROM golf_courses;";
+        String sql = "SELECT course_id, club_name, course_name, address, city, state_ab, country, total_yards, par, holes FROM golf_courses;";
         try{
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
             while (results.next()) {
@@ -64,7 +64,7 @@ public class JdbcCourseDao implements CourseDao{
     public List<Courses> getCoursesByState(String state) {
         if(state == null) throw new IllegalArgumentException("State cannot be null.");
         List<Courses> courses = new ArrayList<>();
-        String sql = "SELECT course_id, club_name, course_name, address, state_ab, total_yards, par, holes FROM golf_courses " +
+        String sql = "SELECT course_id, club_name, course_name, address, city, state_ab, country, total_yards, par, holes FROM golf_courses " +
                 "WHERE state_ab = LOWER(TRIM(?))";
 
         try{
@@ -84,7 +84,7 @@ public class JdbcCourseDao implements CourseDao{
     public List<Courses> getCoursesByCity(String city) {
         if(city == null) throw new IllegalArgumentException("City cannot be null.");
         List<Courses> courses = new ArrayList<>();
-        String sql = "SELECT course_id, club_name, course_name, address, total_yards, par, holes FROM golf_courses " +
+        String sql = "SELECT course_id, club_name, course_name, address, city, state_ab, country, total_yards, par, holes FROM golf_courses " +
                 "WHERE city = LOWER(TRIM(?))";
 
         try{
@@ -105,7 +105,7 @@ public class JdbcCourseDao implements CourseDao{
     public List<Courses> getCoursesByName(String courseName) {
         if(courseName == null) throw new IllegalArgumentException("Course Name cannot be null.");
         List<Courses> courses = new ArrayList<>();
-        String sql = "SELECT course_id, club_name, course_name, address, total_Yards, par, holes FROM golf_courses " +
+        String sql = "SELECT course_id, club_name, course_name, address, city, state_ab, country, total_Yards, par, holes FROM golf_courses " +
                 "WHERE course_name ILIKE ?";
         try{
             SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, courseName);
@@ -196,7 +196,7 @@ public class JdbcCourseDao implements CourseDao{
     public Courses getCourseByAddress(String address) {
         if(address == null) throw new IllegalArgumentException("Address cannot be null.");
         Courses course = new Courses();
-        String sql = "SELECT course_id, club_name, course_name, address, total_yards, par, holes FROM golf_courses WHERE address ILIKE ?";
+        String sql = "SELECT course_id, club_name, course_name, address, city, state_ab, country, total_yards, par, holes FROM golf_courses WHERE address ILIKE ?";
 
         try{
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, address);
@@ -216,19 +216,6 @@ public class JdbcCourseDao implements CourseDao{
         if (course == null) {
             throw new IllegalArgumentException("Course object cannot be null");
         }
-        // Validation on required fields before proceeding
-        if (course.getClubName() == null || course.getClubName().trim().isEmpty()) {
-            throw new IllegalArgumentException("Club Name cannot be null or empty.");
-        }
-        if (course.getCourseName() == null || course.getCourseName().trim().isEmpty()) {
-            throw new IllegalArgumentException("Course Name cannot be null or empty.");
-        }
-        if (course.getAddress() == null || course.getAddress().trim().isEmpty()) {
-            throw new IllegalArgumentException("Address cannot be null or empty.");
-        }
-        if (course.getCity() == null || course.getState() == null || course.getCountry() == null) {
-            throw new IllegalArgumentException("City, State, and Country cannot be null.");
-        }
 
         String sql = "INSERT INTO golf_courses (club_name, course_name, address, city, state_ab, country, total_yards, par, holes) " +
                 "VALUES (LOWER(TRIM(?)), ?, ?, ?, ?, ?, ?, ?, ?) RETURNING course_id;";
@@ -236,7 +223,7 @@ public class JdbcCourseDao implements CourseDao{
             int newCourseId = jdbcTemplate.queryForObject(sql, int.class,
                     course.getClubName().trim(),
                     course.getCourseName().trim(),
-                    course.getAddress().trim(),
+                    course.getAddress(),
                     course.getCity().trim(),
                     course.getState().trim(),
                     course.getCountry().trim(),
@@ -254,7 +241,6 @@ public class JdbcCourseDao implements CourseDao{
         return course;
     }
 
-
     //TODO MAYBE COME BACK LATER
 //    public Courses insertApiDataToDb(){
 //        List<Integer> newIds = new ArrayList<>();
@@ -269,7 +255,6 @@ public class JdbcCourseDao implements CourseDao{
 //        }
 //
 //    }
-
 
     private Courses mapRowToCourse(SqlRowSet rs) {
         Courses courses = new Courses();
