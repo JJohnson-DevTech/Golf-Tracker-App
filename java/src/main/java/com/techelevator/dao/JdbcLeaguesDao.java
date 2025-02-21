@@ -3,7 +3,6 @@ package com.techelevator.dao;
 import com.techelevator.model.Leagues;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.stereotype.Component;
 import java.util.UUID;
 
@@ -27,7 +26,7 @@ public class JdbcLeaguesDao implements LeaguesDao {
         String inviteLink = baseURL + "/invite/" + inviteCode;
 
         //stores this invitation link in our database
-        String sql = "INSERT INTO invitations (league_id, invite_link, status) VALUES (?, ?, 'pending);";
+        String sql = "INSERT INTO invitations (league_id, invite_link, status) VALUES (?, ?, 'pending');";
         jdbcTemplate.update(sql, leagueId, inviteLink);
         System.out.println(inviteLink);
         return inviteLink;
@@ -43,10 +42,10 @@ public class JdbcLeaguesDao implements LeaguesDao {
         if (courseExists == null || courseExists == 0) {
             throw new IllegalArgumentException("Invalid course ID: Course does not exist.");
         }
-        String sql = "INSERT INTO leagues (league_name, league_host, course_id, match_time, is_active, max_players) " +
+        String sql = "INSERT INTO leagues (league_name, league_host, course_id, match_time, is_active, min_players) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";
         jdbcTemplate.update(sql, league.getLeagueName(), league.getLeagueHost(), league.getCourseId(),
-                league.getMatchTime(), league.getIsActive(), league.getMaxPlayers());
+                league.getMatchTime(), league.getIsActive(), league.getMinPlayers());
     }
 
 
@@ -138,7 +137,7 @@ public class JdbcLeaguesDao implements LeaguesDao {
                         rs.getInt("course_id"),
                         rs.getTimestamp("match_time"),
                         rs.getBoolean("is_active"),
-                        rs.getInt("max_players")
+                        rs.getInt("min_players")
                 ), userId);
     }
 
@@ -164,10 +163,10 @@ public class JdbcLeaguesDao implements LeaguesDao {
     @Override
     public boolean joinLeague(int leagueId, int userId) {
         // Check if league is full or inactive
-        String checkLeague = "SELECT max_players, is_active FROM leagues WHERE league_id = ?";
+        String checkLeague = "SELECT min_players, is_active FROM leagues WHERE league_id = ?";
         Map<String, Object> leagueInfo = jdbcTemplate.queryForMap(checkLeague, leagueId);
 
-        Integer maxPlayers = (Integer) leagueInfo.get("max_players");
+        Integer maxPlayers = (Integer) leagueInfo.get("min_players");
         Boolean isActive = (Boolean) leagueInfo.get("is_active");
 
         // League is not active or doesn't exist, cannot join
@@ -190,9 +189,9 @@ public class JdbcLeaguesDao implements LeaguesDao {
 
     @Override
     public void updateLeague(Leagues league) {
-        String sql = "UPDATE leagues SET league_name = ?, league_host = ?, course_id = ?, match_time = ?, is_active = ?, max_players = ? WHERE league_id = ?";
+        String sql = "UPDATE leagues SET league_name = ?, league_host = ?, course_id = ?, match_time = ?, is_active = ?, min_players = ? WHERE league_id = ?";
         jdbcTemplate.update(sql, league.getLeagueName(), league.getLeagueHost(), league.getCourseId(),
-                league.getMatchTime(), league.getIsActive(), league.getMaxPlayers(), league.getLeagueId());
+                league.getMatchTime(), league.getIsActive(), league.getMinPlayers(), league.getLeagueId());
     }
 
     @Override

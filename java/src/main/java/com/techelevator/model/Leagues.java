@@ -16,16 +16,16 @@ public class Leagues {
 
     private boolean isActive;
 
-    private int maxPlayers;
+    private int minPlayers;
 
-    public Leagues(int leagueId, String leagueName, int leagueHost, int courseId, Timestamp matchTime, boolean isActive, int maxPlayers) {
+    public Leagues(int leagueId, String leagueName, int leagueHost, int courseId, Timestamp matchTime, boolean isActive, int minPlayers) {
         this.leagueId = leagueId;
         this.leagueName = leagueName;
         this.leagueHost = leagueHost;
         this.courseId = courseId;
         this.matchTime = matchTime;
         this.isActive = isActive;
-        this.maxPlayers = maxPlayers;
+        this.minPlayers = minPlayers;
     }
 
     public int getLeagueId() {
@@ -68,8 +68,8 @@ public class Leagues {
 
     public void setIsActive(boolean isActive) { this.isActive = isActive; }
 
-    public int getMaxPlayers() { return maxPlayers; }
+    public int getMinPlayers() { return minPlayers; }
 
-    public void setMaxPlayers(int maxPlayers) { this.maxPlayers = maxPlayers; }
+    public void setMinPlayers(int maxPlayers) { this.minPlayers = maxPlayers; }
 
 }
