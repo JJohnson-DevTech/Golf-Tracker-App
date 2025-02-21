@@ -56,6 +56,11 @@ const routes = [
     meta: {
       requiresAuth: true
     }
+  },
+  {
+    path: "/user/:username",
+    name: "UserProfile",
+    
   }
 ];
 

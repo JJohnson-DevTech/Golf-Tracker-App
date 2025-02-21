@@ -2,6 +2,7 @@
   <div class="home">
     <h1>Home</h1>
     <router-link to="/courses">Course List</router-link>
+    <router-link to="/login">Login</router-link>
     <p>You must be authenticated to see this</p>
   </div>
   <body>
