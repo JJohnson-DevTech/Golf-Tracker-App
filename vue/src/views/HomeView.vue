@@ -5,7 +5,7 @@
       <h1>Home</h1>
       <router-link class="page-link" to="/courses">View Courses</router-link>
       <router-link class="page-link" to="">Create Tee Time</router-link>
-      <router-link class="page-link" to="">Match Results</router-link>
+      <router-link class="page-link" to="">Matches</router-link>
       <router-link class="page-link" to="/leagues">Leagues</router-link>
       <router-link class="page-link" to="">MyProfile</router-link>
       
@@ -39,7 +39,7 @@ export default {
   width: 100%;
   height: 100%;
   z-index: -1;
-  background-image: url('@/assets/GolfHole3.png');
+  background-image: url('@/assets/GolfHole4.png');
   background-size: cover; /* Ensures the image covers the container */
   background-position: center; /* Centers the image */
   background-repeat: no-repeat; /* Prevents the image from repeating */

@@ -1,17 +1,12 @@
 <template>
-  <head>
-    <title>CaddyHack-Login</title>
-  </head>
-  <body class="login-container">
-    <div class="CaddyHack">
+  <div class="login-container">
+    <div class="logo">
       <img src="@/assets/Logo2-No-Background.png" />
     </div>
-   <div class="background-image">
-      <img src="@/assets/GolfHole3.png" />
-    </div>
+    <div class="background-image"></div>
 
-    <div id="login">
-      <div class="login_form-card">
+    <div class="login">
+      <div class="form-card">
         <img src="@/assets/Scorecard.png" />
       </div>
       <form v-on:submit.prevent="login">
@@ -21,41 +16,27 @@
         <div role="alert" v-if="this.$route.query.registration">
           Thank you for registering, please sign in.
         </div>
-        <div class="form-input-group-username">
+        <div class="input-group">
           <label for="username"></label>
-          <input
-            type="text"
-            id="username" placeholder="Username"
-            v-model="user.username"
-            required
-            autofocus
-          />
+          <input type="text" id="username" placeholder="Username" v-model="user.username" required autofocus />
         </div>
-        <div class="form-input-group-password">
+        <div class="input-group">
           <label for="password"></label>
-          <input
-            type="password"
-            id="password" placeholder="Password"
-            v-model="user.password"
-            required
-          />
+          <input type="password" id="password" placeholder="Password" v-model="user.password" required />
         </div>
-        <button type="submit" v-bind:to="{name: 'UserProfile'}">Sign in</button>
+        <button type="submit">Sign in</button>
         <span>
-          <router-link class="registration" v-bind:to="{ name: 'register' }"
-            >Need an account? Sign up.</router-link
-          >
+          <router-link class="registration" v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link>
         </span>
       </form>
     </div>
-  </body>
+  </div>
 </template>
 
 <script>
 import authService from "../services/AuthService";
 
 export default {
-  components: {},
   data() {
     return {
       user: {
@@ -89,153 +70,110 @@ export default {
 </script>
 
 <style scoped>
-  body {
-    font-family: "Sriracha", serif;
-    font-weight: 400;
-    font-style: normal;
-    color: #fcf400;
-    margin: 0;
-    padding: 0;
-  }
+.login-container {
+  font-family: "Sriracha", serif;
+  color: #fcf400;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin-left: -100px;
+}
 
-  .background-image {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background-image: url("@/assets/GolfHole3.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 10rem;
+}
 
-  .background-image img {
-    width: 100%;
-    height: 100%;
-    
- }
-  
-.login_form-card{
-    position: fixed;
-    top: 60vh;
-    left: 29vw;
-    padding: -10px;
-    margin: 0;
-  } 
+.logo img {
+  margin-top: -40px;
+  width: 20%; /* Adjust the width as needed */
+}
 
-  .login_form-card img{
-    width: 34vw;
-    height: 50vh;
-  }
+.background-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-image: url('@/assets/GolfHole3.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 
-  #login {
-    position: relative;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 20px;
-    border-radius: 10px;
-    width: 300px;
-  }
+.form-card {
+  position: fixed;
+  top: 60vh;
+  left: 29vw;
+}
 
-  form {
-    position: absolute;
-    top: 71vh;
-    left: 35vw; 
-  }
+.form-card img {
+  width: 34vw;
+  height: 50vh;
+}
 
-  h1 {
-    font-family: "Fugaz One", serif;
-    font-weight: 400;
-    font-style: normal;
-    color: #fcf400;
-    margin-bottom: 0;
-  }
+.login {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+}
 
-  .form-input-group-username {
-    margin-bottom: 15px;
-    margin-right: 20%;
-    padding-top: 7px;
-    opacity: 0.5;
-    display: flex;
-    
-  }
+form {
+  position: absolute;
+  top: 71vh;
+  left: 35vw;
+}
 
-  .form-input-group-password {
-    margin-top: -9%;
-    margin-right: 25%;
-    padding-top: 5px;
-    opacity: 0.5;
-  }
+.input-group {
+  margin-bottom: 15px;
+  opacity: 0.5;
+}
 
-  label {
-    font-family: "Fugaz One", serif;
-    font-weight: 400;
-    font-style: normal;
-    color: #fcf400;
-  }
+label {
+  font-family: "Fugaz One", serif;
+  color: #fcf400;
+}
 
-  
+input {
+  width: 100%;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #fcf400;
+}
 
-  input {
-    width: 100%;
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid #fcf400;
-  }
+button {
+  width: 80%;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #fcf400;
+  background-color: #fcf400;
+  color: #005e23;
+  font-family: "Fugaz One", serif;
+  margin-top: 10%;
+}
 
-  button {
-    width: 80%;
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid #fcf400;
-    background-color: #fcf400;
-    color: #005e23;
-    font-family: "Fugaz One", serif;
-    font-weight: 400;
-    font-style: normal;
-    margin-top: 10%;
-    margin-right: 15%;
-  }
+button:hover {
+  background-color: #005e23;
+  color: #fcf400;
+}
 
-  button:hover {
-    background-color: #005e23;
-    color: #fcf400;
-  }
+form > span {
+  font-family: "Fugaz One", serif;
+  font-size: large;
+  color: #fcf400;
+  display: inline-block;
+  margin-top: 10px;
+}
 
-  form > span {
-    font-family: "Fugaz One", serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: large;
-    color: #fcf400;
-    display: inline-block;
-    margin-top: 10px;
-    
-  }
-
-  a {
-    font-family: "Fugaz One", serif;
-    font-weight: 400;
-  }
-
-  .registration {
-    display: inline;
-    white-space: nowrap;
-  }
-
-  .CaddyHack {
-    position: absolute;
-    height: 25%;
-    width: 25%;
-    margin-left: 26%;
-    margin-top: -10%;;
-  }
-
-  .CaddyHack img {
-    width: 100%;
-    height: 100%;
-  }
+.registration {
+  display: inline;
+  white-space: nowrap;
+}
 </style>

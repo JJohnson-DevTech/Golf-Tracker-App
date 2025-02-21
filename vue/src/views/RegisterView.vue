@@ -143,7 +143,6 @@ h1 {
   font-style: normal;
   color: #fcf400;
   margin-bottom: -20px;
-  border: 5px solid#005e23;
   margin-right: 40%
 }
 .text-center {
@@ -162,7 +161,7 @@ h1 {
     height: 25%;
     width: 25%;
     margin-left: 26%;
-    margin-top: -10%;;
+    margin-top: -8%;
   }
 
   .CaddyHack img {
