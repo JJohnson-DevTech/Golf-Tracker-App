@@ -1,11 +1,11 @@
 package com.techelevator.dao;
 
+import com.techelevator.exception.DaoException;
 import com.techelevator.model.Leagues;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import java.util.UUID;
-
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +17,27 @@ public class JdbcLeaguesDao implements LeaguesDao {
 
     public JdbcLeaguesDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Override
+    public List<Leagues> getAllLeagues() {
+        String sql = "SELECT * FROM leagues;";
+        try {
+            return jdbcTemplate.query(sql,
+                    (rs, rowNum) -> new Leagues(
+                            rs.getInt("league_id"),
+                            rs.getString("league_name"),
+                            rs.getInt("league_host"),
+                            rs.getInt("course_id"),
+                            rs.getTimestamp("match_time"),
+                            rs.getBoolean("is_active"),
+                            rs.getInt("max_players")
+                    ));
+        } catch (EmptyResultDataAccessException e) {
+            throw new DaoException("Nothing was returned.");
+        } catch (Exception e){
+            throw new DaoException("Issue with getAllLeagues");
+        }
     }
 
     @Override
@@ -166,11 +187,11 @@ public class JdbcLeaguesDao implements LeaguesDao {
         String checkLeague = "SELECT min_players, is_active FROM leagues WHERE league_id = ?";
         Map<String, Object> leagueInfo = jdbcTemplate.queryForMap(checkLeague, leagueId);
 
-        Integer maxPlayers = (Integer) leagueInfo.get("min_players");
+        Integer minPlayers = (Integer) leagueInfo.get("min_players");
         Boolean isActive = (Boolean) leagueInfo.get("is_active");
 
         // League is not active or doesn't exist, cannot join
-        if (maxPlayers == null || isActive == null || !isActive) {
+        if (minPlayers == null || isActive == null || !isActive) {
             return false;
         }
 
@@ -179,7 +200,7 @@ public class JdbcLeaguesDao implements LeaguesDao {
         Integer currentPlayers = jdbcTemplate.queryForObject(playerCount, Integer.class, leagueId);
 
         // If league is not full allow players to join
-        if (currentPlayers < maxPlayers) {
+        if (currentPlayers < minPlayers) {
             String joinLeagueSql = "INSERT INTO league_members (league_id, member_id) VALUES (?, ?)";
             jdbcTemplate.update(joinLeagueSql, leagueId, userId);
             return true;
