@@ -4,7 +4,6 @@ import com.techelevator.dao.JdbcLeaguesDao;
 import com.techelevator.dao.LeaguesDao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Leagues;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

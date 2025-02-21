@@ -28,4 +28,6 @@ public interface CourseDao {
     Courses getCourseByAddress(String address);
 
     Courses createCourse(Courses course);
+
+    boolean courseExists(int courseId);
 }
