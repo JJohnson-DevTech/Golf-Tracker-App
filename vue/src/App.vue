@@ -1,15 +1,14 @@
 <template>
   <div id="capstone-app">
     <div id="nav">
-      <router-link id="home-link" v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
-      <router-link id="logout-link" v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
+      <router-link id="logout-link" v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>&nbsp;&nbsp;
+      <router-link id="home-link" v-bind:to="{ name: 'home' }" v-if="$store.state.token != ''">Home</router-link>&nbsp;&nbsp;
     </div>
     <router-view />
   </div>
 </template>
 
-<style scoped>
-
+<style>
 #capstone-app {
   color: #fcf400;
   margin: 0 auto;
@@ -26,7 +25,8 @@
 }
 
 #home-link:hover, #logout-link:hover {
-  color: white;
+  color: #Ed0030;
 }
+
 
 </style>

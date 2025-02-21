@@ -1,89 +1,74 @@
 <template>
-    <body class="course-list-container">
-        <div class="course-list-image">
-            <img src="@/assets/GolfHole1.png" alt="Golf Hole" />
-        </div>
+    <div class="course-list-container">
+        <div class="course-list-image"></div>
 
         <div>
             <h1>Course List</h1>
 
-            <div class="filters">
-                <div class="filter-box">
-                    <label for="clubName">Club Name:</label>
-                    <input type="text" id="clubName" v-model="filters.clubName" @input="filterCourses" class="input-box" />
-                </div>
-                <div class="filter-box">
-                    <label for="courseName">Course Name:</label>
-                    <input type="text" id="courseName" v-model="filters.courseName" @input="filterCourses"
-                        class="input-box" />
-                </div>
-                <div class="par-filter">
-                    <label for="par">Par:</label>
-                    <select id="par" v-model="filters.par" @change="filterCourses">
-                        <option value="72">72</option>
-                        <option value="68">68</option>
-                        <option value="70">70</option>
-                        <option value="71">71</option>
-                    </select>
-                </div>
-                <div class="filter-box">
-                    <label for="address">Address:</label>
-                    <input type="text" id="address" v-model="filters.address" @input="filterCourses" class="input-box" />
-                </div>
-                <div class="filter-box">
-                    <label for="city">City:</label>
-                    <input type="text" id="city" v-model="filters.city" @input="filterCourses" class="input-box" />
-                </div>
-                <div class="filter-box">
-                    <label for="state">State:</label>
-                    <input type="text" id="state" v-model="filters.state" @input="filterCourses" />
-                </div>
-                <div class="filter-box">
-                    <label for="country">Country:</label>
-                    <input type="text" id="country" v-model="filters.country" @input="filterCourses" />
-                </div>
-            </div>
-            <ul>
+            <CourseList :filters="filters" @update-filters="updateFilters" />
+
+            <ul class="course-list">
                 <li v-for="course in filteredCourses" :key="course.id">
-                    {{ course.clubName }} - {{ course.courseName }}
+                    <div class="course-box club-name">{{ course.club_name }}</div>
+                    <div class="course-box course_name">{{ course.course_name }}</div>
+                    <div class="course-box city">{{ course.location.city }}</div>
+                    <div class="course-box state">{{ course.location.state }}</div>
                 </li>
             </ul>
         </div>
-    </body>
+    </div>
 </template>
 
 <script>
+import APIService from '@/services/APIService.js';
+import CourseList from '@/components/CourseList.vue';
+
 export default {
+    components: {
+        CourseList
+    },
     data() {
         return {
             filters: {
-                clubName: '',
-                courseName: '',
-                par: '',
-                address: '',
+                club_name: '',
+                course_name: '',
                 city: '',
                 state: '',
-                country: ''
             },
-            courses: [] // Replace with your API call to fetch the courses
+            courses: [] // Initialize as an empty array
         };
     },
     computed: {
         filteredCourses() {
             return this.courses.filter(course => {
                 return Object.keys(this.filters).every(key => {
-                    return course[key].toLowerCase().includes(this.filters[key].toLowerCase());
+                    if (!this.filters[key]) {
+                        return true;
+                    }
+                    const value = this.filters[key].toLowerCase();
+                    return (course[key] && course[key].toLowerCase().includes(value)) ||
+                        (course.location && course.location[key] && course.location[key].toLowerCase().includes(value));
                 });
             });
         }
     },
     methods: {
-        filterCourses() {
-            // Trigger re-computation of filteredCourses
+        async fetchCourses() {
+            try {
+                const response = await APIService.allCourses();
+                console.log('Fetched courses', response.data);
+                this.courses = response.data.courses || [];
+            } catch (error) {
+                console.error('Error fetching courses:', error);
+            }
+        },
+        updateFilters(updatedFilters) {
+            this.filters = updatedFilters;
         }
     },
     mounted() {
         // Fetch the courses from your API and assign them to the 'courses' data property
+        this.fetchCourses();
     }
 };
 </script>
@@ -93,7 +78,6 @@ export default {
     position: relative;
     width: 100%;
     height: 100%;
-    margin-left: -100px;
 }
 
 .course-list-image {
@@ -103,11 +87,13 @@ export default {
     width: 100%;
     height: 100%;
     z-index: -1;
-}
-
-.course-list-image img {
-    width: 100%;
-    height: 100%;
+    background-image: url('@/assets/GolfHole1.png');
+    background-size: cover;
+    /* Ensures the image covers the container */
+    background-position: center;
+    /* Centers the image */
+    background-repeat: no-repeat;
+    /* Prevents the image from repeating */
 }
 
 h1 {
@@ -115,46 +101,46 @@ h1 {
     font-weight: 400;
     font-style: normal;
     color: #fcf400;
-    margin-bottom: 0;
+    margin-bottom: 4px;
 }
 
-label {
+.course-list {
+    list-style-type: none;
+    padding: 0;
+    margin: auto;
+    max-width: 100%;
     font-family: 'Sriracha', serif;
+    font-size: 1.1rem;
     font-weight: 400;
     font-style: normal;
 }
 
-.filters {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.filters>div {
-    flex: 1;
-    min-width: 120px;
-}
-
-.filters .par-filter {
-    flex: 1.5;
-    margin-right: -140px;
-}
-
-.filters label {
-    display: block;
+.course-list li {
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr 2fr;
     margin-bottom: 5px;
-    white-space: wrap;
+    transition: background-color 0.3s;
+    border-radius: 10px;
 }
 
-.filters input {
-    width: 130px;
+.course-list li:hover {
+    background-color: #005E23CF;
+    cursor: pointer;
+}
+
+.course-box {
+    display: inline-block;
+    flex: 1;
+    text-align: left;
     box-sizing: border-box;
+    padding: 0 5px 0 0;
 }
 
-.filter-box {
-    display: flex;
-    flex-direction: column;
+.city {
+    text-align: left;
+    margin-left: .5em;
 }
-</style>
+
+.state {
+    text-align: left;
+}</style>

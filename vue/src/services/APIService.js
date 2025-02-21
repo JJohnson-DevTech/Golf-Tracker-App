@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const golfCourseAPI = axios.create({
-    baseURL: "https://golfcourseapi.com/v1/",
+    baseURL: "https://api.golfcourseapi.com/v1",
     headers: {
         Authorization: `Key TYIZ7KUIADD4EOMVIOUGTKEGXQ`
     }
@@ -18,9 +18,6 @@ export default {
        },
        
        courseByName(name){
-            return golfCourseAPI.get(`/search_query=${name}`)
+            return golfCourseAPI.get(`/courses?search_query=${name}`)
        }
-
-
-
 }
