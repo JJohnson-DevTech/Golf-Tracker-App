@@ -8,15 +8,12 @@ public interface ScoreDao {
 
     List<Score> getALlScores();
 
-    List<Score> getScoreByTeeTime(int teeTimeId);
+    List<Score> getScoreByTeeTime(int teeTimeId, int userId);
 
-    List<Score> getScoreByLeagueId(int leagueId);
+    List<Score> getScoreByLeagueId(int leagueId, int userId);
 
-    //to get a course leaderboard possibly?
-    List<Score> getScoreByCourseId(int courseId);
+    List<Score> getScoreByCourseId(int courseId, int userId);
 
-    Score getUserScore(int userId);
+    List<Score> getUserScore(int userId);
 
-    //was thinking to implement a getAverageUserScore, getHighestUserScore, getLowestUserScore
-    //?
 }

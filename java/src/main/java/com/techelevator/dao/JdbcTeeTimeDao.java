@@ -68,26 +68,103 @@ public class JdbcTeeTimeDao implements TeeTimeDao{
 
     @Override
     public TeeTime getTeeTimeById(int teeTimeId) {
-        return null;
+        if(teeTimeId <= 0) throw new IllegalArgumentException("TeeTime ID must be a positive integer");
+        TeeTime teeTime = null;
+        String sql = "SELECT * FROM tee_times WHERE tee_time_id = ?;";
+
+        try{
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, teeTimeId);
+            if (results.next()){
+                teeTime = mapRowToTeeTime(results);
+            } else {
+                throw new DaoException("No TeeTime found with ID: " + teeTimeId);
+            }
+        } catch (CannotGetJdbcConnectionException e){
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (Exception e){
+            throw new DaoException("Issue with getTeeTimeById", e);
+        }
+        return teeTime;
     }
 
     @Override
     public TeeTime getTeeTimeByLeagueId(int leagueId) {
-        return null;
+        if(leagueId <= 0 ) throw new IllegalArgumentException("League ID must be a positive integer.");
+
+        TeeTime teeTime = null;
+        String sql = "SELECT * FROM tee_times WHERE league_id = ?;";
+
+        try{
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, leagueId);
+            if(results.next()){
+                teeTime = mapRowToTeeTime(results);
+            } else {
+                throw new DaoException("No TeeTime found with the League ID: " + leagueId);
+            }
+        }catch (CannotGetJdbcConnectionException e){
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (Exception e){
+            throw new DaoException("Issue with getTeeTimeByLeagueId", e);
+        }
+        return teeTime;
     }
 
     @Override
     public TeeTime getTeeTimeByCourseId(int courseId) {
-        return null;
+        if(courseId <= 0) throw new IllegalArgumentException("Course ID must be a positive integer.");
+
+        TeeTime teeTime = null;
+        String sql = "SELECT * FROM tee_times WHERE course_id = ?";
+
+        try{
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, courseId);
+            if(results.next()){
+                teeTime = mapRowToTeeTime(results);
+            } else {
+                throw new DaoException("No TeeTime found with that Course ID: " + courseId);
+            }
+        } catch (CannotGetJdbcConnectionException e){
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (Exception e){
+            throw new DaoException("Issue with getTeeTimeByCourseId", e);
+        }
+         return teeTime;
     }
 
     @Override
     public void updateTeeTime(TeeTime teeTime) {
+        if(teeTime == null) throw new IllegalArgumentException("teeTime object is null.");
+
+        TeeTime updatedTeeTime = null;
+        String sql = "UPDATE tee_times SET " +
+                "course_id = ? " +
+                "user_id = ? " +
+                "league_id = ? " +
+                "tee_time = ? " +
+                "WHERE tee_time_id = ?;";
+
+        try{
+            jdbcTemplate.update(sql, teeTime.getCourseId(), teeTime.getUserId(), teeTime.getLeagueId(),
+                    teeTime.getTeeTime(), teeTime.getTeeTimeId());
+        } catch (CannotGetJdbcConnectionException e){
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (Exception e){
+            throw new DaoException("Issue with updateTeeTime", e);
+        }
 
     }
 
     @Override
     public void deleteTeeTime(int teeTimeId) {
+        if(teeTimeId <= 0) throw new IllegalArgumentException("teeTimeId must be a positive integer.");
+        String sql = "DELETE FROM tee_times WHERE tee_time_id = ?";
+        try{
+            jdbcTemplate.update(sql, teeTimeId);
+        }catch (CannotGetJdbcConnectionException e){
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (Exception e){
+            throw new DaoException("Issue with deleteTeeTime", e);
+        }
 
     }
 
