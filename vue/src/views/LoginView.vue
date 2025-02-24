@@ -40,8 +40,11 @@ import authService from "../services/AuthService";
 export default {
   data() {
     return {
-      username: '',
-      password: ''
+      user: {
+        username: "",
+        password: "",
+      },
+      invalidCredentials: false,
     };
   },
   methods: {

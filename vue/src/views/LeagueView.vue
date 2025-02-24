@@ -52,4 +52,13 @@ h1 {
   color: #fcf400;
   margin-bottom: 0;
 }
+
+button {
+background-color: #005e23;
+  color: #fcf400;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 </style>

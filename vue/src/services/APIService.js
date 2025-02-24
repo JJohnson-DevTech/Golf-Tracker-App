@@ -19,5 +19,16 @@ export default {
        
        courseByName(name){
             return golfCourseAPI.get(`/courses?search_query=${name}`)
-       }
+       },
+
+       getLink() {
+        axios
+          .get("http://localhost:9000/api/leagues")
+          .then((response) => {
+            this.link = response.data;
+          })
+          .catch((error) => {
+            console.error("There was an error fetching the link!", error);
+          });
+      },
 }
