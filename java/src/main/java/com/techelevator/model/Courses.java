@@ -20,13 +20,9 @@ public class Courses {
 
     private String country;
 
-    private int totalYards;
-
     private int par;
 
-    private int holes;
-
-    public Courses(int courseId, String clubName, String courseName, String address, String city, String state, String country, int totalYards, int par, int holes) {
+    public Courses(int courseId, String clubName, String courseName, String address, String city, String state, String country, int par) {
         this.courseId = courseId;
         this.clubName = clubName;
         this.courseName = courseName;
@@ -34,9 +30,7 @@ public class Courses {
         this.city = city;
         this.state = state;
         this.country = country;
-        this.totalYards = totalYards;
         this.par = par;
-        this.holes = holes;
     }
 
     public Courses() {}
@@ -104,14 +98,6 @@ public class Courses {
         this.country = country;
     }
 
-    public int getTotalYards() {
-        return totalYards;
-    }
-
-    public void setTotalYards(int totalYards) {
-        this.totalYards = totalYards;
-    }
-
     public int getPar() {
         return par;
     }
@@ -120,11 +106,4 @@ public class Courses {
         this.par = par;
     }
 
-    public int getHoles() {
-        return holes;
-    }
-
-    public void setHoles(int holes) {
-        this.holes = holes;
-    }
 }

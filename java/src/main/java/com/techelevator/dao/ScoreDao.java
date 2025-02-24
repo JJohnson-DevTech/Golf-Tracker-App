@@ -1,6 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.Score;
+import com.techelevator.model.TeeTime;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ public interface ScoreDao {
 
     Score getScoreByScoreId(int scoreId);
 
-    Score addNewScore(int courseId, int leagueId, int userId, int totalScore);
+    Score addNewScore(Score score);
 
+    Score getScoreByTeeTime(int teeTimeId);
 }
