@@ -9,6 +9,7 @@ import RegisterView from '../views/RegisterView.vue';
 import CourseListView from '../views/CourseListView.vue';
 import UserProfileView from '../views/UserProfileView.vue';
 import LeagueView from '../views/LeagueView.vue';
+import CreateLeagueView from '../views/CreateLeagueView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component

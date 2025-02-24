@@ -118,8 +118,8 @@ h2 {
   display: flex;
   height: 50%;
   width: auto;
-  margin-top: 20%;
-  margin-left: 3;
+  margin-top: 35%;
+  margin-left: 10%;
   justify-content: space-between;
 }
 </style>
