@@ -1,13 +1,11 @@
 <template>
-  
   <div class="login-container">
     <div class="CaddyHack">
       <img src="@/assets/Logo2-No-Background.png" />
     </div>
-   <div class="background-image">
+    <div class="background-image">
       <img src="@/assets/GolfHole3.png" />
     </div>
-
     <div id="login">
       <div class="login_form-card">
         <img src="@/assets/Scorecard.png" />
@@ -33,19 +31,7 @@
             </span>
           </form>
         </div>
-        <div class="form-input-group-username">
-          <label for="username"></label>
-          <input type="text" id="username" placeholder="Username" v-model="user.username" required autofocus />
-        </div>
-        <div class="form-input-group-password">
-          <label for="password"></label>
-          <input type="password" id="password" placeholder="Password" v-model="user.password" required />
-        </div>
-        <button type="submit">Sign in</button>
-        <p>
-          <router-link class="router-link" v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link>
-        </p>
-      </form>
+      </div>
     </div>
   </div>
 </template>
@@ -54,8 +40,11 @@ import authService from "../services/AuthService";
 export default {
   data() {
     return {
-      username: '',
-      password: ''
+      user: {
+        username: '',
+        password: ''
+      },
+      invalidCredentials: false,
     };
   },
   methods: {
@@ -100,7 +89,8 @@ export default {
 
 .logo img {
   margin-top: -40px;
-  width: 20%; /* Adjust the width as needed */
+  width: 20%;
+  /* Adjust the width as needed */
 }
 
 .background-image {
@@ -118,6 +108,7 @@ export default {
   background-repeat: no-repeat;
   /* Prevents the image from repeating */
 }
+
 .login_form-card {
   position: fixed;
   top: 60vh;
@@ -125,10 +116,12 @@ export default {
   padding: -10px;
   margin: 0;
 }
+
 .login_form-card img {
   width: 34vw;
   height: 50vh;
 }
+
 #login {
   position: relative;
   top: 50%;
@@ -138,11 +131,13 @@ export default {
   border-radius: 10px;
   width: 300px;
 }
+
 form {
   position: absolute;
   top: 71vh;
   left: 35vw;
 }
+
 h1 {
   font-family: "Fugaz One", serif;
   font-weight: 400;
@@ -150,29 +145,34 @@ h1 {
   color: #FCF400;
   margin-bottom: 0;
 }
+
 .form-input-group-username {
   margin-bottom: 15px;
   padding-top: 7px;
   opacity: 0.5;
   display: flex;
-  flex-grow: ;
+  flex-grow: 1;
 }
+
 .form-input-group-password {
   margin-bottom: 15px;
   padding-top: 10px;
 }
+
 label {
   font-family: "Fugaz One", serif;
   font-weight: 400;
   font-style: normal;
   color: #FCF400;
 }
+
 input {
   width: 100%;
   padding: 5px;
   border-radius: 5px;
   border: 1px solid #FCF400;
 }
+
 button {
   width: 100%;
   padding: 5px;
@@ -184,22 +184,31 @@ button {
   font-weight: 400;
   font-style: normal;
 }
+
 button:hover {
   background-color: #005E23;
   color: #FCF400;
 }
+
 p {
   font-family: "Fugaz One", serif;
   font-weight: 400;
   font-style: normal;
   color: #FCF400;
 }
+
 a {
   font-family: "Fugaz One", serif;
   font-weight: 400;
 }
+
 .router-link {
   display: inline;
   white-space: nowrap;
-}
-</style>
+}</style>
+
+
+
+
+
+

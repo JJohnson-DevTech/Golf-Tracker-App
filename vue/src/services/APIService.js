@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const golfCourseAPI = axios.create({
-    baseURL: "https://api.golfcourseapi.com/v1",
+    baseURL: "http://localhost:9000/api/courses",
     headers: {
         Authorization: `Key TYIZ7KUIADD4EOMVIOUGTKEGXQ`
     }
@@ -10,7 +10,7 @@ const golfCourseAPI = axios.create({
 export default {
 
         allCourses(){
-            return golfCourseAPI.get('/courses')
+            return golfCourseAPI.get('')
         },
 
        courseById(id){
