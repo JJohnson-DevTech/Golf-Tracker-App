@@ -117,6 +117,7 @@ h1 {
     font-style: normal;
     color: #fcf400;
     margin-bottom: 4px;
+    border: none;
 }
 
 .course-list {

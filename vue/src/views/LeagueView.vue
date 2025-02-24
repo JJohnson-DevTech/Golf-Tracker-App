@@ -51,6 +51,7 @@ h1 {
   font-style: normal;
   color: #fcf400;
   margin-bottom: 0;
+  border: none;
 }
 
 button {
