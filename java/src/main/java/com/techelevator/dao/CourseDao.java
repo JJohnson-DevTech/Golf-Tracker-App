@@ -17,11 +17,7 @@ public interface CourseDao {
 
     List<Courses> getCoursesByName(String courseName);
 
-    Courses getCourseTotalYards(int courseId);
-
     Courses getCoursePar(int courseId);
-
-    Courses getCourseHoles(int courseId);
 
     Courses getClubNameByCourse(int courseId);
 
