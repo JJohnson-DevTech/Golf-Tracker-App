@@ -3,11 +3,9 @@ package com.techelevator.controller;
 import com.techelevator.dao.JdbcCourseDao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Courses;
-import org.springframework.http.HttpEntity;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -57,39 +55,19 @@ public class CourseController {
             throw new DaoException("Issue with controller method 'addNewCourse'");
         }
     }
-//   TODO check with team to make sure wont have a merge here
 
-//    @PutMapping("/{courseId}")
-//    public ResponseEntity<Courses> updateCourse(@PathVariable int courseId, @RequestBody Courses course) {
-//        if(courseId <= 0){
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-//        }
-//        if(course == null){
-//            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-//        }
-//        try{
-//            jdbcCourseDao.updateCourse(course);
-//            return ResponseEntity.status(HttpStatus.OK).build();
-//        } catch (Exception e){
-//            throw new DaoException("issue with controller method 'updateCourse'");
-//        }
-//    }
+    @GetMapping("/courses/{id}/par")
+    public ResponseEntity<Courses> getCoursePar(int courseId){
+        if(courseId <= 0){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        Courses course = jdbcCourseDao.getCoursePar(courseId);
+        if(course == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(course);
+    }
 
-
-    //TODO again make sure no merges happen
-
-//    @DeleteMapping(path = "/{courseId}")
-//    public ResponseEntity<Courses> deleteCourse(@PathVariable int courseId){
-//        if(courseId <= 0){
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-//        }
-//        try{
-//            jdbcCourseDao.deleteCourse(courseId);
-//            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-//        } catch (Exception e){
-//            throw new DaoException("Issue with controller method 'deleteCourse'");
-//        }
-//    }
 
 
 
