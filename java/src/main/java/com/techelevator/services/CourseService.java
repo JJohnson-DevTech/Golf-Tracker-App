@@ -46,7 +46,7 @@ public class CourseService {
     }
 
     public void fetchAndStoreCourses() {
-        int pagesPerDay = 10;
+        int pagesPerDay = 15;
         while(lastFetchedPage <= pagesPerDay) {
             String url = API_BASE_URL + "courses?page=" + lastFetchedPage;
 

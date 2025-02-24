@@ -1,12 +1,8 @@
 <template>
   <div class="login-container">
-    <div class="logo">
-      <img src="@/assets/Logo2-No-Background.png" />
-    </div>
-    <div class="background-image"></div>
-
-    <div class="login">
-      <div class="form-card">
+    <div class="login-image"></div>
+    <div id="login">
+      <div class="login_form-card">
         <img src="@/assets/Scorecard.png" />
         <div class="form-content">
           <form v-on:submit.prevent="login">
@@ -30,22 +26,29 @@
             </span>
           </form>
         </div>
-      </div>
+        <div class="form-input-group-username">
+          <label for="username"></label>
+          <input type="text" id="username" placeholder="Username" v-model="user.username" required autofocus />
+        </div>
+        <div class="form-input-group-password">
+          <label for="password"></label>
+          <input type="password" id="password" placeholder="Password" v-model="user.password" required />
+        </div>
+        <button type="submit">Sign in</button>
+        <p>
+          <router-link class="router-link" v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link>
+        </p>
+      </form>
     </div>
   </div>
 </template>
-
 <script>
 import authService from "../services/AuthService";
-
 export default {
   data() {
     return {
-      user: {
-        username: "",
-        password: "",
-      },
-      invalidCredentials: false,
+      username: '',
+      password: ''
     };
   },
   methods: {
@@ -61,7 +64,6 @@ export default {
         })
         .catch((error) => {
           const response = error.response;
-
           if (response.status === 401) {
             this.invalidCredentials = true;
           }
@@ -70,11 +72,12 @@ export default {
   },
 };
 </script>
-
 <style scoped>
 .login-container {
   font-family: "Sriracha", serif;
-  color: #fcf400;
+  font-weight: 400;
+  font-style: normal;
+  color: #FCF400;
   position: relative;
   width: 100%;
   height: 100%;
@@ -102,110 +105,94 @@ export default {
   z-index: -1;
   background-image: url('@/assets/GolfHole3.png');
   background-size: cover;
+  /* Ensures the image covers the container */
   background-position: center;
+  /* Centers the image */
   background-repeat: no-repeat;
+  /* Prevents the image from repeating */
 }
-
-.form-card {
+.login_form-card {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  top: 60vh;
+  left: 29vw;
+  padding: -10px;
+  margin: 0;
 }
-
-.form-card img {
-  width: 95%; /* Adjust the width as needed */
+.login_form-card img {
+  width: 34vw;
+  height: 50vh;
 }
-
-.form-content {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+#login {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   padding: 20px;
-  box-sizing: border-box;
+  border-radius: 10px;
+  width: 300px;
 }
-
 form {
-  margin-bottom: 3.5rem;
-  width: 100%;
+  position: absolute;
+  top: 71vh;
+  left: 35vw;
+}
+h1 {
+  font-family: "Fugaz One", serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #FCF400;
+  margin-bottom: 0;
+}
+.form-input-group-username {
+  margin-bottom: 15px;
+  padding-top: 7px;
+  opacity: 0.5;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-grow: ;
 }
-
-.input-group {
-  margin-bottom: 30px;
-  width: 100%;
+.form-input-group-password {
+  margin-bottom: 15px;
+  padding-top: 10px;
 }
-
-.username-group {
-  margin-bottom: 2rem; /* Adjust this value as needed */
-}
-
-.password-group {
-  margin-top: -1rem; /* Adjust this value to move the password input up */
-  margin-bottom: 7rem; /* Adjust this value as needed */
-}
-
 label {
   font-family: "Fugaz One", serif;
-  color: #fcf400;
+  font-weight: 400;
+  font-style: normal;
+  color: #FCF400;
 }
-
 input {
-  width: 50%;
+  width: 100%;
   padding: 5px;
   border-radius: 5px;
-  border: 1px solid #fcf400;
-  margin-left: 3rem;
+  border: 1px solid #FCF400;
 }
-
 button {
-  margin-top: -5rem; /* Adjust this value to move the button up */
-  margin-bottom: 60px;
-  width: 80%;
+  width: 100%;
   padding: 5px;
   border-radius: 5px;
-  border: 1px solid #fcf400;
-  background-color: #fcf400;
-  color: #005e23;
+  border: 1px solid #FCF400;
+  background-color: #FCF400;
+  color: #005E23;
   font-family: "Fugaz One", serif;
+  font-weight: 400;
+  font-style: normal;
 }
-
 button:hover {
-  background-color: #005e23;
-  color: #fcf400;
+  background-color: #005E23;
+  color: #FCF400;
 }
-
-form > .registration-link {
-  margin-top: -3rem; /* Adjust this value to move the registration link up */
-}
-
-form > span {
+p {
   font-family: "Fugaz One", serif;
-  font-size: large;
-  color: #fcf400;
-  display: inline-block;
-  margin-top: 10px;
+  font-weight: 400;
+  font-style: normal;
+  color: #FCF400;
 }
-
-.registration {
-  padding-top: 1rem;
+a {
+  font-family: "Fugaz One", serif;
+  font-weight: 400;
+}
+.router-link {
   display: inline;
   white-space: nowrap;
-  color: #005e23;
-
-}
-
-.registration:hover {
-  color: #ED0030;
 }
 </style>
