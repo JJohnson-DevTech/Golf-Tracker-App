@@ -1,114 +1,171 @@
 <template>
-  <div class="background-container">
-    <div class="login-card">
-      <input type="text" placeholder="Username" v-model="username" class="input-field" />
-      <input type="password" placeholder="Password" v-model="password" class="input-field" />
-      <button class="login-button">Login</button>
-      <p class="signup-link" id="signup">Need an account? <a href="/signup">Sign up</a></p>
+  <div class="login-container">
+    <div class="login-image"></div>
+    <div id="login">
+      <div class="login_form-card">
+        <img src="@/assets/Scorecard.png" />
+      </div>
+      <form v-on:submit.prevent="login">
+        <div role="alert" v-if="invalidCredentials">
+          Invalid username and password!
+        </div>
+        <div role="alert" v-if="this.$route.query.registration">
+          Thank you for registering, please sign in.
+        </div>
+        <div class="form-input-group-username">
+          <label for="username"></label>
+          <input type="text" id="username" placeholder="Username" v-model="user.username" required autofocus />
+        </div>
+        <div class="form-input-group-password">
+          <label for="password"></label>
+          <input type="password" id="password" placeholder="Password" v-model="user.password" required />
+        </div>
+        <button type="submit">Sign in</button>
+        <p>
+          <router-link class="router-link" v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link>
+        </p>
+      </form>
     </div>
   </div>
 </template>
-
 <script>
+import authService from "../services/AuthService";
 export default {
   data() {
     return {
       username: '',
       password: ''
     };
-  }
+  },
+  methods: {
+    login() {
+      authService
+        .login(this.user)
+        .then((response) => {
+          if (response.status == 200) {
+            this.$store.commit("SET_AUTH_TOKEN", response.data.token);
+            this.$store.commit("SET_USER", response.data.user);
+            this.$router.push("/");
+          }
+        })
+        .catch((error) => {
+          const response = error.response;
+          if (response.status === 401) {
+            this.invalidCredentials = true;
+          }
+        });
+    },
+  },
 };
 </script>
-
 <style scoped>
-body, html {
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
+.login-container {
+  font-family: "Sriracha", serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #FCF400;
+  position: relative;
   width: 100%;
   height: 100%;
+  margin-left: -100px;
 }
-
-/* Background Styling */
-.background-container {
+.login-image {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("@/assets/GolfHole3.jpg") no-repeat center center;
+  z-index: -1;
+  background-image: url('@/assets/GolfHole3.png');
   background-size: cover;
+  /* Ensures the image covers the container */
+  background-position: center;
+  /* Centers the image */
+  background-repeat: no-repeat;
+  /* Prevents the image from repeating */
 }
-
-/* Login Card Styling */
-.login-card {
-  position: absolute;
-  bottom: 10px;
-  right: -50px;
+.login_form-card {
+  position: fixed;
+  top: 60vh;
+  left: 29vw;
+  padding: -10px;
+  margin: 0;
+}
+.login_form-card img {
+  width: 34vw;
+  height: 50vh;
+}
+#login {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border-radius: 10px;
   width: 300px;
-  padding: 175px;
-  background: url("@/assets/Scorecard.png") no-repeat center center;
-  background-size: contain;
+}
+form {
+  position: absolute;
+  top: 71vh;
+  left: 35vw;
+}
+h1 {
+  font-family: "Fugaz One", serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #FCF400;
+  margin-bottom: 0;
+}
+.form-input-group-username {
+  margin-bottom: 15px;
+  padding-top: 7px;
+  opacity: 0.5;
   display: flex;
-  flex-direction: column;
+  flex-grow: ;
 }
-
-input[type="text"] {
-  font-size: 14px;
-  width: 60%;
-  border: 1px solid #ccc;
-  opacity: 0.4;
+.form-input-group-password {
+  margin-bottom: 15px;
+  padding-top: 10px;
+}
+label {
+  font-family: "Fugaz One", serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #FCF400;
+}
+input {
+  width: 100%;
+  padding: 5px;
   border-radius: 5px;
+  border: 1px solid #FCF400;
 }
-
-input[type="password"] {
-  font-size: 14px;
-  width: 55%;
-  border: 1px solid #ccc;
-  opacity: 0.4;
+button {
+  width: 100%;
+  padding: 5px;
   border-radius: 5px;
+  border: 1px solid #FCF400;
+  background-color: #FCF400;
+  color: #005E23;
+  font-family: "Fugaz One", serif;
+  font-weight: 400;
+  font-style: normal;
 }
-
-input[type="text"], input[type="password"]{
-  padding: 2px;
-  margin-bottom: 10px;
+button:hover {
+  background-color: #005E23;
+  color: #FCF400;
 }
-
-/* Login Button */
-.login-button {
-  width: 35%;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-  margin-top: 10px;
-  margin-bottom: 12px;
+p {
+  font-family: "Fugaz One", serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #FCF400;
 }
-
-.login-button, input[type="text"], input[type="password"] {
-  margin-left: -48px;
+a {
+  font-family: "Fugaz One", serif;
+  font-weight: 400;
 }
-
-.login-button:hover {
-  background-color: #218838;
-}
-
-/* Signup Link */
-.signup-link {
-  font-size: 22px;
-  margin-left: -48px;
-  margin-top: 50px;
-}
-
-.signup-link a {
-  color: #007bff;
-  text-decoration: none;
-  align-self: flex-start;
-}
-
-.signup-link a:hover {
-  text-decoration: underline;
+.router-link {
+  display: inline;
+  white-space: nowrap;
 }
 </style>
