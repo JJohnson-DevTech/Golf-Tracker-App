@@ -3,11 +3,8 @@ package com.techelevator.controller;
 import com.techelevator.dao.JdbcCourseDao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Courses;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
