@@ -38,14 +38,10 @@
 <script>
 import authService from "../services/AuthService";
 export default {
-  components: {},
   data() {
     return {
-      user: {
-        username: "",
-        password: "",
-      },
-      invalidCredentials: false,
+      username: '',
+      password: ''
     };
   },
   methods: {
