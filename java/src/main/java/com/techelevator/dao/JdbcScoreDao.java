@@ -35,25 +35,6 @@ public class JdbcScoreDao implements ScoreDao{
         return listAllScores;
     }
 
-    //TODO add tee_time_id to scores table in db
-    @Override
-    public List<Score> getScoreByTeeTime(int teeTimeId, int userId) {
-        if(teeTimeId <= 0) throw new IllegalArgumentException("Tee Time ID must be a positive integer.");
-        if(userId <= 0) throw new IllegalArgumentException("User ID must be a positive integer.");
-        List<Score> scoreByTeeTime = new ArrayList<>();
-        String sql = "SELECT * FROM scores WHERE tee_time_id = ? AND user_id = ?;";
-        try{
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, teeTimeId, userId);
-            while(results.next()){
-                scoreByTeeTime.add(mapRowToScore(results));
-            }
-        } catch (CannotGetJdbcConnectionException e) {
-            throw new DaoException("Unable to connect to server or database", e);
-        } catch (Exception e) {
-            throw new DaoException("Issue with getScoreByTeeTime", e);
-        }
-        return scoreByTeeTime;
-    }
 
     @Override
     public List<Score> getScoreByLeagueId(int leagueId, int userId) {
@@ -111,6 +92,44 @@ public class JdbcScoreDao implements ScoreDao{
             throw new DaoException("Issue with getUserScore", e);
         }
         return userScore;
+    }
+
+    @Override
+    public Score getScoreByScoreId(int scoreId) {
+        if(scoreId <= 0) throw new IllegalArgumentException("ScoreID must be a positive integer.");
+        Score score = new Score();
+        String sql = "SELECT * FROM scores WHERE score_id = ?;";
+
+        try{
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, scoreId);
+            score = mapRowToScore(results);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (Exception e) {
+            throw new DaoException("Issue with getScoreByScoreId", e);
+        }
+        return score;
+    }
+
+
+    @Override
+    public Score addNewScore(int courseId, int leagueId, int userId, int totalScore) {
+        if( courseId <= 0 || leagueId <= 0 || userId <= 0 || totalScore < 0){
+            throw new IllegalArgumentException("Parameters must be positive integers.");
+        }
+        Score score = null;
+        String sql = "INSERT INTO scores (user_id, course_id, league_id, total_score) " +
+                "VALUES (?, ?, ?, ?) RETURNING score_id;";
+
+        try{
+            int newScoreId = jdbcTemplate.queryForObject(sql, int.class, userId, courseId, leagueId, totalScore);
+             score = getScoreByScoreId(newScoreId);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (Exception e) {
+            throw new DaoException("Issue with addNewScore", e);
+        }
+        return score;
     }
 
     private Score mapRowToScore(SqlRowSet rs){
