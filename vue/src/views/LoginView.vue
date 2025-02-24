@@ -8,27 +8,29 @@
     <div class="login">
       <div class="form-card">
         <img src="@/assets/Scorecard.png" />
+        <div class="form-content">
+          <form v-on:submit.prevent="login">
+            <div role="alert" v-if="invalidCredentials">
+              Invalid username and password!
+            </div>
+            <div role="alert" v-if="this.$route.query.registration">
+              Thank you for registering, please sign in.
+            </div>
+            <div class="input-group username-group">
+              <label for="username"></label>
+              <input type="text" id="username" placeholder="Username" v-model="user.username" required autofocus />
+            </div>
+            <div class="input-group password-group">
+              <label for="password"></label>
+              <input type="password" id="password" placeholder="Password" v-model="user.password" required />
+            </div>
+            <button type="submit">Sign in</button>
+            <span class="registration-link">
+              <router-link class="registration" v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link>
+            </span>
+          </form>
+        </div>
       </div>
-      <form v-on:submit.prevent="login">
-        <div role="alert" v-if="invalidCredentials">
-          Invalid username and password!
-        </div>
-        <div role="alert" v-if="this.$route.query.registration">
-          Thank you for registering, please sign in.
-        </div>
-        <div class="input-group">
-          <label for="username"></label>
-          <input type="text" id="username" placeholder="Username" v-model="user.username" required autofocus />
-        </div>
-        <div class="input-group">
-          <label for="password"></label>
-          <input type="password" id="password" placeholder="Password" v-model="user.password" required />
-        </div>
-        <button type="submit">Sign in</button>
-        <span>
-          <router-link class="registration" v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link>
-        </span>
-      </form>
     </div>
   </div>
 </template>
@@ -106,34 +108,51 @@ export default {
 
 .form-card {
   position: fixed;
-  top: 60vh;
-  left: 29vw;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .form-card img {
-  width: 34vw;
-  height: 50vh;
+  width: 95%; /* Adjust the width as needed */
 }
 
-.login {
-  position: relative;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.form-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   padding: 20px;
-  border-radius: 10px;
-  width: 300px;
+  box-sizing: border-box;
 }
 
 form {
-  position: absolute;
-  top: 71vh;
-  left: 35vw;
+  margin-bottom: 3.5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .input-group {
-  margin-bottom: 15px;
-  opacity: 0.5;
+  margin-bottom: 30px;
+  width: 100%;
+}
+
+.username-group {
+  margin-bottom: 2rem; /* Adjust this value as needed */
+}
+
+.password-group {
+  margin-top: -1rem; /* Adjust this value to move the password input up */
+  margin-bottom: 7rem; /* Adjust this value as needed */
 }
 
 label {
@@ -142,13 +161,16 @@ label {
 }
 
 input {
-  width: 100%;
+  width: 50%;
   padding: 5px;
   border-radius: 5px;
   border: 1px solid #fcf400;
+  margin-left: 3rem;
 }
 
 button {
+  margin-top: -5rem; /* Adjust this value to move the button up */
+  margin-bottom: 60px;
   width: 80%;
   padding: 5px;
   border-radius: 5px;
@@ -156,12 +178,15 @@ button {
   background-color: #fcf400;
   color: #005e23;
   font-family: "Fugaz One", serif;
-  margin-top: 10%;
 }
 
 button:hover {
   background-color: #005e23;
   color: #fcf400;
+}
+
+form > .registration-link {
+  margin-top: -3rem; /* Adjust this value to move the registration link up */
 }
 
 form > span {
@@ -173,7 +198,14 @@ form > span {
 }
 
 .registration {
+  padding-top: 1rem;
   display: inline;
   white-space: nowrap;
+  color: #005e23;
+
+}
+
+.registration:hover {
+  color: #ED0030;
 }
 </style>

@@ -4,9 +4,8 @@
     <div class="home">
       <h1>Home</h1>
       <router-link class="page-link" to="/courses">View Courses</router-link>
-      <router-link class="page-link" to="">Create Tee Time</router-link>
-      <router-link class="page-link" to="">Matches</router-link>
-      <router-link class="page-link" to="/leagues">Leagues</router-link>
+      <router-link class="page-link" to="">View Tee Times</router-link>
+      <router-link class="page-link" to="/leagues">View Leagues</router-link>
       <router-link class="page-link" to="">MyProfile</router-link>
       
     </div>
