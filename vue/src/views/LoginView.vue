@@ -1,16 +1,9 @@
 <template>
-  
   <div class="login-container">
-    <div class="CaddyHack">
-      <img src="@/assets/Logo2-No-Background.png" />
-    </div>
-   <div class="background-image">
-      <img src="@/assets/GolfHole3.png" />
-    </div>
-
-    <div id="login">
+    <div class="logo-container"></div>
+    <div class="background-image"></div>
+    <div class="login-form-container">
       <div class="login_form-card">
-        <img src="@/assets/Scorecard.png" />
         <div class="form-content">
           <form v-on:submit.prevent="login">
             <div role="alert" v-if="invalidCredentials">
@@ -20,42 +13,33 @@
               Thank you for registering, please sign in.
             </div>
             <div class="input-group username-group">
-              <label for="username"></label>
               <input type="text" id="username" placeholder="Username" v-model="user.username" required autofocus />
             </div>
             <div class="input-group password-group">
-              <label for="password"></label>
               <input type="password" id="password" placeholder="Password" v-model="user.password" required />
             </div>
-            <button type="submit">Sign in</button>
+            <button type="submit" class="login-button">Sign in</button>
             <span class="registration-link">
-              <router-link class="registration" v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link>
+              <router-link class="registration" v-bind:to="{ name: 'register' }"> Need an account? Sign up.</router-link>
             </span>
           </form>
         </div>
-        <div class="form-input-group-username">
-          <label for="username"></label>
-          <input type="text" id="username" placeholder="Username" v-model="user.username" required autofocus />
-        </div>
-        <div class="form-input-group-password">
-          <label for="password"></label>
-          <input type="password" id="password" placeholder="Password" v-model="user.password" required />
-        </div>
-        <button type="submit">Sign in</button>
-        <p>
-          <router-link class="router-link" v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link>
-        </p>
-      </form>
+      </div>
     </div>
   </div>
 </template>
+
 <script>
 import authService from "../services/AuthService";
+
 export default {
   data() {
     return {
-      username: '',
-      password: ''
+      user: {
+        username: "",
+        password: "",
+      },
+      invalidCredentials: false,
     };
   },
   methods: {
@@ -79,28 +63,19 @@ export default {
   },
 };
 </script>
+
 <style scoped>
-.login-container {
-  font-family: "Sriracha", serif;
-  font-weight: 400;
-  font-style: normal;
-  color: #FCF400;
-  position: relative;
-  width: 100%;
-  height: 100%;
-  margin-left: -100px;
-}
 
-.logo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-left: 10rem;
-}
-
-.logo img {
-  margin-top: -40px;
-  width: 20%; /* Adjust the width as needed */
+/* Fullscreen Background */
+.logo-container {
+  position: absolute;
+  top: 10px; /* Adjust the distance from the top */
+  left: 10px; /* Adjust the distance from the left */
+  width: 30%; /* Adjust the width of the logo */
+  height: 30%; /* Adjust the height of the logo */
+  background: url("@/assets/Logo2-No-Background.png") no-repeat center center;
+  background-size: contain;
+  z-index: 10; /* Ensure it stays on top of other elements */
 }
 
 .background-image {
@@ -110,96 +85,78 @@ export default {
   width: 100%;
   height: 100%;
   z-index: -1;
-  background-image: url('@/assets/GolfHole3.png');
+  background: url("@/assets/GolfHole3.png") no-repeat center 90%;
   background-size: cover;
-  /* Ensures the image covers the container */
-  background-position: center;
-  /* Centers the image */
-  background-repeat: no-repeat;
-  /* Prevents the image from repeating */
 }
-.login_form-card {
-  position: fixed;
-  top: 60vh;
-  left: 29vw;
-  padding: -10px;
-  margin: 0;
-}
-.login_form-card img {
-  width: 34vw;
-  height: 50vh;
-}
-#login {
-  position: relative;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 20px;
-  border-radius: 10px;
-  width: 300px;
-}
-form {
+
+/* Grouping the form and scorecard image */
+.login-form-container {
   position: absolute;
-  top: 71vh;
-  left: 35vw;
+  bottom: 5vh; /* Positioned from the bottom */
+  right: 1vw; /* Positioned from the right */
+  z-index: 1;
 }
-h1 {
-  font-family: "Fugaz One", serif;
-  font-weight: 400;
-  font-style: normal;
-  color: #FCF400;
-  margin-bottom: 0;
-}
-.form-input-group-username {
-  margin-bottom: 15px;
-  padding-top: 7px;
-  opacity: 0.5;
+
+.login_form-card {
+  position: relative;
+  bottom: 10px;
+  right: -50px;
+  width: 300px;
+  padding: 175px;
+  background: url("@/assets/Scorecard.png") no-repeat center center;
+  background-size: contain;
   display: flex;
-  flex-grow: ;
+  flex-direction: column;
+  overflow: hidden;
 }
-.form-input-group-password {
-  margin-bottom: 15px;
-  padding-top: 10px;
+
+.input-group {
+  position: absolute;
+  width: 100%;
+  margin-bottom: 20px;
 }
-label {
-  font-family: "Fugaz One", serif;
-  font-weight: 400;
-  font-style: normal;
+
+.username-group {
+  top: 23.3%;
+  margin-left: 10px;
+}
+
+.password-group {
+  top: 30.5%; 
+  margin-left: 10px;
+}
+
+input[type="text"],
+input[type="password"] {
+  font-size: 14px;
+  border: 2px solid #FCF400;
+  opacity: 0.6;
+  font-weight: bold;
+  border-radius: 5px;
+  text-align: center;
+  color: #005e23;
+  background-color: transparent;
+}
+
+.login-button {
+  position: relative;
+  margin-top: 25px;
+  margin-right: 20px;
+  left: 10px;
+  border: 1px solid #FCF400;
+  border-radius: 5px;
+  background-color: #005e23;
   color: #FCF400;
 }
-input {
-  width: 100%;
-  padding: 5px;
-  border-radius: 5px;
-  border: 1px solid #FCF400;
-}
-button {
-  width: 100%;
-  padding: 5px;
-  border-radius: 5px;
-  border: 1px solid #FCF400;
+
+.login-button:hover {
   background-color: #FCF400;
   color: #005E23;
-  font-family: "Fugaz One", serif;
-  font-weight: 400;
-  font-style: normal;
 }
-button:hover {
-  background-color: #005E23;
-  color: #FCF400;
+
+.registration-link a {
+  color: #007bff;
+  text-decoration: none;
 }
-p {
-  font-family: "Fugaz One", serif;
-  font-weight: 400;
-  font-style: normal;
-  color: #FCF400;
-}
-a {
-  font-family: "Fugaz One", serif;
-  font-weight: 400;
-}
-.router-link {
-  display: inline;
-  white-space: nowrap;
-}
+
 </style>
