@@ -137,9 +137,9 @@ public class JdbcTeeTimeDao implements TeeTimeDao{
 
         TeeTime updatedTeeTime = null;
         String sql = "UPDATE tee_times SET " +
-                "course_id = ? " +
-                "user_id = ? " +
-                "league_id = ? " +
+                "course_id = ?," +
+                " user_id = ?" +
+                ", league_id = ?, " +
                 "tee_time = ? " +
                 "WHERE tee_time_id = ?;";
 

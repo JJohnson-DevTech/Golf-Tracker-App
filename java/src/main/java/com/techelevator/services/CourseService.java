@@ -39,11 +39,11 @@ public class CourseService {
         this.jdbcCourseDao = jdbcCourseDao;
     }
 
-    @PostConstruct
-    public void initialize() {
-        loadLastFetchedPage();
-        fetchAndStoreCourses();
-    }
+//    @PostConstruct
+//    public void initialize() {
+//        loadLastFetchedPage();
+//        fetchAndStoreCourses();
+//    }
 
     public void fetchAndStoreCourses() {
         int pagesPerDay = 15;

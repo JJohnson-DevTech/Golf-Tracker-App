@@ -75,15 +75,6 @@ const routes = [
       requiresAuth: true
     }
   },
-  {
-    path: "/create-league",
-    name: "CreateLeague",
-    component: CreateLeagueView,
-    meta: {
-      requiresAuth: true
-    }
-  }
-  
 ];
 
 // Create the router
