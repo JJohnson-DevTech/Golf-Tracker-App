@@ -4,7 +4,6 @@ import com.techelevator.dao.JdbcLeaguesDao;
 import com.techelevator.dao.LeaguesDao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Leagues;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,20 +14,31 @@ import java.util.List;
 @RequestMapping("/api/leagues")
 public class LeagueController {
 
-    private final LeaguesDao leaguesDao;
     private final JdbcLeaguesDao jdbcLeaguesDao;
 
 
 
-    public LeagueController(LeaguesDao leaguesDao, JdbcLeaguesDao jdbcLeaguesDao) {
-        this.leaguesDao = leaguesDao;
+    public LeagueController(JdbcLeaguesDao jdbcLeaguesDao) {
         this.jdbcLeaguesDao = jdbcLeaguesDao;
     }
 
-
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping()
     public List<Leagues> getAllLeagues(){
         return jdbcLeaguesDao.getAllLeagues();
+    }
+
+
+    @GetMapping("/{leagueId}")
+    public ResponseEntity<Leagues> getLeagueById(@PathVariable int leagueId){
+        if(leagueId <= 0){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        Leagues league = jdbcLeaguesDao.getLeagueById(leagueId);
+        if(league == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(league);
     }
 
     @PostMapping()
@@ -44,21 +54,25 @@ public class LeagueController {
         }
     }
 
-    @PutMapping()
-    public ResponseEntity<Leagues> updateLeague(@RequestBody Leagues league) {
+    @PutMapping("/{leagueId}")
+    public ResponseEntity<Leagues> updateLeague(@PathVariable int leagueId, @RequestBody Leagues league) {
+        if(leagueId <= 0){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        if(league == null){
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
         try{
             jdbcLeaguesDao.updateLeague(league);
             return ResponseEntity.status(HttpStatus.OK).body(league);
-        }catch (NullPointerException e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        } catch (Exception e){
+        }   catch (Exception e){
             throw new DaoException("Issue with controller method 'updateLeague'");
         }
     }
 
-    @DeleteMapping()
+    @DeleteMapping("/{leagueId}")
     public ResponseEntity<Leagues> deleteLeague(@PathVariable int leagueId){
-        if(leagueId == 0){
+        if(leagueId <= 0){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         try{
@@ -72,6 +86,8 @@ public class LeagueController {
     }
 
     @GetMapping(path = "/invite")
+    //using requestparam here requires us to input a query string, likely
+    // /invite?league_id=x
     public String generateInvite(@RequestParam int leagueId){
         if(leagueId == 0) throw new IllegalArgumentException("league id cannot be 0");
         //passes in the league id from the parameters into the dao method to create the link

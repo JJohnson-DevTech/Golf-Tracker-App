@@ -1,7 +1,5 @@
 <template>
-  <head>
-    <title>CaddyHack-Login</title>
-  </head>
+  
   <div class="login-container">
     <div class="CaddyHack">
       <img src="@/assets/Logo2-No-Background.png" />
@@ -23,37 +21,22 @@
         </div>
         <div class="form-input-group-username">
           <label for="username"></label>
-          <input
-            type="text"
-            id="username" placeholder="Username"
-            v-model="user.username"
-            required
-            autofocus
-          />
+          <input type="text" id="username" placeholder="Username" v-model="user.username" required autofocus />
         </div>
         <div class="form-input-group-password">
           <label for="password"></label>
-          <input
-            type="password"
-            id="password" placeholder="Password"
-            v-model="user.password"
-            required
-          />
+          <input type="password" id="password" placeholder="Password" v-model="user.password" required />
         </div>
-        <button type="submit" v-bind:to="{name: 'UserProfile'}">Sign in</button>
-        <span>
-          <router-link class="registration" v-bind:to="{ name: 'register' }"
-            >Need an account? Sign up.</router-link
-          >
-        </span>
+        <button type="submit">Sign in</button>
+        <p>
+          <router-link class="router-link" v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link>
+        </p>
       </form>
     </div>
   </div>
 </template>
-
 <script>
 import authService from "../services/AuthService";
-
 export default {
   components: {},
   data() {
@@ -78,7 +61,6 @@ export default {
         })
         .catch((error) => {
           const response = error.response;
-
           if (response.status === 401) {
             this.invalidCredentials = true;
           }
@@ -87,7 +69,6 @@ export default {
   },
 };
 </script>
-
 <style scoped>
   body {
     font-family: "Sriracha", serif;
