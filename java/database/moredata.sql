@@ -229,8 +229,6 @@ INSERT INTO public.golf_courses VALUES (140, 'old overton club', 'Old Overton Cl
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.users VALUES (1, 'user', 'John', 'Doe', 'JDoe@gmail.com', '$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC', 'ROLE_USER');
-INSERT INTO public.users VALUES (2, 'admin', 'Mary', 'Doe', 'JMDoe@gmail.com', '$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC', 'ROLE_ADMIN');
 
 
 --
@@ -293,3 +291,4 @@ SELECT pg_catalog.setval('public.users_user_id_seq', 2, true);
 -- PostgreSQL database dump complete
 --
 
+select * from golf_courses;
