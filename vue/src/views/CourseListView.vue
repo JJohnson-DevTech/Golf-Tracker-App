@@ -9,10 +9,10 @@
 
             <ul class="course-list">
                 <li v-for="course in filteredCourses" :key="course.id">
-                    <div class="course-box club-name">{{ course.club_name }}</div>
+                    <div class="course-box club-name">{{ toTitleCase(course.club_name) }}</div>
                     <div class="course-box course_name">{{ course.course_name }}</div>
-                    <div class="course-box city">{{ course.location.city }}</div>
-                    <div class="course-box state">{{ course.location.state }}</div>
+                    <div class="course-box city">{{ course['location.city'] || 'N/A' }}</div>
+                    <div class="course-box state">{{ course['location.state'] || 'N/A' }}</div>
                 </li>
             </ul>
         </div>
@@ -40,6 +40,7 @@ export default {
     },
     computed: {
         filteredCourses() {
+            console.log(this.courses);
             return this.courses.filter(course => {
                 return Object.keys(this.filters).every(key => {
                     if (!this.filters[key]) {
@@ -47,7 +48,7 @@ export default {
                     }
                     const value = this.filters[key].toLowerCase();
                     return (course[key] && course[key].toLowerCase().includes(value)) ||
-                        (course.location && course.location[key] && course.location[key].toLowerCase().includes(value));
+                        (course[`location.${key}`] && course[`location.${key}`].toLowerCase().includes(value));
                 });
             });
         }
@@ -57,13 +58,27 @@ export default {
             try {
                 const response = await APIService.allCourses();
                 console.log('Fetched courses', response.data);
-                this.courses = response.data.courses || [];
+                if (Array.isArray(response.data)) {
+                    this.courses = response.data;
+                    this.logCourses(); // Log courses for debugging
+                } else {
+                    console.error('Unexpected response structure:', response.data);
+                }
             } catch (error) {
                 console.error('Error fetching courses:', error);
             }
         },
         updateFilters(updatedFilters) {
             this.filters = updatedFilters;
+        },
+        toTitleCase(text) {
+            if (!text) return '';
+            return text.replace(/\w\S*/g, (txt) => {
+                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+            });
+        },
+        logCourses() {
+            console.log('Courses:', this.courses);
         }
     },
     mounted() {
@@ -143,4 +158,5 @@ h1 {
 
 .state {
     text-align: left;
-}</style>
+}
+</style>
