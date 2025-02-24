@@ -1,6 +1,13 @@
 <template>
+  
   <div class="login-container">
-    <div class="login-image"></div>
+    <div class="CaddyHack">
+      <img src="@/assets/Logo2-No-Background.png" />
+    </div>
+   <div class="background-image">
+      <img src="@/assets/GolfHole3.png" />
+    </div>
+
     <div id="login">
       <div class="login_form-card">
         <img src="@/assets/Scorecard.png" />
@@ -59,113 +66,153 @@ export default {
 };
 </script>
 <style scoped>
-.login-container {
-  font-family: "Sriracha", serif;
-  font-weight: 400;
-  font-style: normal;
-  color: #FCF400;
-  position: relative;
-  width: 100%;
-  height: 100%;
-  margin-left: -100px;
-}
-.login-image {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  background-image: url('@/assets/GolfHole3.png');
-  background-size: cover;
-  /* Ensures the image covers the container */
-  background-position: center;
-  /* Centers the image */
-  background-repeat: no-repeat;
-  /* Prevents the image from repeating */
-}
-.login_form-card {
-  position: fixed;
-  top: 60vh;
-  left: 29vw;
-  padding: -10px;
-  margin: 0;
-}
-.login_form-card img {
-  width: 34vw;
-  height: 50vh;
-}
-#login {
-  position: relative;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 20px;
-  border-radius: 10px;
-  width: 300px;
-}
-form {
-  position: absolute;
-  top: 71vh;
-  left: 35vw;
-}
-h1 {
-  font-family: "Fugaz One", serif;
-  font-weight: 400;
-  font-style: normal;
-  color: #FCF400;
-  margin-bottom: 0;
-}
-.form-input-group-username {
-  margin-bottom: 15px;
-  padding-top: 7px;
-  opacity: 0.5;
-  display: flex;
-  flex-grow: ;
-}
-.form-input-group-password {
-  margin-bottom: 15px;
-  padding-top: 10px;
-}
-label {
-  font-family: "Fugaz One", serif;
-  font-weight: 400;
-  font-style: normal;
-  color: #FCF400;
-}
-input {
-  width: 100%;
-  padding: 5px;
-  border-radius: 5px;
-  border: 1px solid #FCF400;
-}
-button {
-  width: 100%;
-  padding: 5px;
-  border-radius: 5px;
-  border: 1px solid #FCF400;
-  background-color: #FCF400;
-  color: #005E23;
-  font-family: "Fugaz One", serif;
-  font-weight: 400;
-  font-style: normal;
-}
-button:hover {
-  background-color: #005E23;
-  color: #FCF400;
-}
-p {
-  font-family: "Fugaz One", serif;
-  font-weight: 400;
-  font-style: normal;
-  color: #FCF400;
-}
-a {
-  font-family: "Fugaz One", serif;
-  font-weight: 400;
-}
-.router-link {
-  display: inline;
-  white-space: nowrap;
-}
+  body {
+    font-family: "Sriracha", serif;
+    font-weight: 400;
+    font-style: normal;
+    color: #fcf400;
+    margin: 0;
+    padding: 0;
+  }
+
+  .background-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-image: url("@/assets/GolfHole3.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .background-image img {
+    width: 100%;
+    height: 100%;
+    
+ }
+  
+.login_form-card{
+    position: fixed;
+    top: 60vh;
+    left: 29vw;
+    padding: -10px;
+    margin: 0;
+  } 
+
+  .login_form-card img{
+    width: 34vw;
+    height: 50vh;
+  }
+
+  #login {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+  }
+
+  form {
+    position: absolute;
+    top: 71vh;
+    left: 35vw; 
+  }
+
+  h1 {
+    font-family: "Fugaz One", serif;
+    font-weight: 400;
+    font-style: normal;
+    color: #fcf400;
+    margin-bottom: 0;
+  }
+
+  .form-input-group-username {
+    margin-bottom: 15px;
+    margin-right: 20%;
+    padding-top: 7px;
+    opacity: 0.5;
+    display: flex;
+    
+  }
+
+  .form-input-group-password {
+    margin-top: -9%;
+    margin-right: 25%;
+    padding-top: 5px;
+    opacity: 0.5;
+  }
+
+  label {
+    font-family: "Fugaz One", serif;
+    font-weight: 400;
+    font-style: normal;
+    color: #fcf400;
+  }
+
+  
+
+  input {
+    width: 100%;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #fcf400;
+  }
+
+  button {
+    width: 80%;
+    padding: 1px;
+    border-radius: 5px;
+    border: 1px solid #fcf400;
+    background-color: #fcf400;
+    color: #005e23;
+    font-family: "Fugaz One", serif;
+    font-weight: 400;
+    font-style: normal;
+    margin-top: 12%;
+    margin-right: 15%;
+  }
+
+  button:hover {
+    background-color: #005e23;
+    color: #fcf400;
+  }
+
+  form > span {
+    font-family: "Fugaz One", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: large;
+    color: #fcf400;
+    display: inline-block;
+    margin-top: 10px;
+    
+  }
+
+  a {
+    font-family: "Fugaz One", serif;
+    font-weight: 400;
+  }
+
+  .registration {
+    display: inline;
+    white-space: nowrap;
+  }
+
+  .CaddyHack {
+    position: absolute;
+    height: 25%;
+    width: 25%;
+    margin-left: 26%;
+    margin-top: -10%;;
+  }
+
+  .CaddyHack img {
+    width: 100%;
+    height: 100%;
+  }
 </style>

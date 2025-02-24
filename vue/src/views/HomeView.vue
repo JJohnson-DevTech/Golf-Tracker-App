@@ -7,7 +7,7 @@
       <router-link class="page-link" to="">Create Tee Time</router-link>
       <router-link class="page-link" to="">Match Results</router-link>
       <router-link class="page-link" to="/leagues">Leagues</router-link>
-      <router-link class="page-link" to="">MyProfile</router-link>
+      <router-link class="page-link" to="/user">MyProfile</router-link>
       
     </div>
   </div>

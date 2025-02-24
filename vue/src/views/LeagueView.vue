@@ -6,6 +6,7 @@
             <h1>Leagues</h1>
             <League/>
         </div>
+        <button @click="$router.push('/create-league')">Create League</button>
     </div>
 </template>
 
