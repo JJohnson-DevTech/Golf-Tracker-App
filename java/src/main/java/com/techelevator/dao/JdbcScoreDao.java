@@ -5,11 +5,12 @@ import com.techelevator.model.Score;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
+@Component
 public class JdbcScoreDao implements ScoreDao{
 
     private final JdbcTemplate jdbcTemplate;
@@ -34,7 +35,6 @@ public class JdbcScoreDao implements ScoreDao{
         }
         return listAllScores;
     }
-
 
     @Override
     public List<Score> getScoreByLeagueId(int leagueId, int userId) {
@@ -113,21 +113,40 @@ public class JdbcScoreDao implements ScoreDao{
 
 
     @Override
-    public Score addNewScore(int courseId, int leagueId, int userId, int totalScore) {
-        if( courseId <= 0 || leagueId <= 0 || userId <= 0 || totalScore < 0){
-            throw new IllegalArgumentException("Parameters must be positive integers.");
+    public Score addNewScore(Score score) {
+        if(score == null){
+            throw new IllegalArgumentException("Score object cannot be null");
         }
-        Score score = null;
-        String sql = "INSERT INTO scores (user_id, course_id, league_id, total_score) " +
-                "VALUES (?, ?, ?, ?) RETURNING score_id;";
+        Score newScore = null;
+        String sql = "INSERT INTO scores (user_id, course_id, league_id, total_score, tee_time_id) " +
+                "VALUES (?, ?, ?, ?, ?) RETURNING score_id;";
 
         try{
-            int newScoreId = jdbcTemplate.queryForObject(sql, int.class, userId, courseId, leagueId, totalScore);
-             score = getScoreByScoreId(newScoreId);
+            int newScoreId = jdbcTemplate.queryForObject(sql, int.class, score.getUserId(), score.getCourseId(), score.getLeagueId(), score.getTotalScore(), score.getTeeTimeId());
+             newScore = getScoreByScoreId(newScoreId);
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (Exception e) {
             throw new DaoException("Issue with addNewScore", e);
+        }
+        return newScore;
+    }
+
+    @Override
+    public Score getScoreByTeeTime(int teeTimeId) {
+        if(teeTimeId <= 0) throw new IllegalArgumentException("Tee Time ID must be a positive integer.");
+        Score score = new Score();
+        String sql = "SELECT * FROM scores WHERE tee_time_id = ?;";
+
+        try{
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, teeTimeId);
+            if(results.next()){
+                score = mapRowToScore(results);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (Exception e) {
+            throw new DaoException("Issue with getScoreByTeeTime", e);
         }
         return score;
     }
@@ -139,6 +158,7 @@ public class JdbcScoreDao implements ScoreDao{
         score.setCourseId(rs.getInt("course_id"));
         score.setLeagueId(rs.getInt("league_id"));
         score.setTotalScore(rs.getInt("total_score"));
+        score.setTeeTimeId(rs.getInt("tee_time_id"));
         return score;
     }
 }

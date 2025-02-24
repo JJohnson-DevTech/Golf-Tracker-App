@@ -39,11 +39,11 @@ public class CourseService {
         this.jdbcCourseDao = jdbcCourseDao;
     }
 
-    @PostConstruct
-    public void initialize() {
-        loadLastFetchedPage();
-        fetchAndStoreCourses();
-    }
+//    @PostConstruct
+//    public void initialize() {
+//        loadLastFetchedPage();
+//        fetchAndStoreCourses();
+//    }
 
     public void fetchAndStoreCourses() {
         int pagesPerDay = 15;
@@ -71,13 +71,11 @@ public class CourseService {
                         String country = (String) location.get("country");
 
                         // Set defaults if yards/par/holes are not available in api\
-                        int totalYards = course.containsKey("total_yards") ? (int) course.get("total_yards") : 0;
                         int par = course.containsKey("par") ? (int) course.get("par") : 72;
-                        int holes = course.containsKey("holes") ? (int) course.get("holes") : 18;
 
                         // Skip course if it exists otherwise insert into PostgreSQL Database
                         if (!jdbcCourseDao.courseExists(courseId)) {
-                            jdbcCourseDao.createCourse(new Courses(courseId, clubName, courseName, address, city, state, country, totalYards, par, holes));
+                            jdbcCourseDao.createCourse(new Courses(courseId, clubName, courseName, address, city, state, country, par));
                         }
                     }
                     lastFetchedPage++;

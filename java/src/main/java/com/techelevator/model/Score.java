@@ -12,13 +12,16 @@ public class Score {
 
     private int totalScore;
 
+    private int teeTimeId;
 
-    public Score(int scoreId, int userId, int courseId, int leagueId, int totalScore) {
+
+    public Score(int scoreId, int userId, int courseId, int leagueId, int totalScore, int teeTimeId) {
         this.scoreId = scoreId;
         this.userId = userId;
         this.courseId = courseId;
         this.leagueId = leagueId;
         this.totalScore = totalScore;
+        this.teeTimeId = teeTimeId;
     }
 
     public Score(){
@@ -63,5 +66,13 @@ public class Score {
 
     public void setTotalScore(int totalScore) {
         this.totalScore = totalScore;
+    }
+
+    public int getTeeTimeId() {
+        return teeTimeId;
+    }
+
+    public void setTeeTimeId(int teeTimeId) {
+        this.teeTimeId = teeTimeId;
     }
 }
