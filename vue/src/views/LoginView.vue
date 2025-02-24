@@ -2,7 +2,7 @@
   <head>
     <title>CaddyHack-Login</title>
   </head>
-  <body class="login-container">
+  <div class="login-container">
     <div class="CaddyHack">
       <img src="@/assets/Logo2-No-Background.png" />
     </div>
@@ -48,7 +48,7 @@
         </span>
       </form>
     </div>
-  </body>
+  </div>
 </template>
 
 <script>
@@ -188,7 +188,7 @@ export default {
 
   button {
     width: 80%;
-    padding: 5px;
+    padding: 1px;
     border-radius: 5px;
     border: 1px solid #fcf400;
     background-color: #fcf400;
@@ -196,7 +196,7 @@ export default {
     font-family: "Fugaz One", serif;
     font-weight: 400;
     font-style: normal;
-    margin-top: 10%;
+    margin-top: 12%;
     margin-right: 15%;
   }
 
