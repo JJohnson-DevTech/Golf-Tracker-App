@@ -1,6 +1,13 @@
 <template>
+  
   <div class="login-container">
-    <div class="login-image"></div>
+    <div class="CaddyHack">
+      <img src="@/assets/Logo2-No-Background.png" />
+    </div>
+   <div class="background-image">
+      <img src="@/assets/GolfHole3.png" />
+    </div>
+
     <div id="login">
       <div class="login_form-card">
         <img src="@/assets/Scorecard.png" />
