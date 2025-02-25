@@ -117,6 +117,7 @@ h1 {
     font-style: normal;
     color: #fcf400;
     margin-bottom: 4px;
+    border: none;
 }
 
 .course-list {
@@ -132,7 +133,7 @@ h1 {
 
 .course-list li {
     display: grid;
-    grid-template-columns: 2fr 2fr 2fr 2fr;
+    grid-template-columns: 2fr 2fr 2fr 1fr;
     margin-bottom: 5px;
     transition: background-color 0.3s;
     border-radius: 10px;
@@ -148,7 +149,7 @@ h1 {
     flex: 1;
     text-align: left;
     box-sizing: border-box;
-    padding: 0 5px 0 0;
+    padding: 0 5px;
 }
 
 .city {

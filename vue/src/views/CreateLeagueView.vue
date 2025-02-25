@@ -1,109 +1,20 @@
-
-
 <template>
   <div class="create-league-container">
     <div>
       <div class="heading">
         <h1>Create League</h1>
       </div>
-      <!--<CreateLeague />-->
-      <form id="createLeague">
-        <div class="form-input-group">
-          <div class="admin">
-            <label for="host">League Host</label>
-            <input
-              type="text"
-              id="host"
-              v-model="league.host"
-              required
-              autofocus
-            />
-          </div>
-          <div class="league">
-            <label for="leagueName">League Name</label>
-            <input
-              type="text"
-              id="leagueName"
-              v-model="league.leagueName"
-              required
-              autofocus
-            />
-          </div>
-          <div class="course">
-            <label for="course">Course</label>
-            <select
-              type="select"
-              id="course"
-              v-model="league.course"
-              required
-              autofocus
-            >
-                <option v-for="course in courses" :key="course.id" :value="course.id">
-                    {{ course.course_name }}
-                </option>
-            </select>
-          </div>
-          <div class="players">
-            <label for players>Number of Players</label>
-            <input
-              type="number"
-              id="players"
-              v-model="league.players"
-              min="4"
-              required
-              autofocus
-            />
-          </div>
-        </div>
-        <div class="submit">
-          <button type="submit" v-bind:to="{ name: 'League' }">
-            Create League
-          </button>
-        </div>
-        <div class="link">
-          <label for="generated-link">League Link</label>
-        </div>
-      </form>
+      <CreateLeague />
     </div>
   </div>
 </template>
 
 <script>
-import AuthService from "../services/AuthService";
-import CreateLeagueView from "../components/CreateLeague.vue";
-import axios from "axios";
+import CreateLeague from "../components/CreateLeague.vue";
 
 export default {
   components: {
-    CreateLeagueView,
-  },
-  data() {
-    return {
-      league: {
-        host: "",
-        leagueName: "",
-        course: "",
-        link: "",
-      },
-    };
-  },
-  methods: {
-    createLeague() {
-      // Logic to create a league
-      console.log("League created:", this.league);
-    },
-    
-    
-    getLink() {
-      axios
-        .get("http://localhost:9000/api/leagues")
-        .then((response) => {
-          this.link = response.data;
-        })
-        .catch((error) => {
-          console.error("There was an error fetching the link!", error);
-        });
-    },
+    CreateLeague,
   },
 };
 </script>
@@ -124,15 +35,14 @@ form {
   flex-direction: column;
   align-items: center;
   justify-content: space;
-  margin-top: 40%;
+  margin-top: 25%;
   height: auto;
   width: auto;
-  
 }
 
 #host {
   margin-left: 11%;
-  color:#005e23
+  color: #005e23;
 }
 
 #leagueName {
@@ -145,17 +55,15 @@ form {
   width: 100%;
 }
 
-
-
 #players {
   margin-left: 10%;
   padding: 
 }
 
 .heading {
-  margin-top: 10%;
+  margin-top: 6%;
   text-align: center;
-  margin-left: 11%
+  margin-left: 11%;
 }
 
 h1 {
@@ -164,9 +72,10 @@ h1 {
   font-style: normal;
   color: #fcf400;
   margin-bottom: -20px;
-  border: 5px solid#005e23;
+  border: 5px solid #005e23;
   margin-right: 60%;
 }
+
 .create-league-container {
   position: fixed;
   top: 0;
@@ -176,17 +85,15 @@ h1 {
   z-index: -1;
   background-image: url("@/assets/GolfHole2.png");
   background-size: cover;
-  /* Ensures the image covers the container */
   background-position: center;
-  /* Centers the image */
   background-repeat: no-repeat;
-  /* Prevents the image from repeating */
 }
 
 .submit {
   margin-top: 10%;
   margin-bottom: 10%;
 }
+
 .submit button {
   background-color: #005e23;
   color: #fcf400;
