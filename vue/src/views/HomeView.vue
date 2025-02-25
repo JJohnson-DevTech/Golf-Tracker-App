@@ -6,7 +6,7 @@
       <router-link class="page-link" to="/courses">View Courses</router-link>
       <router-link class="page-link" to="">View Tee Times</router-link>
       <router-link class="page-link" to="/leagues">View Leagues</router-link>
-      <router-link class="page-link" to="">MyProfile</router-link>
+      <router-link class="page-link" to="/user">MyProfile</router-link>
       
     </div>
   </div>
