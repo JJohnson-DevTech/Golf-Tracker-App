@@ -5,7 +5,7 @@
   <div class="user-profile-image"></div>
   <div class="headline"> 
     <div class="greeting">
-      <h1>Welcome, {{ user }}</h1>
+      <h1>Welcome {{ user }},</h1>
     </div>
     
     <div class="logo">
@@ -97,8 +97,9 @@ export default {
 }
 
 
-header h1 {
+h1 {
   margin-right: 20%;
+  border: none;
 }
 .userContainer {
   height: 80vh;
