@@ -55,9 +55,13 @@ public class CourseController {
             jdbcCourseDao.createCourse(course);
             return ResponseEntity.status(HttpStatus.CREATED).body(course);
         } catch (Exception e) {
-            throw new DaoException("Issue with controller method 'addNewCourse'");
+            // Log the actual exception to help debug
+            System.err.println("Error occurred in addNewCourse: " + e.getMessage());
+            e.printStackTrace();  // This will print the stack trace to help you see where it is failing
+            throw new DaoException("Issue with controller method 'addNewCourse': " + e.getMessage(), e);
         }
     }
+
 
     @GetMapping("/courses/{id}/par")
     public ResponseEntity<Courses> getCoursePar(int courseId){

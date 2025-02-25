@@ -1,20 +1,20 @@
 <template>
-    <div class="filters">
-        <div class="filter-box">
-            <label for="clubName">Club Name:</label>
-            <input type="text" id="clubName" v-model="filters.club_name" @input="updateFilters" class="input-box" />
+    <div class="course-search-filter">
+        <div class="filter-label-and-box">
+            <label for="clubName" class="search-label">Club Name:</label>
+            <input type="text" id="clubName" class="search-box" v-model="filters.club_name" @input="updateFilters" />
         </div>
-        <div class="filter-box">
-            <label for="courseName" class="course-label">Course Name:</label>
-            <input type="text" id="courseName" v-model="filters.course_name" @input="updateFilters" class="input-box" />
+        <div class="filter-label-and-box">
+            <label for="courseName" class="search-label">Course Name:</label>
+            <input type="text" id="courseName" class="search-box" v-model="filters.course_name" @input="updateFilters" />
         </div>
-        <div class="filter-box">
-            <label for="city" class="city-label">City:</label>
-            <input type="text" id="city" v-model="filters.city" @input="updateFilters" class="input-box" />
+        <div class="filter-label-and-box">
+            <label for="city" class="search-label">City:</label>
+            <input type="text" id="city" class="search-box" v-model="filters.city" @input="updateFilters" />
         </div>
-        <div class="filter-box state-box">
-            <label class="state-label" for="state">State:</label>
-            <input type="text" id="state" v-model="filters.state" @input="updateFilters" class="input-box" />
+        <div class="filter-label-and-box">
+            <label id="state-label" for="state" class="search-label">State:</label>
+            <input type="text" id="state" class="search-box" v-model="filters.state" @input="updateFilters" />
         </div>
     </div>
 </template>
@@ -36,102 +36,50 @@ export default {
 </script>
 
 <style scoped>
-.filters {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 25px;
-    margin-left: -7px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.filter-box {
+.course-search-filter {
     display: flex;
-    flex-direction: column;
-    max-width: fit-content;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
-.course-label {
-    margin-left: 30px;
-}
-
-#courseName {
-    width: 90%;
-    margin-left: 30px;
-}
-
-.state-box {
-    grid-column: 4 / 5; /* Ensure the state box is in the fourth column */
-    grid-row: 1; /* Ensure the state box is in the first row */
-}
-
-.state-box .state-label {
-    max-width: fit-content;
-    margin-left: 35%;
-}
-
-.city-label {
-    margin-left: 50px;
-}
-
-.filters label {
-    margin-bottom: 5px;
+.search-label {
     font-family: 'Sriracha', serif;
+    font-size: 1.1rem;
     font-weight: 400;
     font-style: normal;
 }
 
-.filters input {
-    width: 100%;
-    box-sizing: border-box;
-    margin-bottom: 7px;
+.filter-label-and-box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1;
+    max-width: 200px; /* Set a maximum width */
+    margin: 5px;
 }
 
-#city {
-    width: 70%;
-    margin-left: 50px;
+.search-box {
+    padding: 5px;
+    border: none;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 #state {
-    width: 25%;
-    margin-left: 80px; 
+    width: 40%;
 }
 
-/* Media queries for responsive design */
 @media (max-width: 768px) {
-    .filters {
-        grid-template-columns: repeat(2, 1fr);
+    .course-search-filter {
+        flex-direction: row;
+        flex-wrap: wrap;
     }
 
-    .course-label, .city-label, .state-label {
-        margin-left: 0;
-    }
-
-    #courseName, #city, #state {
+    .filter-label-and-box {
         width: 100%;
-        margin-left: 0;
-    }
-
-    .filters label {
-        font-size: 0.8rem;
-    }
-
-    .filters input {
-        font-size: 0.8rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .filters {
-        grid-template-columns: 1fr;
-    }
-
-    .filters label {
-        font-size: 0.7rem;
-    }
-
-    .filters input {
-        font-size: 0.7rem;
+        margin-bottom: 5px;
     }
 }
 </style>
