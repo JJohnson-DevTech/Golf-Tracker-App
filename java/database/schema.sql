@@ -36,7 +36,6 @@ CREATE TABLE leagues (
     league_name varchar(75) NOT NULL,
     league_host INT NOT NULL,
     course_id INT NOT NULL,
-    match_time TIMESTAMP NOT NULL,
     is_active BOOLEAN DEFAULT TRUE,
     min_players INT DEFAULT 4,
     CONSTRAINT fk_league_host FOREIGN KEY (league_host) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE,

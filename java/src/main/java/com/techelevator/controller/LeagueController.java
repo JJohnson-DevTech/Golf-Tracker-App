@@ -1,7 +1,6 @@
 package com.techelevator.controller;
 
 import com.techelevator.dao.JdbcLeaguesDao;
-import com.techelevator.dao.LeaguesDao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Leagues;
 import org.springframework.dao.DataAccessException;
