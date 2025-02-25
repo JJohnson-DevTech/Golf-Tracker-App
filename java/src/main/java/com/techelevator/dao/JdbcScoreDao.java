@@ -105,7 +105,7 @@ public class JdbcScoreDao implements ScoreDao{
                 "VALUES (?, ?, ?, ?, ?) RETURNING tee_time_id;";
 
         try{
-            //newScoreId references tee_time_id 
+            //newScoreId references tee_time_id
             int newScoreId = jdbcTemplate.queryForObject(sql, int.class, score.getUserId(), score.getCourseId(), score.getLeagueId(), score.getTotalScore(), score.getTeeTimeId());
              newScore = getScoreByTeeTime(newScoreId);
         } catch (CannotGetJdbcConnectionException e) {
