@@ -29,7 +29,6 @@ public class JdbcLeaguesDao implements LeaguesDao {
                             rs.getString("league_name"),
                             rs.getInt("league_host"),
                             rs.getInt("course_id"),
-                            rs.getTimestamp("match_time"),
                             rs.getBoolean("is_active"),
                             rs.getInt("min_players")
                     ));
@@ -63,10 +62,10 @@ public class JdbcLeaguesDao implements LeaguesDao {
         if (courseExists == null || courseExists == 0) {
             throw new IllegalArgumentException("Invalid course ID: Course does not exist.");
         }
-        String sql = "INSERT INTO leagues (league_name, league_host, course_id, match_time, is_active, min_players) " +
-                "VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO leagues (league_name, league_host, course_id, is_active, min_players) " +
+                "VALUES (?, ?, ?, ?, ? )";
         jdbcTemplate.update(sql, league.getLeagueName(), league.getLeagueHost(), league.getCourseId(),
-                league.getMatchTime(), league.getIsActive(), league.getMinPlayers());
+                 league.getIsActive(), league.getMinPlayers());
     }
 
 
@@ -136,7 +135,6 @@ public class JdbcLeaguesDao implements LeaguesDao {
                             rs.getString("league_name"),
                             rs.getInt("league_host"),
                             rs.getInt("course_id"),
-                            rs.getTimestamp("match_time"),
                             rs.getBoolean("is_active"),
                             rs.getInt("min_players")
                     ), leagueId);
@@ -156,7 +154,6 @@ public class JdbcLeaguesDao implements LeaguesDao {
                         rs.getString("league_name"),
                         rs.getInt("league_host"),
                         rs.getInt("course_id"),
-                        rs.getTimestamp("match_time"),
                         rs.getBoolean("is_active"),
                         rs.getInt("min_players")
                 ), userId);
@@ -210,9 +207,9 @@ public class JdbcLeaguesDao implements LeaguesDao {
 
     @Override
     public void updateLeague(Leagues league) {
-        String sql = "UPDATE leagues SET league_name = ?, league_host = ?, course_id = ?, match_time = ?, is_active = ?, min_players = ? WHERE league_id = ?";
+        String sql = "UPDATE leagues SET league_name = ?, league_host = ?, course_id = ?, is_active = ?, min_players = ? WHERE league_id = ?";
         jdbcTemplate.update(sql, league.getLeagueName(), league.getLeagueHost(), league.getCourseId(),
-                league.getMatchTime(), league.getIsActive(), league.getMinPlayers(), league.getLeagueId());
+                league.getIsActive(), league.getMinPlayers(), league.getLeagueId());
     }
 
     @Override

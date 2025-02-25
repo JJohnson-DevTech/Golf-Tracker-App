@@ -5,10 +5,12 @@ import com.techelevator.model.TeeTime;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class JdbcTeeTimeDao implements TeeTimeDao{
 
     private final JdbcTemplate jdbcTemplate;
@@ -46,11 +48,11 @@ public class JdbcTeeTimeDao implements TeeTimeDao{
     if(teeTime == null){
         throw new IllegalArgumentException("teeTime object cannot be null.");
     }
-    String sql = "INSERT INTO tee_times (tee_time_id, course_id, user_id, league_id, tee_time) " +
-            "VALUES (LOWER(TRIM(?)), ?, ?, ?, ?) RETURNING tee_time_id;";
+    String sql = "INSERT INTO tee_times (tee_time_id, course_id, user_id, league_id, tee_time, total_score) " +
+            "VALUES (LOWER(TRIM(?)), ?, ?, ?, ?, ?) RETURNING tee_time_id;";
     try {
         int newTeeTimeId = jdbcTemplate.queryForObject(sql, int.class, teeTime.getTeeTimeId(), teeTime.getCourseId(),
-                teeTime.getUserId(), teeTime.getLeagueId(), teeTime.getTeeTime());
+                teeTime.getUserId(), teeTime.getLeagueId(), teeTime.getTeeTime(), teeTime.getTotalScore());
         teeTime = getTeeTimeById(newTeeTimeId);
     } catch (CannotGetJdbcConnectionException e) {
         throw new DaoException("Unable to connect to server or database", e);
@@ -140,7 +142,8 @@ public class JdbcTeeTimeDao implements TeeTimeDao{
                 "course_id = ?," +
                 " user_id = ?" +
                 ", league_id = ?, " +
-                "tee_time = ? " +
+                "tee_time = ?, " +
+                "total_score = ? " +
                 "WHERE tee_time_id = ?;";
 
         try{
@@ -175,6 +178,7 @@ public class JdbcTeeTimeDao implements TeeTimeDao{
         teeTime.setUserId(rs.getInt("user_id"));
         teeTime.setLeagueId(rs.getInt("league_id"));
         teeTime.setTeeTime(rs.getTimestamp("tee_time"));
+        teeTime.setTotalScore(rs.getInt("total_score"));
         return teeTime;
     }
 }

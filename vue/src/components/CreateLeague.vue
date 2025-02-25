@@ -14,7 +14,7 @@
         <input type="text" id="course" v-model="courseSearch" @input="filterCourses" @focus="showCourseList = true"
           @blur="hideCourseList" required autofocus />
         <ul v-if="showCourseList && filteredCourses.length" class="course-list">
-          <li v-for="course in filteredCourses" :key="course.id" @mousedown.prevent="selectCourse(course)">
+          <li v-for="course in filteredCourses" :key="course.id" @click="selectCourse(course)">
             {{ course.course_name }}
           </li>
         </ul>
@@ -34,6 +34,7 @@
 </template>
 
 <script>
+
 import axios from "axios";
 
 export default {
@@ -42,7 +43,7 @@ export default {
       league: {
         host: "",
         leagueName: "",
-        course: "",
+        course: 0,
         players: 4,
         link: "",
       },
@@ -53,7 +54,20 @@ export default {
     };
   },
   methods: {
-    createLeague() {
+    async createLeague() {
+
+      try{
+        const response = await axios.post('http://localhost:9000/api/leagues', {
+          leagueName: this.league.leagueName,
+          minPlayers: this.league.players,
+          courseId: this.league.course,
+          leagueHost: this.league.host,
+        });
+        this.league = response.data;
+      } catch(error) {
+        this.error = error.response ? error.response.data.message : 'Something wrong with createLeague()';
+      };
+    
       // Logic to create a league
       console.log("League created:", this.league);
     },
@@ -74,6 +88,7 @@ export default {
       );
     },
     selectCourse(course) {
+      console.log(course);
       this.league.course = course.id;
       this.courseSearch = course.course_name;
       this.showCourseList = false;

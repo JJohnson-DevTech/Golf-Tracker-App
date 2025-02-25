@@ -11,10 +11,12 @@
 
 <script>
 import CreateLeague from "../components/CreateLeague.vue";
+import League from "../components/League.vue";
 
 export default {
   components: {
     CreateLeague,
+    League,
   },
 };
 </script>
@@ -51,7 +53,7 @@ form {
 }
 
 #course {
-  margin-left: %;
+  margin-left: 5%;
   width: 100%;
 }
 

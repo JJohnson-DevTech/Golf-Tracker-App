@@ -15,9 +15,9 @@ public interface ScoreDao {
 
     List<Score> getUserScore(int userId);
 
-    Score getScoreByScoreId(int scoreId);
-
     Score addNewScore(Score score);
 
     Score getScoreByTeeTime(int teeTimeId);
+
+    Score getTotalOfPast5Scores(int user_id);
 }

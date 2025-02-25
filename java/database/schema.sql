@@ -20,9 +20,7 @@ CREATE TABLE golf_courses (
     city varchar(50) NOT NULL,
     state_ab char(2) NOT NULL,
     country varchar(30) NOT NULL,
-    total_yards int,
-    par int,
-    holes int DEFAULT 18 NOT NULL
+    par int
 );
 
 CREATE TABLE user_favorites (
@@ -38,7 +36,6 @@ CREATE TABLE leagues (
     league_name varchar(75) NOT NULL,
     league_host INT NOT NULL,
     course_id INT NOT NULL,
-    match_time TIMESTAMP NOT NULL,
     is_active BOOLEAN DEFAULT TRUE,
     min_players INT DEFAULT 4,
     CONSTRAINT fk_league_host FOREIGN KEY (league_host) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -65,36 +62,13 @@ CREATE TABLE invitations (
     CONSTRAINT fk_host_invite_id FOREIGN KEY (host_id) REFERENCES users(user_id)
 );
 
-CREATE TABLE scores (
-    score_id SERIAL PRIMARY KEY,
-    user_id INT NOT NULL,
-    course_id INT NOT NULL,
-    league_id INT,
-    total_score INT NOT NULL,
-    CONSTRAINT fk_scores_user FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_scores_course FOREIGN KEY (course_id) REFERENCES golf_courses(course_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_scores_league FOREIGN KEY (league_id) REFERENCES leagues(league_id) ON DELETE SET NULL ON UPDATE CASCADE
-);
-
-
-CREATE TABLE leaderboards (
-    leaderboard_id SERIAL PRIMARY KEY,
-    user_id INT NOT NULL,
-    course_id INT NOT NULL,
-    league_id INT,
-    total_score INT NOT NULL,
-    ranking INT NOT NULL,
-    CONSTRAINT fk_leaderboards_user FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_leaderboards_course FOREIGN KEY (course_id) REFERENCES golf_courses(course_id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_leaderboards_league FOREIGN KEY (league_id) REFERENCES leagues(league_id) ON DELETE SET NULL ON UPDATE CASCADE
-);
-
 CREATE TABLE tee_times (
     tee_time_id SERIAL PRIMARY KEY,
     course_id INT NOT NULL,
     user_id INT NOT NULL,
     league_id INT,
     tee_time TIMESTAMP NOT NULL,
+    total_scores INT NOT NULL,
     CONSTRAINT fk_tee_times_course FOREIGN KEY (course_id) REFERENCES golf_courses(course_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fk_tee_times_user FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fk_tee_times_league FOREIGN KEY (league_id) REFERENCES leagues(league_id) ON DELETE SET NULL ON UPDATE CASCADE
