@@ -2,6 +2,7 @@ package com.techelevator.dao;
 
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Courses;
+import com.techelevator.model.FavoriteCourse;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -14,6 +15,8 @@ import java.util.List;
 public class JdbcCourseDao implements CourseDao{
 
     private final JdbcTemplate jdbcTemplate;
+
+    private FavoriteCourse favoriteCourse;
 
     public JdbcCourseDao(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate = jdbcTemplate;
@@ -184,6 +187,27 @@ public class JdbcCourseDao implements CourseDao{
         return count != null && count > 0;
     }
 
+    @Override
+    public FavoriteCourse addNewFavoriteCourse(int userId, int courseId) {
+        FavoriteCourse favoriteCourse = null;
+        String sql = "INSERT INTO user_favorites (user_id, course_id) " +
+                "VALUES (?, ?);";
+        try{
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId, courseId);
+            while(results.next()){
+                favoriteCourse = mapRowToFavorite(results);
+                if(favoriteCourse == null){
+                    throw new DaoException("Favorite Course is null.");
+                }
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (Exception e) {
+            throw new DaoException("Issue with createCourse", e);
+        }
+        return favoriteCourse;
+    }
+
 
     @Override
     public Courses createCourse(Courses course) throws DaoException {
@@ -191,28 +215,41 @@ public class JdbcCourseDao implements CourseDao{
             throw new IllegalArgumentException("Course object cannot be null");
         }
 
-        String sql = "INSERT INTO golf_courses (club_name, course_name, address, city, state_ab, country, par ) " +
-                "VALUES (LOWER(TRIM(?)), ?, ?, ?, ?,) RETURNING course_id;";
+        String sql = "INSERT INTO golf_courses (club_name, course_name, address, city, state_ab, country ) " +
+                "VALUES (LOWER(TRIM(?)), ?, ?, ?, ?, ?) RETURNING course_id;";  // Ensure no extra comma
+
         try {
+            // Log the parameters being passed to the query
+            System.out.println("Inserting course with values: ");
+            System.out.println("Club Name: " + course.getClubName().trim());
+            System.out.println("Course Name: " + course.getCourseName().trim());
+            System.out.println("Address: " + course.getAddress());
+            System.out.println("City: " + course.getCity().trim());
+            System.out.println("State: " + course.getState().trim());
+            System.out.println("Country: " + course.getCountry().trim());
+
+            // Execute the query and get the new course ID
             int newCourseId = jdbcTemplate.queryForObject(sql, int.class,
                     course.getClubName().trim(),
                     course.getCourseName().trim(),
                     course.getAddress(),
                     course.getCity().trim(),
                     course.getState().trim(),
-                    course.getCountry().trim(),
-                    course.getPar());
+                    course.getCountry().trim());
 
+            System.out.println("Generated course ID: " + newCourseId);
 
-            // Fetch the inserted course using the new course ID
-            course = getCourseById(newCourseId);
-        } catch (CannotGetJdbcConnectionException e) {
-            throw new DaoException("Unable to connect to server or database", e);
+            course.setCourseId(newCourseId);  // Set the generated course_id
+            return course;
+
         } catch (Exception e) {
-            throw new DaoException("Issue with createCourse", e);
+            // Log the error message and stack trace for more details
+            System.err.println("Error occurred while inserting course: " + e.getMessage());
+            e.printStackTrace();  // This will print the stack trace to the console
+            throw new DaoException("Issue with createCourse method: " + e.getMessage(), e);
         }
-        return course;
     }
+
 
     //TODO MAYBE COME BACK LATER
 //    public Courses insertApiDataToDb(){
@@ -240,5 +277,12 @@ public class JdbcCourseDao implements CourseDao{
         courses.setCountry(rs.getString("country"));
         courses.setPar(rs.getInt("par"));
         return courses;
+    }
+
+    private FavoriteCourse mapRowToFavorite(SqlRowSet rs){
+        FavoriteCourse favoriteCourses = new FavoriteCourse();
+        favoriteCourses.setUserId(rs.getInt("user_id"));
+        favoriteCourses.setCourseId(rs.getInt("course_id"));
+        return favoriteCourses;
     }
 }

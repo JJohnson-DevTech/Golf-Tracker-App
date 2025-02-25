@@ -2,11 +2,15 @@ package com.techelevator.dao;
 
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Score;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -133,6 +137,47 @@ public class JdbcScoreDao implements ScoreDao{
             throw new DaoException("Issue with getScoreByTeeTime", e);
         }
         return score;
+    }
+
+
+    @Override
+    public Score getTotalOfPast5Scores(int userId) {
+        Score last5 = new Score();
+        int total = 0;
+        String sql = "SELECT tee_times.total_score, golf_courses.par " +
+                "FROM tee_times " +
+                "JOIN golf_courses ON tee_times.course_id = golf_courses.course_id " +
+                "WHERE tee_times.user_id = ? " +
+                "ORDER BY tee_times.tee_time DESC " +
+                "LIMIT 5";
+
+        try{
+           List<Score> scores = jdbcTemplate.query(sql, new Object[]{userId}, new RowMapper<Score>(){
+               @Override
+               public Score mapRow(ResultSet rs, int rowNum) throws SQLException {
+                       Score score = new Score();
+                       score.setTotalScore(rs.getInt("total_score"));
+                       score.setPar(rs.getInt("par"));
+                       return score;
+               }
+           });
+
+           if(scores.isEmpty()){
+               throw new DaoException("scores has no value.");
+           }
+
+           for(Score score : scores){
+               total += score.getTotalScore();
+           }
+
+           last5.setTotalScore(total);
+
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (Exception e) {
+            throw new DaoException("Issue with getPast20Scores", e);
+        }
+        return last5;
     }
 
     private Score mapRowToScore(SqlRowSet rs){

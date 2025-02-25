@@ -11,10 +11,12 @@
 
 <script>
 import CreateLeague from "../components/CreateLeague.vue";
+import League from "../components/League.vue";
 
 export default {
   components: {
     CreateLeague,
+    League,
   },
 
   

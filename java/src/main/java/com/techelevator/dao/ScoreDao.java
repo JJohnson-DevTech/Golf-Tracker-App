@@ -18,4 +18,6 @@ public interface ScoreDao {
     Score addNewScore(Score score);
 
     Score getScoreByTeeTime(int teeTimeId);
+
+    Score getTotalOfPast5Scores(int user_id);
 }
