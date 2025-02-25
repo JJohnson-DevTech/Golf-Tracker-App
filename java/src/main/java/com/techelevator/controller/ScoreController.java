@@ -45,10 +45,9 @@ public class ScoreController{
         }
         // created this as a list but upon further thinking it would probably be unique
         List<Score> scores = jdbcScoreDao.getScoreByLeagueId(userId, leagueId);
-        if(scores.isEmpty()){
+        if(scores.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-
         return ResponseEntity.ok(scores.get(0));
     }
 
