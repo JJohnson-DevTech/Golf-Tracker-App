@@ -14,16 +14,27 @@ public class TeeTime {
 
     private Timestamp teeTime;
 
-    public TeeTime(int teeTimeId, int courseId, int userId, int leagueId, Timestamp teeTime) {
+    private int totalScore;
+
+    public TeeTime(int teeTimeId, int courseId, int userId, int leagueId, Timestamp teeTime, int totalScore) {
         this.teeTimeId = teeTimeId;
         this.courseId = courseId;
         this.userId = userId;
         this.leagueId = leagueId;
         this.teeTime = teeTime;
+        this.totalScore = totalScore;
     }
 
     public TeeTime(){
 
+    }
+
+    public int getTotalScore() {
+        return totalScore;
+    }
+
+    public void setTotalScore(int totalScore) {
+        this.totalScore = totalScore;
     }
 
     public int getTeeTimeId() {
