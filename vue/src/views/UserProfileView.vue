@@ -5,7 +5,7 @@
   <div class="user-profile-image"></div>
   <div class="headline"> 
     <div class="greeting">
-      <h1>Welcome {{ user }},</h1>
+      <h1>Welcome {{ $store.state.user.firstName }},</h1>
     </div>
     
     <div class="logo">

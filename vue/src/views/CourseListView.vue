@@ -3,8 +3,11 @@
         <div class="course-list-image"></div>
 
         <div>
-            <h1>Course List</h1>
+            <div class="course-list-header">
+                <h1>Course List</h1>
 
+                <router-link to="/courses/add" class="add-course-button">Add New Course</router-link>
+            </div>
             <CourseList :filters="filters" @update-filters="updateFilters" />
 
             <ul class="course-list">
@@ -119,6 +122,27 @@ h1 {
     margin-bottom: 4px;
     border: none;
 }
+.course-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.add-course-button {
+    font-family: 'Fugaz One', serif;
+    font-weight: 400;
+    font-style: normal;
+  background-color: #fcf400;
+  color: #005e23;
+  padding: 5px 10px;
+  text-decoration: none;
+  border-radius: 10px;
+}
+
+.add-course-button:hover {
+  background-color: #005e23;
+  color: #fcf400;
+}
 
 .course-list {
     list-style-type: none;
@@ -158,6 +182,31 @@ h1 {
 }
 
 .state {
-    text-align: left;
+    margin: 0 auto;
+    padding-right: 50%;
+}
+
+@media (max-width: 1200px) {
+    .course-list {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .course-list {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .course-list {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .course-list {
+        font-size: 0.7rem;
+    }
 }
 </style>

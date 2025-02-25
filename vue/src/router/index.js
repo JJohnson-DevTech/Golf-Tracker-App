@@ -10,6 +10,7 @@ import CourseListView from '../views/CourseListView.vue';
 import UserProfileView from '../views/UserProfileView.vue';
 import LeagueView from '../views/LeagueView.vue';
 import CreateLeagueView from '../views/CreateLeagueView.vue';
+import AddCourseView from '../views/AddCourseView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -56,6 +57,14 @@ const routes = [
     path: "/courses",
     name: "CourseList",
     component: CourseListView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/courses/add",
+    name: "AddCourse",
+    component: AddCourseView,
     meta: {
       requiresAuth: true
     }

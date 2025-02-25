@@ -215,28 +215,41 @@ public class JdbcCourseDao implements CourseDao{
             throw new IllegalArgumentException("Course object cannot be null");
         }
 
-        String sql = "INSERT INTO golf_courses (club_name, course_name, address, city, state_ab, country, par ) " +
-                "VALUES (LOWER(TRIM(?)), ?, ?, ?, ?,) RETURNING course_id;";
+        String sql = "INSERT INTO golf_courses (club_name, course_name, address, city, state_ab, country ) " +
+                "VALUES (LOWER(TRIM(?)), ?, ?, ?, ?, ?) RETURNING course_id;";  // Ensure no extra comma
+
         try {
+            // Log the parameters being passed to the query
+            System.out.println("Inserting course with values: ");
+            System.out.println("Club Name: " + course.getClubName().trim());
+            System.out.println("Course Name: " + course.getCourseName().trim());
+            System.out.println("Address: " + course.getAddress());
+            System.out.println("City: " + course.getCity().trim());
+            System.out.println("State: " + course.getState().trim());
+            System.out.println("Country: " + course.getCountry().trim());
+
+            // Execute the query and get the new course ID
             int newCourseId = jdbcTemplate.queryForObject(sql, int.class,
                     course.getClubName().trim(),
                     course.getCourseName().trim(),
                     course.getAddress(),
                     course.getCity().trim(),
                     course.getState().trim(),
-                    course.getCountry().trim(),
-                    course.getPar());
+                    course.getCountry().trim());
 
+            System.out.println("Generated course ID: " + newCourseId);
 
-            // Fetch the inserted course using the new course ID
-            course = getCourseById(newCourseId);
-        } catch (CannotGetJdbcConnectionException e) {
-            throw new DaoException("Unable to connect to server or database", e);
+            course.setCourseId(newCourseId);  // Set the generated course_id
+            return course;
+
         } catch (Exception e) {
-            throw new DaoException("Issue with createCourse", e);
+            // Log the error message and stack trace for more details
+            System.err.println("Error occurred while inserting course: " + e.getMessage());
+            e.printStackTrace();  // This will print the stack trace to the console
+            throw new DaoException("Issue with createCourse method: " + e.getMessage(), e);
         }
-        return course;
     }
+
 
     //TODO MAYBE COME BACK LATER
 //    public Courses insertApiDataToDb(){
