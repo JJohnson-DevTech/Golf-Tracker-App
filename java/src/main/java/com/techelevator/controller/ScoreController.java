@@ -26,12 +26,12 @@ public class ScoreController{
         return jdbcScoreDao.getALlScores();
     }
 
-    @GetMapping("{scoreId}")
-    public ResponseEntity<Score> getScoreById(@PathVariable int scoreId){
-        if(scoreId <= 0){
+    @GetMapping("{teeTimeId}")
+    public ResponseEntity<Score> getScoreById(@PathVariable int teeTimeId){
+        if(teeTimeId <= 0){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        Score score = jdbcScoreDao.getScoreByScoreId(scoreId);
+        Score score = jdbcScoreDao.getScoreByTeeTime(teeTimeId);
         if(score == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
@@ -45,10 +45,9 @@ public class ScoreController{
         }
         // created this as a list but upon further thinking it would probably be unique
         List<Score> scores = jdbcScoreDao.getScoreByLeagueId(userId, leagueId);
-        if(scores.isEmpty()){
+        if(scores.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-
         return ResponseEntity.ok(scores.get(0));
     }
 

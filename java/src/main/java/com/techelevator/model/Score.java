@@ -1,8 +1,10 @@
 package com.techelevator.model;
 
+import java.sql.Timestamp;
+
 public class Score {
 
-    private int scoreId;
+    private int teeTimeId;
 
     private int userId;
 
@@ -12,28 +14,27 @@ public class Score {
 
     private int totalScore;
 
-    private int teeTimeId;
+    private Timestamp teeTime;
 
-
-    public Score(int scoreId, int userId, int courseId, int leagueId, int totalScore, int teeTimeId) {
-        this.scoreId = scoreId;
+    public Score(int userId, int courseId, int leagueId, int totalScore, int teeTimeId, Timestamp teeTime) {
         this.userId = userId;
         this.courseId = courseId;
         this.leagueId = leagueId;
         this.totalScore = totalScore;
         this.teeTimeId = teeTimeId;
+        this.teeTime = teeTime;
     }
 
     public Score(){
 
     }
 
-    public int getScoreId() {
-        return scoreId;
+    public Timestamp getTeeTime() {
+        return teeTime;
     }
 
-    public void setScoreId(int scoreId) {
-        this.scoreId = scoreId;
+    public void setTeeTime(Timestamp teeTime) {
+        this.teeTime = teeTime;
     }
 
     public int getUserId() {
