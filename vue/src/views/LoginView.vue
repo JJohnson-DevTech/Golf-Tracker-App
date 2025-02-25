@@ -113,17 +113,16 @@ export default {
 .input-group {
   position: absolute;
   width: 100%;
-  margin-bottom: 20px;
 }
 
 .username-group {
   top: 23.3%;
-  margin-left: 10px;
+  margin-left: -33.5%;
 }
 
 .password-group {
   top: 30.5%; 
-  margin-left: 10px;
+  margin-left: -33.5%;
 }
 
 input[type="text"],
@@ -140,9 +139,9 @@ input[type="password"] {
 
 .login-button {
   position: relative;
-  margin-top: 25px;
+  margin-top: 35px;
   margin-right: 20px;
-  left: 10px;
+  left: 1px;
   border: 1px solid #FCF400;
   border-radius: 5px;
   background-color: #005e23;
