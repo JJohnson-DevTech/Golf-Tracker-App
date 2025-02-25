@@ -3,11 +3,12 @@
     <div class="home-image"></div>
     <div class="home">
       <h1>Home</h1>
-      <router-link class="page-link" to="/courses">View Courses</router-link>
-      <router-link class="page-link" to="">View Tee Times</router-link>
-      <router-link class="page-link" to="/leagues">View Leagues</router-link>
-      <router-link class="page-link" to="/user">MyProfile</router-link>
-      
+      <div class="page-links-container">
+        <router-link class="page-link" to="/courses">View Courses</router-link>
+        <router-link class="page-link" to="">View Tee Times</router-link>
+        <router-link class="page-link" to="/leagues">View Leagues</router-link>
+        <router-link class="page-link" to="/user">MyProfile</router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -28,7 +29,7 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
-  margin-left: -100px;
+  margin: auto;
 }
 
 .home-image {
@@ -39,9 +40,12 @@ export default {
   height: 100%;
   z-index: -1;
   background-image: url('@/assets/GolfHole4.png');
-  background-size: cover; /* Ensures the image covers the container */
-  background-position: center; /* Centers the image */
-  background-repeat: no-repeat; /* Prevents the image from repeating */
+  background-size: cover;
+  /* Ensures the image covers the container */
+  background-position: center;
+  /* Centers the image */
+  background-repeat: no-repeat;
+  /* Prevents the image from repeating */
 }
 
 h1 {
@@ -50,6 +54,7 @@ h1 {
   font-style: normal;
   color: #fcf400;
   margin-bottom: 0;
+  border: none;
 }
 
 p {
@@ -58,12 +63,50 @@ p {
   font-style: normal;
 }
 
+.page-links-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
 .page-link {
   font-family: 'Sriracha', serif;
+  font-size: xx-large;
   font-weight: 400;
   font-style: normal;
   color: #fcf400;
   text-decoration: none;
-  margin-right: 20px;
+  transition: background-color 0.3s;
+  border-radius: 10px;
 }
-</style>
+
+.page-link:hover {
+  background-color: #005e23;
+  color: #Ed0030;
+}
+
+/* Media query to adjust font size on smaller screens */
+@media (max-width: 1200px) {
+  .page-link {
+    font-size: x-large;
+  }
+}
+
+@media (max-width: 992px) {
+  .page-link {
+    font-size: large;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-link {
+    font-size: medium;
+  }
+}
+
+@media (max-width: 576px) {
+  .page-link {
+    font-size: small;
+  }
+}</style>

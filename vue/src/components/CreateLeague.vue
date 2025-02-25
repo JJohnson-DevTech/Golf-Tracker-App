@@ -1,5 +1,5 @@
 <template>
-  <form id="createLeague">
+  <form id="createLeague" @submit.prevent="createLeague">
     <div class="form-input-group">
       <div class="admin">
         <label for="host">League Administrator</label>
@@ -7,29 +7,25 @@
       </div>
       <div class="league">
         <label for="leagueName">League Name</label>
-        <input
-          type="text"
-          id="leagueName"
-          v-model="league.leagueName"
-          required
-          autofocus
-        />
+        <input type="text" id="leagueName" v-model="league.leagueName" required autofocus />
       </div>
       <div class="course">
         <label for="course">Course</label>
-        <input
-          type="select"
-          id="course"
-          v-model="league.course"
-          required
-          autofocus
-        />
+        <input type="text" id="course" v-model="courseSearch" @input="filterCourses" @focus="showCourseList = true"
+          @blur="hideCourseList" required autofocus />
+        <ul v-if="showCourseList && filteredCourses.length" class="course-list">
+          <li v-for="course in filteredCourses" :key="course.id" @mousedown.prevent="selectCourse(course)">
+            {{ course.course_name }}
+          </li>
+        </ul>
+      </div>
+      <div class="players">
+        <label for="players">Number of Players</label>
+        <input type="number" id="players" v-model="league.players" min="4" required autofocus />
       </div>
     </div>
     <div class="submit">
-      <button type="submit" v-bind:to="{ name: 'League' }">
-        Create League
-      </button>
+      <button type="submit">Create League</button>
     </div>
     <div class="link">
       <label for="generated-link">League Link</label>
@@ -38,7 +34,7 @@
 </template>
 
 <script>
-import AuthService from "../services/AuthService";
+import axios from "axios";
 
 export default {
   data() {
@@ -47,8 +43,13 @@ export default {
         host: "",
         leagueName: "",
         course: "",
+        players: 4,
         link: "",
       },
+      courses: [],
+      courseSearch: "",
+      filteredCourses: [],
+      showCourseList: false,
     };
   },
   methods: {
@@ -56,6 +57,71 @@ export default {
       // Logic to create a league
       console.log("League created:", this.league);
     },
+    getCourses() {
+      axios
+        .get("http://localhost:9000/api/courses")
+        .then((response) => {
+          this.courses = response.data;
+          this.filteredCourses = this.courses;
+        })
+        .catch((error) => {
+          console.error("There was an error fetching the courses!", error);
+        });
+    },
+    filterCourses() {
+      this.filteredCourses = this.courses.filter(course =>
+        course.course_name.toLowerCase().includes(this.courseSearch.toLowerCase())
+      );
+    },
+    selectCourse(course) {
+      this.league.course = course.id;
+      this.courseSearch = course.course_name;
+      this.showCourseList = false;
+    },
+    hideCourseList() {
+      setTimeout(() => {
+        this.showCourseList = false;
+      }, 200); // Delay to allow click event to register
+    },
+  },
+  mounted() {
+    this.getCourses();
   },
 };
 </script>
+
+<style scoped>
+.form-input-group {
+  font-family: 'Sriracha', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    font-style: normal;
+}
+button {
+  font-family: 'Sriracha', serif;
+  margin-top: -10px;
+}
+.link {
+  font-family: 'Sriracha', serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  font-style: normal;
+  margin-top: -5%;
+}
+.course-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.course-list li {
+  padding: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border-radius: 10px;
+}
+
+.course-list li:hover {
+  background-color: #005E23CF;
+}
+</style>
