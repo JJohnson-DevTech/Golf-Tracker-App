@@ -2,6 +2,7 @@ package com.techelevator.dao;
 
 
 import com.techelevator.model.Courses;
+import com.techelevator.model.FavoriteCourse;
 
 import java.util.List;
 
@@ -26,4 +27,6 @@ public interface CourseDao {
     Courses createCourse(Courses course);
 
     boolean courseExists(int courseId);
+
+    FavoriteCourse addNewFavoriteCourse(int userId, int courseId);
 }

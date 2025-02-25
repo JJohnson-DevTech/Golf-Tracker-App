@@ -16,17 +16,28 @@ public class Score {
 
     private Timestamp teeTime;
 
-    public Score(int userId, int courseId, int leagueId, int totalScore, int teeTimeId, Timestamp teeTime) {
+    private int par;
+
+    public Score(int userId, int courseId, int leagueId, int totalScore, int teeTimeId, Timestamp teeTime, int par) {
         this.userId = userId;
         this.courseId = courseId;
         this.leagueId = leagueId;
         this.totalScore = totalScore;
         this.teeTimeId = teeTimeId;
         this.teeTime = teeTime;
+        this.par = par;
     }
 
     public Score(){
 
+    }
+
+    public int getPar() {
+        return par;
+    }
+
+    public void setPar(int par) {
+        this.par = par;
     }
 
     public Timestamp getTeeTime() {

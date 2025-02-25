@@ -4,6 +4,7 @@ import com.techelevator.dao.JdbcLeaguesDao;
 import com.techelevator.dao.LeaguesDao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Leagues;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,11 +35,17 @@ public class LeagueController {
         if(leagueId <= 0){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        Leagues league = jdbcLeaguesDao.getLeagueById(leagueId);
-        if(league == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        try{
+            Leagues league = jdbcLeaguesDao.getLeagueById(leagueId);
+            if(league == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+            return ResponseEntity.ok(league);
+        } catch (DataAccessException e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        } catch (Exception e){
+            throw new DaoException("Issue with controller method 'deleteLeague'");
         }
-        return ResponseEntity.ok(league);
     }
 
     @PostMapping()
@@ -78,24 +85,22 @@ public class LeagueController {
         try{
             jdbcLeaguesDao.deactivateLeague(leagueId);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }catch (NullPointerException e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }catch (DataAccessException e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         } catch (Exception e){
             throw new DaoException("Issue with controller method 'deleteLeague'");
         }
+
     }
 
     @GetMapping(path = "/invite")
     //using requestparam here requires us to input a query string, likely
     // /invite?league_id=x
-    public String generateInvite(@RequestParam int leagueId){
-        if(leagueId == 0) throw new IllegalArgumentException("league id cannot be 0");
+    public String generateInvite(@RequestParam int leagueId) {
+        if (leagueId == 0) throw new IllegalArgumentException("league id cannot be 0");
         //passes in the league id from the parameters into the dao method to create the link
         String inviteLink = jdbcLeaguesDao.generateInviteLink(leagueId);
         System.out.println(inviteLink);
-
         return inviteLink;
     }
-
-
 }

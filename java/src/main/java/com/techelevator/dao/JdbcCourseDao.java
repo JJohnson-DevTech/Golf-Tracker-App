@@ -2,6 +2,7 @@ package com.techelevator.dao;
 
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Courses;
+import com.techelevator.model.FavoriteCourse;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -14,6 +15,8 @@ import java.util.List;
 public class JdbcCourseDao implements CourseDao{
 
     private final JdbcTemplate jdbcTemplate;
+
+    private FavoriteCourse favoriteCourse;
 
     public JdbcCourseDao(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate = jdbcTemplate;
@@ -184,6 +187,27 @@ public class JdbcCourseDao implements CourseDao{
         return count != null && count > 0;
     }
 
+    @Override
+    public FavoriteCourse addNewFavoriteCourse(int userId, int courseId) {
+        FavoriteCourse favoriteCourse = null;
+        String sql = "INSERT INTO user_favorites (user_id, course_id) " +
+                "VALUES (?, ?);";
+        try{
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId, courseId);
+            while(results.next()){
+                favoriteCourse = mapRowToFavorite(results);
+                if(favoriteCourse == null){
+                    throw new DaoException("Favorite Course is null.");
+                }
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (Exception e) {
+            throw new DaoException("Issue with createCourse", e);
+        }
+        return favoriteCourse;
+    }
+
 
     @Override
     public Courses createCourse(Courses course) throws DaoException {
@@ -240,5 +264,12 @@ public class JdbcCourseDao implements CourseDao{
         courses.setCountry(rs.getString("country"));
         courses.setPar(rs.getInt("par"));
         return courses;
+    }
+
+    private FavoriteCourse mapRowToFavorite(SqlRowSet rs){
+        FavoriteCourse favoriteCourses = new FavoriteCourse();
+        favoriteCourses.setUserId(rs.getInt("user_id"));
+        favoriteCourses.setCourseId(rs.getInt("course_id"));
+        return favoriteCourses;
     }
 }
