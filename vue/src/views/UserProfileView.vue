@@ -5,7 +5,7 @@
   <div class="user-profile-image"></div>
   <div class="headline"> 
     <div class="greeting">
-      <h1>Welcome {{ $store.state.user.firstName }},</h1>
+      <h1>Welcome {{ $store.state.user.firstName }} {{ $store.state.user.lastName }},</h1>
     </div>
     
     <div class="logo">
@@ -17,24 +17,22 @@
     
 
         <div class="info-container">
-          <div class="info-box">
-            <section>
+          <div class="info-box-handicap">
+            <section class="handicap">
               <h2>Handicap</h2>
-              <p>{user handicap}</p>
+              <p></p>
             </section>
           </div>
-          <div class="info-box">
+          <div class="info-box-leagues">
             <h2>My Leagues</h2>
             <ul>
-              <li>League 1</li>
-              <li>League 2</li>
+              
             </ul>
           </div>
-          <div class="info-box">
-            <h2>Favorite Courses</h2>
+          <div class="info-box-scores">
+            <h2>Scores</h2>
             <ul>
-              <li>Course 1</li>
-              <li>Course 2</li>
+              
             </ul>
           </div>
         </div>
@@ -110,8 +108,21 @@ h1 {
 h2 {
   color: #fcf400;
 }
-.info-box {
+.info-box-handicap {
   border: 5px double #005e23;
+  margin-bottom: 30%
+  
+}
+
+.info-box-leagues {
+  border: 5px double #005e23;
+  margin-bottom: 30%;
+  
+}
+.info-box-scores {
+  border: 5px double #005e23;
+  width: 40%;
+  text-align: center;
   
 }
 

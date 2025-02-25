@@ -87,12 +87,13 @@ const routes = [
   },
   {
     path: "/create-league",
-    name: "CreateLeague",
+    name: "CreateLeague", 
     component: CreateLeagueView,
     meta: {
       requiresAuth: true
     }
-  }
+  },
+  
 ];
 
 // Create the router
