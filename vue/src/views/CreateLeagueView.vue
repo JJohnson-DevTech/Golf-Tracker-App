@@ -141,7 +141,7 @@ form {
 }
 
 #course {
-  margin-left: %;
+  margin-left: 5%;
   width: 100%;
 }
 
