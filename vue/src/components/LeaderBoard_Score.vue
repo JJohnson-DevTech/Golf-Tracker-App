@@ -3,7 +3,7 @@
     <h1> {{ leagues.leagueName }}</h1>
     <h1>Leaderboard</h1>
 
-    <div v-if="isCreator">
+    <div v-if="isHost">
       <p><strong>You are the creator of the league, you can update scores.</strong></p>
     </div>
 
@@ -26,13 +26,14 @@
 
 <script>
 import axios from "axios";
+import CreateLeague from "./CreateLeague.vue";
 
 export default {
   name: "Leaderboard",
   data() {
     return {
       leaderboard: [], // Will hold the leaderboard data
-      isCreator: false, // Flag to check if the user is the league creator
+      isHost: false, // Flag to check if the user is the league creator
     };
   },
 
@@ -77,12 +78,12 @@ export default {
   mounted() {
     this.fetchLeaderboard();
   },
-
-  isCreator() {
-    if (this.$state.store.user.username === this.leagues.league_host) {
-      return true;
-    }
-  }
+  computed: {
+    isHost() {
+      return this.$state.store.user.username === this.CreateLeague.league.host;
+    },
+  },
+  
 };
 </script>
 

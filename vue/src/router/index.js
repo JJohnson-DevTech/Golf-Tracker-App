@@ -11,11 +11,8 @@ import UserProfileView from '../views/UserProfileView.vue';
 import LeagueView from '../views/LeagueView.vue';
 import CreateLeagueView from '../views/CreateLeagueView.vue';
 import AddCourseView from '../views/AddCourseView.vue';
-<<<<<<< HEAD
 import LeaderBoard_ScoreView from '../views/LeaderBoard_ScoreView.vue';
-=======
 import TeeTimeView from '../views/TeeTimeView.vue';
->>>>>>> b6de10c632fd1f8370ca0f3fe242692567735a05
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -102,6 +99,14 @@ const routes = [
     path: "/tee-times",
     name: "TeeTimes",
     component: TeeTimeView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/leaderboard",
+    name: "LeaderBoard",
+    component: LeaderBoard_ScoreView,
     meta: {
       requiresAuth: true
     }
