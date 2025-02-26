@@ -10,31 +10,31 @@ public class TeeTime {
 
     private int userId;
 
-    private int leagueId;
+    private Integer leagueId;
 
     private Timestamp teeTime;
 
-    private int totalScore;
+    private int numPlayers;
 
-    public TeeTime(int teeTimeId, int courseId, int userId, int leagueId, Timestamp teeTime, int totalScore) {
+    public TeeTime(int teeTimeId, int courseId, int userId, Integer leagueId, Timestamp teeTime, int numPlayers) {
         this.teeTimeId = teeTimeId;
         this.courseId = courseId;
         this.userId = userId;
         this.leagueId = leagueId;
         this.teeTime = teeTime;
-        this.totalScore = totalScore;
+        this.numPlayers = numPlayers;
     }
 
     public TeeTime(){
 
     }
 
-    public int getTotalScore() {
-        return totalScore;
+    public int getNumPlayers() {
+        return numPlayers;
     }
 
-    public void setTotalScore(int totalScore) {
-        this.totalScore = totalScore;
+    public void setNumPlayers(int numPlayers) {
+        this.numPlayers = numPlayers;
     }
 
     public int getTeeTimeId() {
@@ -61,11 +61,11 @@ public class TeeTime {
         this.userId = userId;
     }
 
-    public int getLeagueId() {
+    public Integer getLeagueId() {
         return leagueId;
     }
 
-    public void setLeagueId(int leagueId) {
+    public void setLeagueId(Integer leagueId) {
         this.leagueId = leagueId;
     }
 

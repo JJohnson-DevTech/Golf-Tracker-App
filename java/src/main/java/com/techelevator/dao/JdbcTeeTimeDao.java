@@ -14,9 +14,13 @@ import java.util.List;
 public class JdbcTeeTimeDao implements TeeTimeDao{
 
     private final JdbcTemplate jdbcTemplate;
+    private final JdbcCourseDao jdbcCourseDao;
+    private final JdbcLeaguesDao jdbcLeaguesDao;
 
-    public JdbcTeeTimeDao(JdbcTemplate jdbcTemplate) {
+    public JdbcTeeTimeDao(JdbcTemplate jdbcTemplate, JdbcCourseDao jdbcCourseDao, JdbcLeaguesDao jdbcLeaguesDao) {
         this.jdbcTemplate = jdbcTemplate;
+        this.jdbcCourseDao = jdbcCourseDao;
+        this.jdbcLeaguesDao = jdbcLeaguesDao;
     }
 
     @Override
@@ -45,21 +49,12 @@ public class JdbcTeeTimeDao implements TeeTimeDao{
 
     @Override
     public TeeTime createTeeTime(TeeTime teeTime) {
-    if(teeTime == null){
-        throw new IllegalArgumentException("teeTime object cannot be null.");
-    }
-    String sql = "INSERT INTO tee_times (tee_time_id, course_id, user_id, league_id, tee_time, total_score) " +
-            "VALUES (LOWER(TRIM(?)), ?, ?, ?, ?, ?) RETURNING tee_time_id;";
-    try {
-        int newTeeTimeId = jdbcTemplate.queryForObject(sql, int.class, teeTime.getTeeTimeId(), teeTime.getCourseId(),
-                teeTime.getUserId(), teeTime.getLeagueId(), teeTime.getTeeTime(), teeTime.getTotalScore());
-        teeTime = getTeeTimeById(newTeeTimeId);
-    } catch (CannotGetJdbcConnectionException e) {
-        throw new DaoException("Unable to connect to server or database", e);
-    } catch (Exception e) {
-        throw new DaoException("Issue with createCourse", e);
-    }
-    return teeTime;
+        TeeTime newTeeTime = null;
+        String sql = "INSERT INTO tee_times (course_id, user_id, league_id, tee_time, num_players) VALUES (?,?,?,?,?) RETURNING tee_time_id;";
+        int newTeeTimeId = jdbcTemplate.queryForObject(sql, int.class, teeTime.getCourseId(), teeTime.getUserId(), teeTime.getLeagueId(), teeTime.getTeeTime(), teeTime.getNumPlayers() );
+        newTeeTime = getTeeTimeById(newTeeTimeId);
+
+        return newTeeTime;
     }
 
     //TODO create active status in db or work on tomorrow messing with timestamp
@@ -178,7 +173,7 @@ public class JdbcTeeTimeDao implements TeeTimeDao{
         teeTime.setUserId(rs.getInt("user_id"));
         teeTime.setLeagueId(rs.getInt("league_id"));
         teeTime.setTeeTime(rs.getTimestamp("tee_time"));
-        teeTime.setTotalScore(rs.getInt("total_score"));
+        teeTime.setNumPlayers(rs.getInt("num_players"));
         return teeTime;
     }
 }
