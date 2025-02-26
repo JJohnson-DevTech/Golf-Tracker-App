@@ -22,6 +22,20 @@ export default {
     return golfCourseAPI.get(`/api/courses?search_query=${name}`)
   },
 
+  addTeeTime(teeTime) {
+    return golfCourseAPI
+    .post('/api/teetimes', teeTime)
+    .then((response) => {
+      console.log('Tee time added:', response.data); // Log response from back end
+      return response.data;
+    })
+    .catch((error) => {
+      console.error('There was an error adding the Tee time!', error);
+      throw error; // Rethrow the error or handle as needed
+    });
+
+  },
+
   addNewCourse(course) {
     return golfCourseAPI
       .post('/api/courses', course)

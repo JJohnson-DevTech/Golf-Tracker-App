@@ -12,6 +12,7 @@ public interface TeeTimeDao {
 
     TeeTime createTeeTime(TeeTime teeTime);
 
+
     boolean activeMatch(TeeTime teeTime);
 
     TeeTime getTeeTimeById(int teeTimeId);
