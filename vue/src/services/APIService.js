@@ -1,17 +1,17 @@
 import axios from 'axios';
 
 const golfCourseAPI = axios
-// .create({
-//   baseURL: "http://localhost:9000/api/courses",
-//   headers: {
-//     Authorization: `Key TYIZ7KUIADD4EOMVIOUGTKEGXQ`
-//   }
-// });
+.create({
+  baseURL: "http://localhost:9000/api/courses",
+  headers: {
+    Authorization: `Key TYIZ7KUIADD4EOMVIOUGTKEGXQ`
+  }
+});
 
 export default {
 
   allCourses() {
-    return golfCourseAPI.get('/courses')
+    return golfCourseAPI.get('')
   },
 
   courseById(id) {
@@ -24,7 +24,7 @@ export default {
 
   addNewCourse(course) {
     return golfCourseAPI
-      .post('/courses', course)
+      .post('', course)
       .then((response) => {
         console.log('Course added:', response.data); // Log response from back end
         return response.data;

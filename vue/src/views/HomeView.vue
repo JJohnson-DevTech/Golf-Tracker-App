@@ -3,12 +3,6 @@
     <div class="home-image"></div>
     <div class="home">
       <h1>Home</h1>
-      <div class="page-links-container">
-        <router-link class="page-link" to="/courses">View Courses</router-link>
-        <router-link class="page-link" to="">View Tee Times</router-link>
-        <router-link class="page-link" to="/leagues">View Leagues</router-link>
-        <router-link class="page-link" to="/user">MyProfile</router-link>
-      </div>
     </div>
   </div>
 </template>
@@ -63,50 +57,4 @@ p {
   font-style: normal;
 }
 
-.page-links-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
-
-.page-link {
-  font-family: 'Sriracha', serif;
-  font-size: xx-large;
-  font-weight: 400;
-  font-style: normal;
-  color: #fcf400;
-  text-decoration: none;
-  transition: background-color 0.3s;
-  border-radius: 10px;
-}
-
-.page-link:hover {
-  background-color: #005e23;
-  color: #Ed0030;
-}
-
-/* Media query to adjust font size on smaller screens */
-@media (max-width: 1200px) {
-  .page-link {
-    font-size: x-large;
-  }
-}
-
-@media (max-width: 992px) {
-  .page-link {
-    font-size: large;
-  }
-}
-
-@media (max-width: 768px) {
-  .page-link {
-    font-size: medium;
-  }
-}
-
-@media (max-width: 576px) {
-  .page-link {
-    font-size: small;
-  }
-}</style>
+</style>
