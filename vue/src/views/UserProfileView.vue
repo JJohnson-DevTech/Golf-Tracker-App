@@ -1,48 +1,27 @@
 <template>
-  
-    
-  
   <div class="user-profile-image"></div>
-  <div class="headline"> 
+  <div class="headline">
     <div class="greeting">
       <h1>Welcome, {{ $store.state.user.firstName }}</h1>
     </div>
-    
+
     <div class="logo">
       <img src="@/assets/Logo2-No-Background.png" alt="Logo" />
     </div>
-      
+
   </div>
   <div class="userContainer">
-    
-
-        <div class="info-container">
-          <div class="info-box-handicap">
-            <section class="handicap">
-              <h2>Handicap</h2>
-              
-            </section>
-          </div>
-          <div class="info-box-leagues">
-            <h2>My Leagues</h2>
-            
-          </div>
-          <div class="info-box-scores">
-            <h2>Scores</h2>
-           
-          </div>
-          <div class="info-box-teetimes">
-            <h2>My Tee Times</h2>
-          </div>
-        </div>
-        
-        
-      
+    <h2>My Handicap: </h2>
+    <div class="user-nav-routes">
+      <router-link class="page-link" to="/courses">View Courses</router-link>
+      <router-link class="page-link" to="/tee-times">My Tee Times</router-link>
+      <router-link class="page-link" to="/leagues">My Leagues</router-link>
+    </div>
+    <h2>Scores:</h2>
   </div>
 </template>
   
-  <script>
-  import axios from "axios";
+<script>
 import { ref, onMounted } from "vue";
 import authService from "../services/AuthService";
 
@@ -87,34 +66,34 @@ export default {
 };
 </script>
 
-  <style scoped>
+<style scoped>
 .user-profile-image {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background-image: url('@/assets/GolfHole4.png');
-    background-size: cover;
-    /* Ensures the image covers the container */
-    background-position: center;
-    /* Centers the image */
-    background-repeat: no-repeat;
-    /* Prevents the image from repeating */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-image: url('@/assets/GolfHole4.png');
+  background-size: cover;
+  /* Ensures the image covers the container */
+  background-position: center;
+  /* Centers the image */
+  background-repeat: no-repeat;
+  /* Prevents the image from repeating */
 }
-.greeting{
+
+.greeting {
   font-family: 'fugaz one', serif;
 }
 
 
 .logo img {
   position: fixed;
-  width:25%;
+  width: 25%;
   height: 25%;
   left: 55%;
   top: 1%
-
 }
 
 
@@ -122,40 +101,61 @@ h1 {
   margin-right: 20%;
   border: none;
 }
-.userContainer {
-  height: 80vh;
-  width: 100vhvh;
-  
+
+.user-nav-routes {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.page-link {
+  font-family: 'Sriracha', serif;
+  font-size: xx-large;
+  font-weight: 400;
+  font-style: normal;
+  color: #fcf400;
+  text-decoration: none;
+  transition: background-color 0.3s;
+  border-radius: 10px;
+}
+
+.page-link:hover {
+  background-color: #005e23;
+  color: #Ed0030;
 }
 
 h2 {
+  font-family: 'Fugaz One', serif;
+  font-weight: 400;
+  font-style: normal;
   color: #fcf400;
-}
-.info-box-handicap {
-  border: 5px double #005e23;
-  margin-bottom: 30%
-  
+  margin-bottom: 0;
+  border: none;
 }
 
-.info-box-leagues {
-  border: 5px double #005e23;
-  margin-bottom: 30%;
-  
-}
-.info-box-scores {
-  border: 5px double #005e23;
-  width: 40%;
-  text-align: center;
-  
-  
+/* Media query to adjust font size on smaller screens */
+@media (max-width: 1200px) {
+  .page-link {
+    font-size: x-large;
+  }
 }
 
-.info-container {
-  display: flex;
-  height: 50%;
-  width: auto;
-  margin-top: 35%;
-  margin-left: 10%;
-  justify-content: space-between;
+@media (max-width: 992px) {
+  .page-link {
+    font-size: large;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-link {
+    font-size: medium;
+  }
+}
+
+@media (max-width: 576px) {
+  .page-link {
+    font-size: small;
+  }
 }
 </style>
