@@ -1,30 +1,30 @@
 import axios from 'axios';
 
 const golfCourseAPI = axios
-.create({
-  baseURL: "http://localhost:9000/api/courses",
-  headers: {
-    Authorization: `Key TYIZ7KUIADD4EOMVIOUGTKEGXQ`
-  }
-});
+// .create({
+//   baseURL: "http://localhost:9000/api/courses",
+//   headers: {
+//     Authorization: `Key TYIZ7KUIADD4EOMVIOUGTKEGXQ`
+//   }
+// });
 
 export default {
 
   allCourses() {
-    return golfCourseAPI.get('')
+    return golfCourseAPI.get('/api/courses')
   },
 
   courseById(id) {
-    return golfCourseAPI.get(`/courses/${id}`)
+    return golfCourseAPI.get(`/api/courses/${id}`)
   },
 
   courseByName(name) {
-    return golfCourseAPI.get(`/courses?search_query=${name}`)
+    return golfCourseAPI.get(`/api/courses?search_query=${name}`)
   },
 
   addNewCourse(course) {
     return golfCourseAPI
-      .post('', course)
+      .post('/api/courses', course)
       .then((response) => {
         console.log('Course added:', response.data); // Log response from back end
         return response.data;
@@ -37,7 +37,7 @@ export default {
 
   getLink() {
     golfCourseAPI
-      .get("/leagues")
+      .get("/api/leagues")
       .then((response) => {
         this.link = response.data;
       })

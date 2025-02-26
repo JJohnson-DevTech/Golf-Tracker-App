@@ -5,6 +5,8 @@
         <div class="content">
             <div class="tee-time-header">
                 <h1>Upcoming Tee Times</h1>
+
+                <router-link to="/tee-times/add" class="create-tee-time-button">Create Tee Time</router-link>
             </div>
             <TeeTime :teeTimes="teeTimes" />
         </div>
@@ -49,8 +51,7 @@ export default {
 .tee-time-container {
     position: relative;
     width: 100%;
-    height: 100vh;
-    overflow: hidden;
+    height: 100%;
 }
 
 .tee-time-image {
@@ -79,4 +80,27 @@ h1 {
     margin-bottom: 4px;
     border: none;
 }
+
+.tee-time-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.create-tee-time-button {
+    font-family: 'Fugaz One', serif;
+    font-weight: 400;
+    font-style: normal;
+  background-color: #fcf400;
+  color: #005e23;
+  padding: 5px 10px;
+  text-decoration: none;
+  border-radius: 10px;
+}
+
+.create-tee-time-button:hover {
+  background-color: #005e23;
+  color: #fcf400;
+}
+
 </style>
