@@ -11,6 +11,7 @@ import UserProfileView from '../views/UserProfileView.vue';
 import LeagueView from '../views/LeagueView.vue';
 import CreateLeagueView from '../views/CreateLeagueView.vue';
 import AddCourseView from '../views/AddCourseView.vue';
+import LeaderBoard_ScoreView from '../views/LeaderBoard_ScoreView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -93,6 +94,14 @@ const routes = [
       requiresAuth: true
     }
   },
+  {
+    path: "/leaderboard",
+    name: "Leaderboard",
+    component: LeaderBoard_ScoreView,
+    meta: {
+      requiresAuth: true
+    }
+  }
   
 ];
 

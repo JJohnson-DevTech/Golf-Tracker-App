@@ -5,7 +5,7 @@
   <div class="user-profile-image"></div>
   <div class="headline"> 
     <div class="greeting">
-      <h1>Welcome {{ $store.state.user.firstName }} {{ $store.state.user.lastName }},</h1>
+      <h1>Welcome, {{ $store.state.user.firstName }}</h1>
     </div>
     
     <div class="logo">
@@ -20,20 +20,19 @@
           <div class="info-box-handicap">
             <section class="handicap">
               <h2>Handicap</h2>
-              <p></p>
+              
             </section>
           </div>
           <div class="info-box-leagues">
             <h2>My Leagues</h2>
-            <ul>
-              
-            </ul>
+            
           </div>
           <div class="info-box-scores">
             <h2>Scores</h2>
-            <ul>
-              
-            </ul>
+           
+          </div>
+          <div class="info-box-teetimes">
+            <h2>My Tee Times</h2>
           </div>
         </div>
         
@@ -43,6 +42,7 @@
 </template>
   
   <script>
+  import axios from "axios";
 import { ref, onMounted } from "vue";
 import authService from "../services/AuthService";
 
@@ -60,6 +60,29 @@ export default {
     });
 
     return { user };
+  },
+
+  methods: {
+    getScore() {
+      axios.get("http://localhost:9000/api/scores/course")
+        .then((response) => {
+          this.scores = response.data;
+        })
+        .catch((error) => {
+          console.error("There was an error fetching the scores!", error);
+        });
+    }
+  },
+  getCourse() {
+    axios
+      .get("http://localhost:9000/api/courses/{courseId}")
+      .then((response) => {
+        this.courses = response.data;
+        this.filteredCourses = this.courses;
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the courses!", error);
+      });
   },
 };
 </script>
@@ -123,6 +146,7 @@ h2 {
   border: 5px double #005e23;
   width: 40%;
   text-align: center;
+  
   
 }
 
