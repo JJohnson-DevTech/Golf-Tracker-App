@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/api/teetimes/")
+@RequestMapping("/api/teetimes")
 public class TeeTimeController {
 
     private final JdbcTeeTimeDao jdbcTeeTimeDao;

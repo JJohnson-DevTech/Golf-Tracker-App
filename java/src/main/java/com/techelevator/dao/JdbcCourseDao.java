@@ -216,7 +216,7 @@ public class JdbcCourseDao implements CourseDao{
         }
 
         String sql = "INSERT INTO golf_courses (club_name, course_name, address, city, state_ab, country ) " +
-                "VALUES (LOWER(TRIM(?)), ?, ?, ?, ?, ?) RETURNING course_id;";  // Ensure no extra comma
+                "VALUES (LOWER(TRIM(?)), ?, ?, ?, ?, ?) RETURNING course_id;";
 
         try {
             // Log the parameters being passed to the query

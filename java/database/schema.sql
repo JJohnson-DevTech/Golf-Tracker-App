@@ -68,7 +68,7 @@ CREATE TABLE tee_times (
     user_id INT NOT NULL,
     league_id INT,
     tee_time TIMESTAMP NOT NULL,
-    total_scores INT NOT NULL,
+    num_players INT NOT NULL,
     CONSTRAINT fk_tee_times_course FOREIGN KEY (course_id) REFERENCES golf_courses(course_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fk_tee_times_user FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fk_tee_times_league FOREIGN KEY (league_id) REFERENCES leagues(league_id) ON DELETE SET NULL ON UPDATE CASCADE
