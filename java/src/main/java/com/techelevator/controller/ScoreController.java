@@ -3,11 +3,15 @@ package com.techelevator.controller;
 import com.techelevator.dao.JdbcScoreDao;
 import com.techelevator.dao.ScoreDao;
 import com.techelevator.exception.DaoException;
+import com.techelevator.model.Handicap;
 import com.techelevator.model.Score;
+import com.techelevator.services.ScoreService;
 import org.apache.coyote.Response;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,8 +22,12 @@ public class ScoreController{
 
     private final JdbcScoreDao jdbcScoreDao;
 
-    public ScoreController(JdbcScoreDao jdbcScoreDao) {
+    private final ScoreService scoreService;
+
+
+    public ScoreController(JdbcScoreDao jdbcScoreDao, ScoreService scoreService) {
         this.jdbcScoreDao = jdbcScoreDao;
+        this.scoreService = scoreService;
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -100,6 +108,25 @@ public class ScoreController{
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         } catch (Exception e){
             throw new DaoException("Issue with controller method 'addNewScore'");
+        }
+    }
+
+
+    @GetMapping(path = "handicap/{userId}")
+    public ResponseEntity<Handicap> getUserHandicap(@PathVariable int userId){
+        if(userId <= 0){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        try{
+           double handicap = scoreService.calculateHandicap(userId);
+            if(handicap < 0 ){
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            }
+            return ResponseEntity.ok(new Handicap(handicap));
+        } catch (DataAccessException e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        } catch (Exception e) {
+            throw new DaoException("Issue with controller method 'getUserHandicap'");
         }
     }
 }

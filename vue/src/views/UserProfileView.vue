@@ -40,6 +40,29 @@ export default {
 
     return { user };
   },
+
+  methods: {
+    getScore() {
+      axios.get("http://localhost:9000/api/scores/course")
+        .then((response) => {
+          this.scores = response.data;
+        })
+        .catch((error) => {
+          console.error("There was an error fetching the scores!", error);
+        });
+    }
+  },
+  getCourse() {
+    axios
+      .get("http://localhost:9000/api/courses/{courseId}")
+      .then((response) => {
+        this.courses = response.data;
+        this.filteredCourses = this.courses;
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the courses!", error);
+      });
+  },
 };
 </script>
 

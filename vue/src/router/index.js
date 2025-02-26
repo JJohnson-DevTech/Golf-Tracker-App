@@ -11,6 +11,7 @@ import UserProfileView from '../views/UserProfileView.vue';
 import LeagueView from '../views/LeagueView.vue';
 import CreateLeagueView from '../views/CreateLeagueView.vue';
 import AddCourseView from '../views/AddCourseView.vue';
+import LeaderBoard_ScoreView from '../views/LeaderBoard_ScoreView.vue';
 import TeeTimeView from '../views/TeeTimeView.vue';
 import AddTeeTimeView from '../views/AddTeeTimeView.vue';
 
@@ -107,6 +108,14 @@ const routes = [
     path: "/tee-times/add",
     name: "AddTeeTime",
     component: AddTeeTimeView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/leaderboard",
+    name: "LeaderBoard",
+    component: LeaderBoard_ScoreView,
     meta: {
       requiresAuth: true
     }
