@@ -161,11 +161,9 @@ public class JdbcScoreDao implements ScoreDao{
                        return score;
                }
            });
-
            if(scores.isEmpty()){
                throw new DaoException("scores has no value.");
            }
-
            for(Score score : scores){
                total += score.getTotalScore();
            }
@@ -178,6 +176,27 @@ public class JdbcScoreDao implements ScoreDao{
             throw new DaoException("Issue with getPast20Scores", e);
         }
         return last5;
+    }
+
+    @Override
+    public List<Score> get5HighestScoresForLeague(int leagueId) {
+        List<Score> leaderboard = new ArrayList<>();
+        String sql = "SELECT tee_times.course_id, tee_times.tee_time_id, tee_times.user_id, tee_times.total_score, tee_times.tee_time, leagues.league_name " +
+                "FROM tee_time JOIN league on tee_times.league_id = leagues.league_id " +
+                "WHERE tee_times.league_id = ? " +
+                "ORDER BY tee_times.total_score DESC LIMIT 5;";
+
+        try{
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, leagueId);
+            while(results.next()){
+                leaderboard.add(mapRowToScore(results));
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (Exception e) {
+            throw new DaoException("Issue with get5HighestScoresForLeague", e);
+        }
+        return List.of();
     }
 
     private Score mapRowToScore(SqlRowSet rs){

@@ -1,17 +1,14 @@
 package com.techelevator.controller;
 
 import com.techelevator.dao.JdbcScoreDao;
-import com.techelevator.dao.ScoreDao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Handicap;
 import com.techelevator.model.Score;
 import com.techelevator.services.ScoreService;
-import org.apache.coyote.Response;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -123,6 +120,24 @@ public class ScoreController{
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
             }
             return ResponseEntity.ok(new Handicap(handicap));
+        } catch (DataAccessException e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        } catch (Exception e) {
+            throw new DaoException("Issue with controller method 'getUserHandicap'");
+        }
+    }
+
+    @GetMapping("leaderboard/{leagueId}")
+    public ResponseEntity<List<Score>> getLeagueLeaderboard(@PathVariable int leagueId){
+        if(leagueId <= 0){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        try{
+            List<Score> leaderboard = jdbcScoreDao.get5HighestScoresForLeague(leagueId);
+            if(leaderboard.isEmpty()){
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+            return ResponseEntity.ok(leaderboard);
         } catch (DataAccessException e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         } catch (Exception e) {

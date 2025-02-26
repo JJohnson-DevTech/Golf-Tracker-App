@@ -20,4 +20,6 @@ public interface ScoreDao {
     Score getScoreByTeeTime(int teeTimeId);
 
     Score getTotalOfPast5Scores(int user_id);
+
+    List<Score> get5HighestScoresForLeague(int leagueId);
 }
