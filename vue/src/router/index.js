@@ -13,6 +13,7 @@ import CreateLeagueView from '../views/CreateLeagueView.vue';
 import AddCourseView from '../views/AddCourseView.vue';
 import LeaderBoard_ScoreView from '../views/LeaderBoard_ScoreView.vue';
 import TeeTimeView from '../views/TeeTimeView.vue';
+import AddTeeTimeView from '../views/AddTeeTimeView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -99,6 +100,14 @@ const routes = [
     path: "/tee-times",
     name: "TeeTimes",
     component: TeeTimeView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/tee-times/add",
+    name: "AddTeeTime",
+    component: AddTeeTimeView,
     meta: {
       requiresAuth: true
     }
