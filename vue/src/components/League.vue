@@ -14,9 +14,9 @@
             <h3>Members</h3>
         </div>
         <ul v-if="leagues.length > 0"    class="leagues-list">
-                <li v-for="league in leagues" :key="league.id">
-                    <div class="league-box">{{league.leagueName}}</div>
-                    <div class="course-box">{{league.courseId}}</div>
+                <li  v-for="league in leagues" :key="league.id">
+                    <RouterLink class="league-box" :to="{ name: 'LeaderBoard' }"  v-on:click="goToLeaderBoardPage" >{{league.leagueName}}</RouterLink>
+                    <div class="course-box">{{league.courseName}}</div>
                     <div class="members-box">{{league.minPlayers}}</div>
                 </li>
             </ul>
@@ -24,6 +24,8 @@
 </template>
 
 <script>
+import { RouterLink } from 'vue-router';
+
 export default {
     props: {
         leagues: {
@@ -35,6 +37,11 @@ export default {
             required: true
         }
     },
+    methods: {
+        goToLeaderBoardPage() {
+            this.$router.push({ name: 'LeaderBoard' });
+        }
+    },  
 };
 </script>
 

@@ -21,10 +21,11 @@ public class JdbcLeaguesDao implements LeaguesDao {
 
     @Override
     public List<Leagues> getAllLeagues() {
-        String sql = "SELECT leagues.league_id, leagues.league_name, leagues.league_host, leagues.course_id, leagues.is_active, " +
+        String sql = "SELECT leagues.league_id, leagues.league_name, leagues.league_host, leagues.course_id, leagues.is_active, golf_courses.course_name, " +
                 "league_members.member_id, leagues.min_players, users.username, users.first_name, users.last_name, users.user_id  FROM leagues " +
                 "JOIN league_members ON leagues.league_id = league_members.league_id " +
-                "JOIN users ON league_members.member_id = users.user_id ";
+                "JOIN users ON league_members.member_id = users.user_id " +
+                "JOIN golf_courses ON leagues.course_id = golf_courses.course_id";
         Map<Integer, Leagues> leaguesMap = new HashMap<>();
         try {
 
@@ -38,7 +39,8 @@ public class JdbcLeaguesDao implements LeaguesDao {
                             rs.getInt("league_host"),
                             rs.getInt("course_id"),
                             rs.getBoolean("is_active"),
-                            rs.getInt("min_players")
+                            rs.getInt("min_players"),
+                           rs.getString("course_name")
                     );
                     leaguesMap.put(leagueId, league);
 
