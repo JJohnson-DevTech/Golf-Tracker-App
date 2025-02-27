@@ -22,6 +22,14 @@ export default {
     return golfCourseAPI.get(`/api/courses?search_query=${name}`)
   },
 
+  allTeeTimes() {
+    return golfCourseAPI.get('/api/teetimes')
+  },
+
+  getTeeTimeByUserId(id) {
+    return golfCourseAPI.get(`/api/teetimes/${id}`)
+  },
+
   addTeeTime(teeTime) {
     return golfCourseAPI
     .post('/api/teetimes', teeTime)

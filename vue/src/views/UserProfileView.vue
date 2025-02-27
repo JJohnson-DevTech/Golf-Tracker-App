@@ -14,7 +14,7 @@
     <h2>My Handicap: </h2>
     <div class="user-nav-routes">
       <router-link class="page-link" to="/courses">View Courses</router-link>
-      <router-link class="page-link" to="/tee-times">My Tee Times</router-link>
+      <router-link class="page-link" to="/teetimes">My Tee Times</router-link>
       <router-link class="page-link" to="/leagues">My Leagues</router-link>
     </div>
     <h2>Scores:</h2>
