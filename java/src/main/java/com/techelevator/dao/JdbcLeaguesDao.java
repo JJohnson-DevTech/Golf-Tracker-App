@@ -67,21 +67,21 @@ public class JdbcLeaguesDao implements LeaguesDao {
     }
 
     @Override
-    public String generateInviteLink(int leagueId) {
+    public String generateInviteLink(int leagueId, int hostId) {
         String inviteCode = UUID.randomUUID().toString();
         String baseURL = "https://localhost:9000";
         String inviteLink = baseURL + "/invite/" + inviteCode;
 
         //stores this invitation link in our database
-        String sql = "INSERT INTO invitations (league_id, invite_link, status) VALUES (?, ?, 'pending');";
-        jdbcTemplate.update(sql, leagueId, inviteLink);
+        String sql = "INSERT INTO invitations (league_id, host_id, invite_link) VALUES (?, ?, ?);";
+        jdbcTemplate.update(sql, leagueId, hostId, inviteLink);
         System.out.println(inviteLink);
         return inviteLink;
 
     }
 
     @Override
-    public void createLeague(Leagues league) {
+    public Leagues createLeague(Leagues league) {
         // Checking to make sure course exists before creating a league
         String checkForCourse = "SELECT COUNT(*) FROM golf_courses WHERE course_id = ?";
         Integer courseExists = jdbcTemplate.queryForObject(checkForCourse, Integer.class, league.getCourseId());
@@ -90,9 +90,12 @@ public class JdbcLeaguesDao implements LeaguesDao {
             throw new IllegalArgumentException("Invalid course ID: Course does not exist.");
         }
         String sql = "INSERT INTO leagues (league_name, league_host, course_id, is_active, min_players) " +
-                "VALUES (?, ?, ?, ?, ? )";
-        jdbcTemplate.update(sql, league.getLeagueName(), league.getLeagueHost(), league.getCourseId(),
+                "VALUES (?, ?, ?, ?, ? ) RETURNING league_id";
+        int newLeagueId = jdbcTemplate.queryForObject(sql, int.class, league.getLeagueName(), league.getLeagueHost(), league.getCourseId(),
                  league.getIsActive(), league.getMinPlayers());
+        Leagues output = getLeagueById(newLeagueId);
+        output.setInviteLink(generateInviteLink(newLeagueId, league.getLeagueHost()));
+        return output;
     }
 
 

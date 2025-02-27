@@ -67,7 +67,7 @@ export default {
           leagueHost: this.$store.state.user.id,
         });
         this.league = response.data;
-        this.link = this.getLink(this.league)
+        this.link = this.league.inviteLink;
         
       } catch(error) {
         this.error = error.response ? error.response.data.message : 'Something wrong with createLeague()';
@@ -77,16 +77,7 @@ export default {
       console.log("League created:", this.league);
     },
 
-    getLink(league) {
-    axios
-      .get("http://localhost:9000/api/leagues/invite", league)
-      .then((response) => {
-        this.link = response.data;
-      })
-      .catch((error) => {
-        console.error("There was an error fetching the link!", error);
-      });
-    },
+    
     getCourses() {
       axios
         .get("http://localhost:9000/api/courses")
