@@ -4,6 +4,7 @@ package com.techelevator.controller;
 import com.techelevator.dao.JdbcTeeTimeDao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.TeeTime;
+import com.techelevator.model.TeeTimeDisplay;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,10 @@ public class TeeTimeController {
     @GetMapping()
     public ResponseEntity<List<TeeTime>> getTeeTimes(){
         return ResponseEntity.ok(jdbcTeeTimeDao.getAllTeeTimes());
+    }
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<TeeTimeDisplay>> getTeeTimeByUser(@PathVariable int userId){
+        return ResponseEntity.ok(jdbcTeeTimeDao.getTeeTimeByUserId(userId));
     }
 
     @PostMapping()
