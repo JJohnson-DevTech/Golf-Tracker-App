@@ -15,7 +15,7 @@
         </div>
         <ul v-if="leagues.length > 0"    class="leagues-list">
                 <li v-for="league in leagues" :key="league.id">
-                    <div class="course-box club-name">{{league.leagueName}}</div>
+                    <div class="league-box league-name">{{league.leagueName}}</div>
                 </li>
             </ul>
     </div>

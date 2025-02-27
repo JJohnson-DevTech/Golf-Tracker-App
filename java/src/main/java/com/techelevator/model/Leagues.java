@@ -1,5 +1,8 @@
 package com.techelevator.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Leagues {
 
     private int leagueId;
@@ -14,13 +17,35 @@ public class Leagues {
 
     private int minPlayers;
 
-    public Leagues(int leagueId, String leagueName, int leagueHost, int courseId, boolean isActive, int minPlayers) {
+    private List<User> leagueUsers = new ArrayList<>();
+
+    public Leagues(int leagueId, String leagueName, int leagueHost, int courseId, boolean isActive, int minPlayers, List<User> leagueUsers) {
         this.leagueId = leagueId;
         this.leagueName = leagueName;
         this.leagueHost = leagueHost;
         this.courseId = courseId;
         this.isActive = isActive;
         this.minPlayers = minPlayers;
+        this.leagueUsers = new ArrayList<>();
+    }
+
+    public Leagues(int leagueId, String leagueName, int leagueHost, int courseId, boolean isActive, int minPlayers) {
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public List<User> getLeagueUsers() {
+        return leagueUsers;
+    }
+
+    public void setLeagueUsers(List<User> leagueUsers) {
+        this.leagueUsers = leagueUsers;
     }
 
     public int getLeagueId() {

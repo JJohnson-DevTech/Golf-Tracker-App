@@ -29,9 +29,11 @@ export default {
   methods: {
     async fetchLeagues() {
       try{
-        const response = await axios.get("http://localhost:9000/api/leagues");
-        console.log(response.data);
-        this.leagues = response.data;
+        axios.get("http://localhost:9000/api/leagues")
+        .then((response) => {
+          console.log(response.data);
+          this.leagues = response.data;
+        })
       } catch (error) {
         console.error('Error fetching leagues:', error);
       }
