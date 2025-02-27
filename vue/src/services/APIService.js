@@ -49,9 +49,21 @@ export default {
       });
   },
 
-  getLink() {
+  createInviteLink(league) {
+    return golfCourseAPI.post('api/leagues/invite', league)
+    .then((response) => {
+      console.log('Invite link created:', response.data); // Log response from back end
+      return response.data;
+    })
+    .catch((error) => {
+      console.error('There was an error creating the invite link!', error);
+      throw error; // Rethrow the error or handle as needed
+    });
+  },
+
+  getLink(league) {
     golfCourseAPI
-      .get("/api/leagues")
+      .get("/api/leagues/invite", league)
       .then((response) => {
         this.link = response.data;
       })

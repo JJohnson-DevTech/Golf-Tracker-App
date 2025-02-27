@@ -12,34 +12,38 @@
         <div role="alert" v-if="registrationErrors">
           {{ registrationErrorMsg }}
         </div>
-        <br>
-        <br>
-        <div class="form-input-group">
-          <label for="firstName">First Name</label>
-          <input type="text" id="firstName" v-model="user.firstName" required autofocus />
+        <div class="inputs">
+          <div class="form-input-group">
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" v-model="user.firstName" required autofocus />
+          </div>
+          <div class="form-input-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" v-model="user.lastName" required />
+          </div>
+          <div class="form-input-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" v-model="user.email" required />
+          </div>
+          <div class="form-input-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" v-model="user.username" required autofocus />
+          </div>
+          <div class="form-input-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" v-model="user.password" required />
+          </div>
+          <div class="form-input-group">
+           <label for="confirmPassword">Confirm Password</label>
+           <input type="password" id="confirmPassword" v-model="user.confirmPassword" required />
+          </div>
+          <div class="buttons">
+            <button type="submit">Create Account</button>
+            <div class="accountExists">
+              <p><router-link id="router-login" v-bind:to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
+            </div>
+          </div>  
         </div>
-        <div class="form-input-group">
-          <label for="lastName">Last Name</label>
-          <input type="text" id="lastName" v-model="user.lastName" required />
-        </div>
-        <div class="form-input-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" v-model="user.email" required />
-        </div>
-        <div class="form-input-group">
-          <label for="username">Username</label>
-          <input type="text" id="username" v-model="user.username" required autofocus />
-        </div>
-        <div class="form-input-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" v-model="user.password" required />
-        </div>
-        <div class="form-input-group">
-          <label for="confirmPassword">Confirm Password</label>
-          <input type="password" id="confirmPassword" v-model="user.confirmPassword" required />
-        </div>
-          <button type="submit">Create Account</button>
-          <p><router-link id="router-login" v-bind:to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
       </form>
     </div>
   </body>
@@ -98,31 +102,32 @@ export default {
 </script>
 
 <style scoped>
-
 .background-image {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
 
 .background-image img {
-    width: 100%;
-    height: 100%;
-  }
+  width: 100%;
+  height: 100%;
+}
 .form-input-group {
-  margin-bottom: 0.5rem;
+  margin-bottom: -20%;
   font-family: "Sriracha", serif;
-
+  margin-right: 35%;
 }
 label {
   margin-right: 0.5rem;
   display: block;
 }
-input[type=text], input[type=email], input[type=password] {
-  width: 50%;
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 75%;
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -135,7 +140,17 @@ form {
   max-width: 500px;
   min-width: 300px;
   margin-right: 60%;
-  margin-top: -3%
+  margin-top: -10%;
+}
+
+.buttons {
+  margin-top: 30%;
+  margin-left: 15%;
+}
+
+.accountExists {
+  margin-top: 10%;
+  margin-left: -25%
 }
 h1 {
   font-family: "Fugaz One", serif;
@@ -143,7 +158,9 @@ h1 {
   font-style: normal;
   color: #fcf400;
   margin-bottom: -20px;
-  margin-right: 40%
+  margin-right: 40%;
+  width: auto;
+  padding-left: 3%
 }
 .text-center {
   text-align: center;
@@ -157,15 +174,15 @@ h1 {
   color: #005e23;
 }
 .CaddyHack {
-    position: absolute;
-    height: 25%;
-    width: 25%;
-    margin-left: 26%;
-    margin-top: -8%;
-  }
+  position: absolute;
+  height: 25%;
+  width: 25%;
+  margin-left: 26%;
+  margin-top: -3%;
+}
 
-  .CaddyHack img {
-    width: 100%;
-    height: 100%;
-  }
+.CaddyHack img {
+  width: 100%;
+  height: 100%;
+}
 </style>

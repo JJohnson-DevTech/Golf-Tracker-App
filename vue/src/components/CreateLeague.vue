@@ -25,7 +25,7 @@
       </div>
     </div>
     <div class="submit">
-      <button type="submit">Create League</button>
+      <button type="submit" @click="createInviteLink">Create League</button>
     </div>
     <div class="link">
       <label for="generated-link">League Link</label>
@@ -36,6 +36,7 @@
 <script>
 
 import axios from "axios";
+import { createInviteLink } from "@/services/APIService.js";
 
 export default {
   data() {
@@ -97,7 +98,7 @@ export default {
       setTimeout(() => {
         this.showCourseList = false;
       }, 200); // Delay to allow click event to register
-    },
+    }
   },
   mounted() {
     this.getCourses();
