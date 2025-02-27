@@ -4,7 +4,7 @@
 
         <div>
             <h1>Leagues</h1>
-            <League/>
+            <League :leagues="leagues" :filters="filters"/>
         </div>
         <button @click="$router.push('/create-league')">Create League</button>
     </div>
@@ -12,15 +12,36 @@
 
 <script>
 import League from '@/components/League.vue';
+import axios from 'axios';
 
 export default {
+ 
     components: {
         League
     },
   name: 'LeagueView',
   data() {
-    return {};
+    return {
+      leagues: [],
+      filters: {},
+    };
   },
+  methods: {
+    async fetchLeagues() {
+      try{
+        axios.get("http://localhost:9000/api/leagues")
+        .then((response) => {
+          console.log(response.data);
+          this.leagues = response.data;
+        })
+      } catch (error) {
+        console.error('Error fetching leagues:', error);
+      }
+    }
+  },
+  mounted(){
+    this.fetchLeagues();
+  }
 };
 </script>
 

@@ -85,7 +85,6 @@ export default {
         }
     },
     mounted() {
-        // Fetch the courses from your API and assign them to the 'courses' data property
         this.fetchCourses();
     }
 };

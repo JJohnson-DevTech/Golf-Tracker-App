@@ -97,7 +97,7 @@ const routes = [
     }
   },
   {
-    path: "/tee-times",
+    path: "/teetimes",
     name: "TeeTimes",
     component: TeeTimeView,
     meta: {
@@ -105,7 +105,7 @@ const routes = [
     }
   },
   {
-    path: "/tee-times/add",
+    path: "/teetimes/add",
     name: "AddTeeTime",
     component: AddTeeTimeView,
     meta: {
@@ -113,7 +113,7 @@ const routes = [
     }
   },
   {
-    path: "/leaderboard",
+    path: "/leaderboard/:leagueId",
     name: "LeaderBoard",
     component: LeaderBoard_ScoreView,
     meta: {

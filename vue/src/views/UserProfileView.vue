@@ -14,7 +14,7 @@
     <h2>My Handicap: </h2>
     <div class="user-nav-routes">
       <router-link class="page-link" to="/courses">View Courses</router-link>
-      <router-link class="page-link" to="/tee-times">My Tee Times</router-link>
+      <router-link class="page-link" to="/teetimes">My Tee Times</router-link>
       <router-link class="page-link" to="/leagues">My Leagues</router-link>
     </div>
   </div>
@@ -26,6 +26,12 @@ import authService from "../services/AuthService";
 
 export default {
   name: "UserProfileView",
+
+  data() {
+    return {
+      handicap:null,
+    }
+  },
   setup() {
     const user = ref(null);
 
@@ -62,6 +68,18 @@ export default {
         console.error("There was an error fetching the courses!", error);
       });
   },
+  getHandicap() {
+    axios.get("http://localhost:9000/api/scores/handicap/{userId}")
+      .then((response) => {
+        this.handicap = response.data;
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the handicap!", error);
+      });
+  },
+  mounted() {
+    this.getHandicap(this.$store.state.user.id)
+  }
 };
 </script>
 

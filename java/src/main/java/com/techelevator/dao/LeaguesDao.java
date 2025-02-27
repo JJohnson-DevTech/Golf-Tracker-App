@@ -8,9 +8,9 @@ public interface LeaguesDao {
 
     List<Leagues> getAllLeagues();
 
-    String generateInviteLink(int leagueId);
+    String generateInviteLink(int leagueId, int hostId);
 
-    void createLeague (Leagues league);
+    Leagues createLeague (Leagues league);
 
     //TODO later date
 //    void inviteUserToLeague(int leagueId, int hostId, String email);
@@ -29,5 +29,6 @@ public interface LeaguesDao {
     void updateLeague(Leagues league);
 
     void deactivateLeague(int leagueId);
+
 
 }

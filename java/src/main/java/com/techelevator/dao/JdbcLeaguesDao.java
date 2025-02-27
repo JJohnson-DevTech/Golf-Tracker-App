@@ -2,12 +2,12 @@ package com.techelevator.dao;
 
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Leagues;
+import com.techelevator.model.User;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import java.util.UUID;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 
 
 @Component
@@ -21,40 +21,67 @@ public class JdbcLeaguesDao implements LeaguesDao {
 
     @Override
     public List<Leagues> getAllLeagues() {
-        String sql = "SELECT * FROM leagues;";
+        String sql = "SELECT leagues.league_id, leagues.league_name, leagues.league_host, leagues.course_id, leagues.is_active, " +
+                "league_members.member_id, leagues.min_players, users.username, users.first_name, users.last_name, users.user_id  FROM leagues " +
+                "JOIN league_members ON leagues.league_id = league_members.league_id " +
+                "JOIN users ON league_members.member_id = users.user_id";
+        Map<Integer, Leagues> leaguesMap = new HashMap<>();
         try {
-            return jdbcTemplate.query(sql,
-                    (rs, rowNum) -> new Leagues(
-                            rs.getInt("league_id"),
+
+            jdbcTemplate.query(sql, (rs) -> {
+
+                int leagueId = rs.getInt("league_id");
+
+                   Leagues league = new Leagues(
+                            leagueId,
                             rs.getString("league_name"),
                             rs.getInt("league_host"),
                             rs.getInt("course_id"),
                             rs.getBoolean("is_active"),
                             rs.getInt("min_players")
-                    ));
-        } catch (EmptyResultDataAccessException e) {
+                    );
+                    leaguesMap.put(leagueId, league);
+
+
+                int userId = rs.getInt("user_id");
+                if(userId > 0){
+                    User user = new User(
+                            userId,
+                            rs.getString("username"),
+                            rs.getString("first_name"),
+                            rs.getString("last_name")
+                    );
+                    if(league.getLeagueUsers() == null){
+                        league.setLeagueUsers(new ArrayList<>());
+                    }
+                    league.getLeagueUsers().add(user);
+                }
+
+        });
+        }  catch (EmptyResultDataAccessException e) {
             throw new DaoException("Nothing was returned.");
         } catch (Exception e){
             throw new DaoException("Issue with getAllLeagues");
         }
+        return new ArrayList<>(leaguesMap.values());
     }
 
     @Override
-    public String generateInviteLink(int leagueId) {
+    public String generateInviteLink(int leagueId, int hostId) {
         String inviteCode = UUID.randomUUID().toString();
         String baseURL = "https://localhost:9000";
         String inviteLink = baseURL + "/invite/" + inviteCode;
 
         //stores this invitation link in our database
-        String sql = "INSERT INTO invitations (league_id, invite_link, status) VALUES (?, ?, 'pending');";
-        jdbcTemplate.update(sql, leagueId, inviteLink);
+        String sql = "INSERT INTO invitations (league_id, host_id, invite_link) VALUES (?, ?, ?);";
+        jdbcTemplate.update(sql, leagueId, hostId, inviteLink);
         System.out.println(inviteLink);
         return inviteLink;
 
     }
 
     @Override
-    public void createLeague(Leagues league) {
+    public Leagues createLeague(Leagues league) {
         // Checking to make sure course exists before creating a league
         String checkForCourse = "SELECT COUNT(*) FROM golf_courses WHERE course_id = ?";
         Integer courseExists = jdbcTemplate.queryForObject(checkForCourse, Integer.class, league.getCourseId());
@@ -63,9 +90,12 @@ public class JdbcLeaguesDao implements LeaguesDao {
             throw new IllegalArgumentException("Invalid course ID: Course does not exist.");
         }
         String sql = "INSERT INTO leagues (league_name, league_host, course_id, is_active, min_players) " +
-                "VALUES (?, ?, ?, ?, ? )";
-        jdbcTemplate.update(sql, league.getLeagueName(), league.getLeagueHost(), league.getCourseId(),
+                "VALUES (?, ?, ?, ?, ? ) RETURNING league_id";
+        int newLeagueId = jdbcTemplate.queryForObject(sql, int.class, league.getLeagueName(), league.getLeagueHost(), league.getCourseId(),
                  league.getIsActive(), league.getMinPlayers());
+        Leagues output = getLeagueById(newLeagueId);
+        output.setInviteLink(generateInviteLink(newLeagueId, league.getLeagueHost()));
+        return output;
     }
 
 
@@ -217,4 +247,5 @@ public class JdbcLeaguesDao implements LeaguesDao {
         String sql = "UPDATE leagues SET is_active = FALSE WHERE league_id = ?";
         jdbcTemplate.update(sql, leagueId);
     }
+
 }
