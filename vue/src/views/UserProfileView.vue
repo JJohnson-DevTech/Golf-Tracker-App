@@ -27,6 +27,12 @@ import authService from "../services/AuthService";
 
 export default {
   name: "UserProfileView",
+
+  data() {
+    return {
+      handicap:null,
+    }
+  },
   setup() {
     const user = ref(null);
 
@@ -63,6 +69,18 @@ export default {
         console.error("There was an error fetching the courses!", error);
       });
   },
+  getHandicap() {
+    axios.get("http://localhost:9000/api/scores/handicap/{userId}")
+      .then((response) => {
+        this.handicap = response.data;
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the handicap!", error);
+      });
+  },
+  mounted() {
+    this.getHandicap(this.$store.state.user.id)
+  }
 };
 </script>
 
