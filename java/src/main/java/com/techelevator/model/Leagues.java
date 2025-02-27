@@ -21,8 +21,6 @@ public class Leagues {
 
     private String courseName;
 
-    private String clubName;
-
     public Leagues(int leagueId, String leagueName, int leagueHost, int courseId, boolean isActive, int minPlayers, List<User> leagueUsers) {
         this.leagueId = leagueId;
         this.leagueName = leagueName;
@@ -50,14 +48,6 @@ public class Leagues {
 
     public void setCourseName(String courseName) {
         this.courseName = courseName;
-    }
-
-    public String getClubName() {
-        return clubName;
-    }
-
-    public void setClubName(String clubName) {
-        this.clubName = clubName;
     }
 
     public boolean isActive() {

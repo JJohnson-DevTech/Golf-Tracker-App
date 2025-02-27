@@ -24,7 +24,7 @@ public class JdbcLeaguesDao implements LeaguesDao {
         String sql = "SELECT leagues.league_id, leagues.league_name, leagues.league_host, leagues.course_id, leagues.is_active, " +
                 "league_members.member_id, leagues.min_players, users.username, users.first_name, users.last_name, users.user_id  FROM leagues " +
                 "JOIN league_members ON leagues.league_id = league_members.league_id " +
-                "JOIN users ON league_members.member_id = users.user_id";
+                "JOIN users ON league_members.member_id = users.user_id ";
         Map<Integer, Leagues> leaguesMap = new HashMap<>();
         try {
 
