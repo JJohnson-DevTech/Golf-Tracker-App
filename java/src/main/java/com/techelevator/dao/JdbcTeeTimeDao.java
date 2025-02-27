@@ -77,7 +77,6 @@ public class JdbcTeeTimeDao implements TeeTimeDao{
     }
 
 
-    //TODO create active status in db or work on tomorrow messing with timestamp
     @Override
     public boolean activeMatch(TeeTime teeTime) {
         return false;
@@ -159,11 +158,12 @@ public class JdbcTeeTimeDao implements TeeTimeDao{
                 ", league_id = ?, " +
                 "tee_time = ?, " +
                 "total_score = ? " +
+                "num_players = ?" +
                 "WHERE tee_time_id = ?;";
 
         try{
             jdbcTemplate.update(sql, teeTime.getCourseId(), teeTime.getUserId(), teeTime.getLeagueId(),
-                    teeTime.getTeeTime(), teeTime.getTeeTimeId());
+                    teeTime.getTeeTime(), teeTime.getTeeTimeId(), teeTime.getNumPlayers());
         } catch (CannotGetJdbcConnectionException e){
             throw new DaoException("Unable to connect to server or database", e);
         } catch (Exception e){
