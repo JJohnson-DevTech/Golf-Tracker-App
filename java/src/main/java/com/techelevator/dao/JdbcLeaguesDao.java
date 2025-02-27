@@ -2,12 +2,12 @@ package com.techelevator.dao;
 
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Leagues;
+import com.techelevator.model.User;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import java.util.UUID;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 
 
 @Component
@@ -21,22 +21,53 @@ public class JdbcLeaguesDao implements LeaguesDao {
 
     @Override
     public List<Leagues> getAllLeagues() {
-        String sql = "SELECT * FROM leagues;";
+        String sql = "SELECT leagues.league_id, leagues.league_name, leagues.league_host, leagues.course_id, leagues.is_active, " +
+                "league_members.member_id, leagues.min_players, users.username, users.first_name, users.last_name, users.user_id  FROM leagues " +
+                "JOIN league_members ON leagues.league_id = league_members.league_id " +
+                "JOIN users ON league_members.member_id = users.user_id";
         try {
-            return jdbcTemplate.query(sql,
-                    (rs, rowNum) -> new Leagues(
-                            rs.getInt("league_id"),
+            Map<Integer, Leagues> leaguesMap = new HashMap<>();
+
+            jdbcTemplate.query(sql, (rs) -> {
+
+                int leagueId = rs.getInt("league_id");
+
+                Leagues league = leaguesMap.get(leagueId);
+                if(league == null){
+                    league = new Leagues(
+                            leagueId,
                             rs.getString("league_name"),
                             rs.getInt("league_host"),
                             rs.getInt("course_id"),
                             rs.getBoolean("is_active"),
                             rs.getInt("min_players")
-                    ));
-        } catch (EmptyResultDataAccessException e) {
+                    );
+                    leaguesMap.put(leagueId, league);
+                }
+
+                int userId = rs.getInt("user_id");
+                if(userId > 0){
+                    User user = new User(
+                            userId,
+                            rs.getString("username"),
+                            rs.getString("first_name"),
+                            rs.getString("last_name")
+                    );
+                    if(league.getLeagueUsers() == null){
+                        league.setLeagueUsers(new ArrayList<>());
+                    }
+                    league.getLeagueUsers().add(user);
+                }
+        });
+
+            return new ArrayList<>(leaguesMap.values());
+
+        }  catch (EmptyResultDataAccessException e) {
             throw new DaoException("Nothing was returned.");
         } catch (Exception e){
             throw new DaoException("Issue with getAllLeagues");
         }
+
     }
 
     @Override
@@ -217,4 +248,5 @@ public class JdbcLeaguesDao implements LeaguesDao {
         String sql = "UPDATE leagues SET is_active = FALSE WHERE league_id = ?";
         jdbcTemplate.update(sql, leagueId);
     }
+
 }

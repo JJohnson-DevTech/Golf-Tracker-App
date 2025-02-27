@@ -32,6 +32,9 @@ public class User {
       this.activated = true;
    }
 
+   public User(int userId, String username, String firstName, String lastName) {
+   }
+
    public int getId() {
       return id;
    }

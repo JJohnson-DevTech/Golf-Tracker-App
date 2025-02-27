@@ -13,17 +13,26 @@
         <div class="league-label">
             <h3>Members</h3>
         </div>
+        <ul v-if="leagues.length > 0"    class="leagues-list">
+                <li v-for="league in leagues" :key="league.id">
+                    <div class="league-box league-name">{{league.leagueName}}</div>
+                </li>
+            </ul>
     </div>
 </template>
 
 <script>
 export default {
     props: {
+        leagues: {
+            type: Array,
+            required: true,
+        },
         filters: {
             type: Object,
             required: true
         }
-    }
+    },
 };
 </script>
 
