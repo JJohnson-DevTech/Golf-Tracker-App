@@ -3,7 +3,7 @@
     <div class="form-input-group">
       <div class="admin">
         <label for="host">League Administrator</label>
-        <input type="text" id="host" v-model="league.host" required autofocus />
+        <input type="text" id="host" placeholder="Your Username" v-model="league.host" required autofocus />
       </div>
       <div class="league">
         <label for="leagueName">League Name</label>
@@ -29,6 +29,7 @@
     </div>
     <div class="link">
       <label for="generated-link">League Link</label>
+      <textarea v-model="link" id="generated-link"></textarea>
     </div>
   </form>
 </template>
@@ -36,6 +37,7 @@
 <script>
 
 import axios from "axios";
+
 
 export default {
   data() {
@@ -51,6 +53,7 @@ export default {
       courseSearch: "",
       filteredCourses: [],
       showCourseList: false,
+      link:"",
     };
   },
   methods: {
@@ -64,6 +67,8 @@ export default {
           leagueHost: this.$store.state.user.id,
         });
         this.league = response.data;
+        this.link = this.league.inviteLink;
+        
       } catch(error) {
         this.error = error.response ? error.response.data.message : 'Something wrong with createLeague()';
       };
@@ -71,6 +76,8 @@ export default {
       // Logic to create a league
       console.log("League created:", this.league);
     },
+
+    
     getCourses() {
       axios
         .get("http://localhost:9000/api/courses")
@@ -97,8 +104,11 @@ export default {
       setTimeout(() => {
         this.showCourseList = false;
       }, 200); // Delay to allow click event to register
-    },
+    }
   },
+  
+  
+  
   mounted() {
     this.getCourses();
   },

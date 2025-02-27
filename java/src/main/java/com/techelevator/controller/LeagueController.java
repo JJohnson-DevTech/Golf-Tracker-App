@@ -53,8 +53,8 @@ public class LeagueController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         try{
-            jdbcLeaguesDao.createLeague(league);
-            return ResponseEntity.status(HttpStatus.CREATED).body(league);
+            Leagues newLeague = jdbcLeaguesDao.createLeague(league);
+            return ResponseEntity.status(HttpStatus.CREATED).body(newLeague);
         } catch (Exception e){
             throw new DaoException("Issue with controller method 'createLeague'");
         }
@@ -92,14 +92,14 @@ public class LeagueController {
 
     }
 
-    @GetMapping(path = "/invite")
-    //using requestparam here requires us to input a query string, likely
-    // /invite?league_id=x
-    public String generateInvite(@RequestParam int leagueId) {
-        if (leagueId == 0) throw new IllegalArgumentException("league id cannot be 0");
-        //passes in the league id from the parameters into the dao method to create the link
-        String inviteLink = jdbcLeaguesDao.generateInviteLink(leagueId);
-        System.out.println(inviteLink);
-        return inviteLink;
-    }
+//    @GetMapping(path = "/{leagueId}/invite")
+//    //using requestparam here requires us to input a query string, likely
+//    // /invite?league_id=x
+//    public String generateInvite(@RequestParam int leagueId) {
+//        if (leagueId == 0) throw new IllegalArgumentException("league id cannot be 0");
+//        //passes in the league id from the parameters into the dao method to create the link
+//        String inviteLink = jdbcLeaguesDao.generateInviteLink(leagueId);
+//        System.out.println(inviteLink);
+//        return inviteLink;
+//    }
 }

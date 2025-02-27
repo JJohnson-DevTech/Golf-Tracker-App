@@ -22,6 +22,14 @@ export default {
     return golfCourseAPI.get(`/api/courses?search_query=${name}`)
   },
 
+  allTeeTimes() {
+    return golfCourseAPI.get('/api/teetimes')
+  },
+
+  getTeeTimeByUserId(id) {
+    return golfCourseAPI.get(`/api/teetimes/${id}`)
+  },
+
   addTeeTime(teeTime) {
     return golfCourseAPI
     .post('/api/teetimes', teeTime)
@@ -49,14 +57,4 @@ export default {
       });
   },
 
-  getLink() {
-    golfCourseAPI
-      .get("/api/leagues")
-      .then((response) => {
-        this.link = response.data;
-      })
-      .catch((error) => {
-        console.error("There was an error fetching the link!", error);
-      });
-  },
 }
