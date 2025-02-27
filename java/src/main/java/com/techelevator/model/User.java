@@ -33,6 +33,10 @@ public class User {
    }
 
    public User(int userId, String username, String firstName, String lastName) {
+      this.id = userId;
+      this.username = username;
+      this.firstName = firstName;
+      this.lastName = lastName;
    }
 
    public int getId() {
