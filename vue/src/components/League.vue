@@ -1,9 +1,6 @@
 <template>
     <div class="filters">
-        <div class="filter-box">
-            <label class="league-search-label" for="leagueSearch">Search:</label>
-            <input type="text" id="leagueSearch" class="league-search-box" />
-        </div>
+        
         <div class="league-label">
             <h3>League Name</h3>
         </div>
@@ -29,9 +26,6 @@ export default {
 
 <style scoped>
 
-h3 {
-    margin: 0;
-}
 .filters {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -61,13 +55,10 @@ h3 {
 
 .league-label {
     font-family: 'Sriracha', serif;
-    font-weight: 400;
+    font-size: 40px;
+    margin-top: 20%;
     display: flex;
     align-items: flex-end;
-
 }
 
-#leagueSearch {
-    width: 75%;
-}
 </style>

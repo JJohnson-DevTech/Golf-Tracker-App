@@ -106,37 +106,51 @@ export default {
 </script>
 
 <style scoped>
+
 .form-input-group {
   font-family: 'Sriracha', serif;
-    font-size: 1.1rem;
-    font-weight: 400;
-    font-style: normal;
+  font-size: 1.5rem;
+  color: #fcf400;  
 }
+
 button {
   font-family: 'Sriracha', serif;
   margin-top: -10px;
 }
+
 .link {
   font-family: 'Sriracha', serif;
-  font-size: 1.1rem;
-  font-weight: 400;
+  font-size: 1.5rem;
   font-style: normal;
   margin-top: -5%;
 }
+
 .course-list {
   list-style-type: none;
   padding: 0;
   margin: 0;
+  max-height: 130px;
+  overflow-y: auto;
+  border: 2px solid #fcf400;
+  border-radius: 10px;
+  background-color: rgba(0, 94, 35, 0.3);
+  width: 100%;
+  margin-left: 11%;
+  margin-top: 4px;
+  z-index: 1;
 }
 
 .course-list li {
-  padding: 8px;
+  padding: 5px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  text-align: center;
   border-radius: 10px;
+  padding: 5px 15px;
+  margin: 8px 15px;
 }
 
 .course-list li:hover {
   background-color: #005E23CF;
 }
+
 </style>

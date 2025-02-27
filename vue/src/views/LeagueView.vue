@@ -29,7 +29,7 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
-  margin-left: -100px;
+  margin-left: 20%;
 }
 
 .league-image {
@@ -39,27 +39,29 @@ export default {
   width: 100%;
   height: 100%;
   z-index: -1;
-  background-image: url('@/assets/GolfHole6.png');
+  background: url('@/assets/GolfHole6.png') no-repeat center center;
   background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  
 }
 
 h1 {
   font-family: 'Fugaz One', serif;
-  font-weight: 400;
-  font-style: normal;
+  font-size: 80px;
   color: #fcf400;
-  margin-bottom: 0;
+  margin-top: 10%;
   border: none;
+  background: none;
+  
 }
 
 button {
 background-color: #005e23;
   color: #fcf400;
-  padding: 10px 20px;
+  padding: 15px 30px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  margin-top: 10%;
 }
+
 </style>

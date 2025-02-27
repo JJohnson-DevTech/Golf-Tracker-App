@@ -66,16 +66,16 @@ export default {
 
 <style scoped>
 
-/* Fullscreen Background */
+
 .logo-container {
   position: absolute;
-  top: 10px; /* Adjust the distance from the top */
-  left: 10px; /* Adjust the distance from the left */
-  width: 30%; /* Adjust the width of the logo */
-  height: 30%; /* Adjust the height of the logo */
+  top: 10px; 
+  left: 10px;
+  width: 30%;
+  height: 30%;
   background: url("@/assets/Logo2-No-Background.png") no-repeat center center;
   background-size: contain;
-  z-index: 10; /* Ensure it stays on top of other elements */
+  z-index: 10;
 }
 
 .background-image {
@@ -92,8 +92,8 @@ export default {
 /* Grouping the form and scorecard image */
 .login-form-container {
   position: absolute;
-  bottom: 5vh; /* Positioned from the bottom */
-  right: 1vw; /* Positioned from the right */
+  bottom: 5vh;
+  right: 1vw;
   z-index: 1;
 }
 

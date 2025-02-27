@@ -37,6 +37,7 @@ export default {
     width: 80%;
     max-width: 1000px;
     margin: 20px auto;
+    margin-top: 10%;
     border-collapse: collapse;
     background-color: rgba(255, 255, 255, 0.8);
 }

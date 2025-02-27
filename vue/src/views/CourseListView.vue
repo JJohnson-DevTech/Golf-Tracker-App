@@ -92,6 +92,7 @@ export default {
 </script>
 
 <style scoped>
+
 .course-list-container {
     position: relative;
     width: 100%;
@@ -107,21 +108,18 @@ export default {
     z-index: -1;
     background-image: url('@/assets/GolfHole1.png');
     background-size: cover;
-    /* Ensures the image covers the container */
     background-position: center;
-    /* Centers the image */
     background-repeat: no-repeat;
-    /* Prevents the image from repeating */
 }
 
 h1 {
-    font-family: 'Fugaz One', serif;
-    font-weight: 400;
-    font-style: normal;
-    color: #fcf400;
-    margin-bottom: 4px;
-    border: none;
+    text-align: center;
+    margin-top: 80px;
+    font-size: 55px;
+    width: 18%;
+    border: 3px solid #005e23;
 }
+
 .course-list-header {
   display: flex;
   justify-content: space-between;
@@ -130,13 +128,12 @@ h1 {
 
 .add-course-button {
     font-family: 'Fugaz One', serif;
-    font-weight: 400;
-    font-style: normal;
-  background-color: #fcf400;
-  color: #005e23;
-  padding: 5px 10px;
-  text-decoration: none;
-  border-radius: 10px;
+    font-size: 1.5rem;
+    background-color: #fcf400;
+    color: #005e23;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 10px;
 }
 
 .add-course-button:hover {
@@ -150,40 +147,25 @@ h1 {
     margin: auto;
     max-width: 100%;
     font-family: 'Sriracha', serif;
-    font-size: 1.1rem;
-    font-weight: 400;
-    font-style: normal;
+    font-size: 25px;
 }
 
 .course-list li {
     display: grid;
     grid-template-columns: 2fr 2fr 2fr 1fr;
-    margin-bottom: 5px;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
     transition: background-color 0.3s;
-    border-radius: 10px;
+    border-radius: 5px;
+    width: 100%;
 }
 
 .course-list li:hover {
     background-color: #005E23CF;
+    border-radius: 20%;
+    padding: 10px;
     cursor: pointer;
-}
-
-.course-box {
-    display: inline-block;
-    flex: 1;
-    text-align: left;
-    box-sizing: border-box;
-    padding: 0 5px;
-}
-
-.city {
-    text-align: left;
-    margin-left: .5em;
-}
-
-.state {
-    margin: 0 auto;
-    padding-right: 50%;
 }
 
 @media (max-width: 1200px) {
@@ -209,4 +191,5 @@ h1 {
         font-size: 0.7rem;
     }
 }
+
 </style>
