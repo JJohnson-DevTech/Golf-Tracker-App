@@ -34,17 +34,6 @@ public class Leagues {
 
     private String inviteLink;
 
-    public Leagues(int leagueId, String leagueName, int leagueHost, int courseId, boolean isActive, int minPlayers, List<User> leagueUsers) {
-        this.leagueId = leagueId;
-        this.leagueName = leagueName;
-        this.leagueHost = leagueHost;
-        this.courseId = courseId;
-        this.isActive = isActive;
-        this.minPlayers = minPlayers;
-        this.leagueUsers = new ArrayList<>();
-
-    }
-
 
     public Leagues(int leagueId, String leagueName, int leagueHost, int courseId, boolean isActive, int minPlayers) {
         this.leagueId = leagueId;
