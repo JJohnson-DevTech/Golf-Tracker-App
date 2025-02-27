@@ -113,7 +113,7 @@ const routes = [
     }
   },
   {
-    path: "/leaderboard",
+    path: "/leaderboard/:leagueId",
     name: "LeaderBoard",
     component: LeaderBoard_ScoreView,
     meta: {
