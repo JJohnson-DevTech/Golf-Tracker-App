@@ -92,7 +92,7 @@ public class LeagueController {
 
     }
 
-    @GetMapping(path = "/invite")
+    @GetMapping(path = "/{leagueId}/invite")
     //using requestparam here requires us to input a query string, likely
     // /invite?league_id=x
     public String generateInvite(@RequestParam int leagueId) {

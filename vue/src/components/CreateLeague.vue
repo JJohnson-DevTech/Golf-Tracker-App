@@ -25,10 +25,11 @@
       </div>
     </div>
     <div class="submit">
-      <button type="submit" @click="createInviteLink">Create League</button>
+      <button type="submit">Create League</button>
     </div>
     <div class="link">
       <label for="generated-link">League Link</label>
+      <textarea v-model="link" id="generated-link"></textarea>
     </div>
   </form>
 </template>
@@ -36,7 +37,7 @@
 <script>
 
 import axios from "axios";
-import { createInviteLink } from "@/services/APIService.js";
+
 
 export default {
   data() {
@@ -52,6 +53,7 @@ export default {
       courseSearch: "",
       filteredCourses: [],
       showCourseList: false,
+      link:"",
     };
   },
   methods: {
@@ -65,12 +67,25 @@ export default {
           leagueHost: this.$store.state.user.id,
         });
         this.league = response.data;
+        this.link = this.getLink(this.league)
+        
       } catch(error) {
         this.error = error.response ? error.response.data.message : 'Something wrong with createLeague()';
       };
     
       // Logic to create a league
       console.log("League created:", this.league);
+    },
+
+    getLink(league) {
+    axios
+      .get("http://localhost:9000/api/leagues/invite", league)
+      .then((response) => {
+        this.link = response.data;
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the link!", error);
+      });
     },
     getCourses() {
       axios
@@ -100,6 +115,9 @@ export default {
       }, 200); // Delay to allow click event to register
     }
   },
+  
+  
+  
   mounted() {
     this.getCourses();
   },
