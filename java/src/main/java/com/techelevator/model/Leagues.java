@@ -19,9 +19,20 @@ public class Leagues {
 
     private List<User> leagueUsers = new ArrayList<>();
 
+    public Leagues(){}
     private String courseName;
 
     private String clubName;
+
+    public String getInviteLink() {
+        return inviteLink;
+    }
+
+    public void setInviteLink(String inviteLink) {
+        this.inviteLink = inviteLink;
+    }
+
+    private String inviteLink;
 
     public Leagues(int leagueId, String leagueName, int leagueHost, int courseId, boolean isActive, int minPlayers, List<User> leagueUsers) {
         this.leagueId = leagueId;

@@ -1,6 +1,6 @@
 <template>
   <div class="leaderboard">
-    <h1> {{ leagues.leagueName }}</h1>
+    <h1> {{ league.leagueName }}</h1>
     <h1>Leaderboard</h1>
 
     <div v-if="isHost">
@@ -10,7 +10,7 @@
     <div v-for="player in leaderboard" :key="player.id" class="player">
       <div class="player-score">
         <div class="player-details">
-          <span>{{ $state.store.user.username }}: </span>
+          <span>{{ player.username }}: </span>
           <span v-if="isCreator">
             <input v-model="player.newScore" type="number" />
             <button @click="updateScore(player.id, player.newScore)">Update Score</button>
@@ -26,16 +26,20 @@
 
 <script>
 import axios from "axios";
-import CreateLeague from "./CreateLeague.vue";
+
+
 
 export default {
   name: "Leaderboard",
   data() {
     return {
-      leaderboard: [], // Will hold the leaderboard data
-      isHost: false, // Flag to check if the user is the league creator
+      league: {},
+      leaderboard: [],
+      isHost: false, 
     };
   },
+
+ 
 
   
     
@@ -43,14 +47,12 @@ export default {
     async fetchLeaderboard() {
       try {
         // Fetch leaderboard data from the backend
-        const response = await axios.get("http://localhost:9000/leagues/{leagueId}");
-        this.leaderboard = response.data.map(player => ({ 
-          ...player, 
-          newScore: player.score // Add 'newScore' to bind for editing
-        }));
+        const response = await axios.get("http://localhost:9000/api/leagues/{leagueId}");
+        this.league = response.data; // Add 'newScore' to bind for editing
+        
 
         
-        const userResponse = await axios.get("http://localhost:9000/user");
+        const userResponse = await axios.get("http://localhost:9000/api/user");
         this.isCreator = userResponse.data.isCreator; 
       } catch (error) {
         console.error("Error fetching leaderboard:", error);
@@ -60,7 +62,7 @@ export default {
     async updateScore(userId, newScore) {
       try {
         // Send updated score to the backend
-        await axios.post("http://localhost:9000/scores/", {
+        await axios.post("http://localhost:9000/api/scores/", {
           userId,
           score: newScore,
         });
@@ -80,7 +82,7 @@ export default {
   },
   computed: {
     isHost() {
-      return this.$state.store.user.username === this.CreateLeague.league.host;
+      return this.user.username === this.CreateLeague.league.host;
     },
   },
   

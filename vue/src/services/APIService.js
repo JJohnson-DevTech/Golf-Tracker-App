@@ -57,14 +57,4 @@ export default {
       });
   },
 
-  getLink() {
-    golfCourseAPI
-      .get("/api/leagues")
-      .then((response) => {
-        this.link = response.data;
-      })
-      .catch((error) => {
-        console.error("There was an error fetching the link!", error);
-      });
-  },
 }
