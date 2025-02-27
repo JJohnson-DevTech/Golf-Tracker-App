@@ -3,7 +3,7 @@
     <div class="form-input-group">
       <div class="admin">
         <label for="host">League Administrator</label>
-        <input type="text" id="host" v-model="league.host" required autofocus />
+        <input type="text" id="host" placeholder="Your Username" v-model="league.host" required autofocus />
       </div>
       <div class="league">
         <label for="leagueName">League Name</label>

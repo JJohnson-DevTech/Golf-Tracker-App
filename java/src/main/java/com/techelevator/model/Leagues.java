@@ -19,6 +19,8 @@ public class Leagues {
 
     private List<User> leagueUsers = new ArrayList<>();
 
+    public Leagues(){}
+
     public Leagues(int leagueId, String leagueName, int leagueHost, int courseId, boolean isActive, int minPlayers, List<User> leagueUsers) {
         this.leagueId = leagueId;
         this.leagueName = leagueName;
