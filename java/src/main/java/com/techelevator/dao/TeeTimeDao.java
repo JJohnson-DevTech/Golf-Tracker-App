@@ -1,12 +1,15 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.TeeTime;
+import com.techelevator.model.TeeTimeDisplay;
 
 import java.util.List;
 
 public interface TeeTimeDao {
 
     List<TeeTime> getAllTeeTimes();
+
+    List<TeeTimeDisplay> getTeeTimeByUserId( int userId);
 
     List<TeeTime> getUpcomingTeeTimes();
 

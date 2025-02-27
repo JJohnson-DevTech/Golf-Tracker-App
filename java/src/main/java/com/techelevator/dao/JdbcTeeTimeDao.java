@@ -2,6 +2,7 @@ package com.techelevator.dao;
 
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.TeeTime;
+import com.techelevator.model.TeeTimeDisplay;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -41,6 +42,24 @@ public class JdbcTeeTimeDao implements TeeTimeDao{
         return teeTimes;
     }
 
+    @Override
+    public List<TeeTimeDisplay> getTeeTimeByUserId(int userId) {
+        List<TeeTimeDisplay> teeTimes = new ArrayList<>();
+        String sql = "SELECT * FROM tee_times AS tt JOIN golf_courses AS gc on tt.course_id = gc.course_id LEFT JOIN leagues AS l ON tt.league_id = l.league_id WHERE user_id = ?;";
+        try{
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
+            while(results.next()){
+                TeeTimeDisplay teeTime = mapRowToTeeTimeDisplay(results);
+                teeTimes.add(teeTime);
+            }
+        } catch (CannotGetJdbcConnectionException e){
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (Exception e){
+            throw new DaoException("Issue with getAllTeeTimes", e);
+        }
+        return teeTimes;
+    }
+
     //TODO add boolean to db to know if its passed or not
     @Override
     public List<TeeTime> getUpcomingTeeTimes() {
@@ -56,6 +75,7 @@ public class JdbcTeeTimeDao implements TeeTimeDao{
 
         return newTeeTime;
     }
+
 
     //TODO create active status in db or work on tomorrow messing with timestamp
     @Override
@@ -174,6 +194,17 @@ public class JdbcTeeTimeDao implements TeeTimeDao{
         teeTime.setLeagueId(rs.getInt("league_id"));
         teeTime.setTeeTime(rs.getTimestamp("tee_time"));
         teeTime.setNumPlayers(rs.getInt("num_players"));
+        return teeTime;
+    }
+
+    private TeeTimeDisplay mapRowToTeeTimeDisplay(SqlRowSet rs){
+        TeeTimeDisplay teeTime = new TeeTimeDisplay();
+        teeTime.setTee_time_id(rs.getInt("tee_time_id"));
+        teeTime.setCourse_name(rs.getString("course_name"));
+        teeTime.setClub_name(rs.getString("club_name"));
+        teeTime.setLeague_name(rs.getString("league_name"));
+        teeTime.setTee_time(rs.getTimestamp("tee_time"));
+        teeTime.setNum_players(rs.getInt("num_players"));
         return teeTime;
     }
 }
