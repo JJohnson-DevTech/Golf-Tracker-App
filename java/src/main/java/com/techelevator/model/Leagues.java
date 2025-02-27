@@ -19,6 +19,10 @@ public class Leagues {
 
     private List<User> leagueUsers = new ArrayList<>();
 
+    private String courseName;
+
+    private String clubName;
+
     public Leagues(int leagueId, String leagueName, int leagueHost, int courseId, boolean isActive, int minPlayers, List<User> leagueUsers) {
         this.leagueId = leagueId;
         this.leagueName = leagueName;
@@ -27,9 +31,33 @@ public class Leagues {
         this.isActive = isActive;
         this.minPlayers = minPlayers;
         this.leagueUsers = new ArrayList<>();
+
     }
 
+
     public Leagues(int leagueId, String leagueName, int leagueHost, int courseId, boolean isActive, int minPlayers) {
+        this.leagueId = leagueId;
+        this.leagueName = leagueName;
+        this.leagueHost = leagueHost;
+        this.courseId = courseId;
+        this.isActive = isActive;
+        this.minPlayers = minPlayers;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
+    public String getClubName() {
+        return clubName;
+    }
+
+    public void setClubName(String clubName) {
+        this.clubName = clubName;
     }
 
     public boolean isActive() {
