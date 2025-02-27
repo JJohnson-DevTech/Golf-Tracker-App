@@ -25,16 +25,14 @@ public class JdbcLeaguesDao implements LeaguesDao {
                 "league_members.member_id, leagues.min_players, users.username, users.first_name, users.last_name, users.user_id  FROM leagues " +
                 "JOIN league_members ON leagues.league_id = league_members.league_id " +
                 "JOIN users ON league_members.member_id = users.user_id";
+        Map<Integer, Leagues> leaguesMap = new HashMap<>();
         try {
-            Map<Integer, Leagues> leaguesMap = new HashMap<>();
 
             jdbcTemplate.query(sql, (rs) -> {
 
                 int leagueId = rs.getInt("league_id");
 
-                Leagues league = leaguesMap.get(leagueId);
-                if(league == null){
-                    league = new Leagues(
+                   Leagues league = new Leagues(
                             leagueId,
                             rs.getString("league_name"),
                             rs.getInt("league_host"),
@@ -43,7 +41,7 @@ public class JdbcLeaguesDao implements LeaguesDao {
                             rs.getInt("min_players")
                     );
                     leaguesMap.put(leagueId, league);
-                }
+
 
                 int userId = rs.getInt("user_id");
                 if(userId > 0){
@@ -58,16 +56,14 @@ public class JdbcLeaguesDao implements LeaguesDao {
                     }
                     league.getLeagueUsers().add(user);
                 }
+
         });
-
-            return new ArrayList<>(leaguesMap.values());
-
         }  catch (EmptyResultDataAccessException e) {
             throw new DaoException("Nothing was returned.");
         } catch (Exception e){
             throw new DaoException("Issue with getAllLeagues");
         }
-
+        return new ArrayList<>(leaguesMap.values());
     }
 
     @Override
