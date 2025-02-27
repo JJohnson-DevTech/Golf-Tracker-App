@@ -62,7 +62,7 @@ export default {
           leagueName: this.league.leagueName,
           minPlayers: this.league.players,
           courseId: this.league.course,
-          leagueHost: this.league.host,
+          leagueHost: this.$store.state.user.id,
         });
         this.league = response.data;
       } catch(error) {
