@@ -4,11 +4,9 @@
     <div class="greeting">
       <h1>Welcome, {{ $store.state.user.firstName }}</h1>
     </div>
-
     <div class="logo">
       <img src="@/assets/Logo2-No-Background.png" alt="Logo" />
     </div>
-
   </div>
   <div class="userContainer">
     <h2>My Handicap: </h2>
@@ -19,16 +17,13 @@
     </div>
   </div>
 </template>
-  
 <script>
 import { ref, onMounted } from "vue";
 import authService from "../services/AuthService";
-
 export default {
   name: "UserProfileView",
   setup() {
     const user = ref(null);
-
     onMounted(async () => {
       try {
         user.value = await authService.getUser();
@@ -36,10 +31,8 @@ export default {
         console.error("Error fetching user data:", error);
       }
     });
-
     return { user };
   },
-
   methods: {
     getScore() {
       axios.get("http://localhost:9000/api/scores/course")
@@ -64,7 +57,6 @@ export default {
   },
 };
 </script>
-
 <style scoped>
 .user-profile-image {
   position: fixed;
@@ -76,11 +68,9 @@ export default {
   background: url('@/assets/GolfHole4.png') no-repeat center 40%;
   background-size: cover;
 }
-
 .greeting {
   font-family: 'fugaz one', serif;
 }
-
 .logo img {
   position: fixed;
   width: 25%;
@@ -88,7 +78,6 @@ export default {
   left: 45%;
   top: -1%
 }
-
 h1 {
   font-family: 'Fugaz One', serif;
   font-size: 70px;
@@ -97,59 +86,51 @@ h1 {
   border: none;
   background: none;
 }
-
 .user-nav-routes {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
 }
-
 .page-link {
   font-family: 'Sriracha', serif;
   font-size: 40px;
   font-style: normal;
-  color: #fcf400;
+  color: #FCF400;
   text-decoration: none;
   transition: background-color 0.3s;
   border-radius: 10px;
 }
-
 .page-link:hover {
-  background-color: #005e23;
-  color: #Ed0030;
+  background-color: #005E23;
+  color: #ED0030;
 }
-
 h2 {
   font-family: 'Fugaz One', serif;
   font-size: 60px;
   font-style: normal;
-  color: #fcf400;
+  color: #FCF400;
   border: none;
   margin-top: 10%;
   margin-left: 15%;
   margin-bottom: 10%;
 }
-
 /* Media query to adjust font size on smaller screens */
 @media (max-width: 1200px) {
   .page-link {
     font-size: x-large;
   }
 }
-
 @media (max-width: 992px) {
   .page-link {
     font-size: large;
   }
 }
-
 @media (max-width: 768px) {
   .page-link {
     font-size: medium;
   }
 }
-
 @media (max-width: 576px) {
   .page-link {
     font-size: small;

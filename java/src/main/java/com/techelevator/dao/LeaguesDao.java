@@ -10,10 +10,12 @@ public interface LeaguesDao {
 
     String generateInviteLink(int leagueId);
 
-    int createLeague (Leagues league);
+
 
     //TODO later date
 //    void inviteUserToLeague(int leagueId, int hostId, String email);
+
+    int createLeague(Leagues league);
 
     boolean acceptInvitation(String inviteLink, int userId);
 
@@ -29,5 +31,6 @@ public interface LeaguesDao {
     void updateLeague(Leagues league);
 
     void deactivateLeague(int leagueId);
+
 
 }

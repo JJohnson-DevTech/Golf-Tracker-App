@@ -33,11 +33,8 @@
 </div>
   </form>
 </template>
-
 <script>
-
 import axios from "axios";
-
 export default {
   data() {
     return {
@@ -64,19 +61,15 @@ export default {
           courseId: this.league.course,
           leagueHost: this.$store.state.user.id,
         });
-        
         this.league.leagueId = response.data.leagueId;
         this.link = response.data.inviteLink;
-
         console.log("League created successfully:", response.data);
       } catch(error) {
         this.error = error.response ? error.response.data.message : 'Something wrong with createLeague()';
       };
-    
       // Logic to create a league
       console.log("League created:", this.league);
     },
-
     copyLink() {
       navigator.clipboard.writeText(this.link).then(() => {
         alert("Invite link copied to clipboard!");
@@ -84,7 +77,6 @@ export default {
         console.error("Failed to copy link:", err);
       });
     },
-
     getCourses() {
       axios
         .get("http://localhost:9000/api/courses")
@@ -118,34 +110,29 @@ export default {
   },
 };
 </script>
-
 <style scoped>
-
 .form-input-group {
   font-family: 'Sriracha', serif;
   font-size: 1.5rem;
-  color: #fcf400;  
+  color: #FCF400;
 }
-
 button {
   font-family: 'Sriracha', serif;
   margin-top: -10px;
 }
-
 .link {
   font-family: 'Sriracha', serif;
   font-size: 1.5rem;
   font-style: normal;
   margin-top: -5%;
 }
-
 .course-list {
   list-style-type: none;
   padding: 0;
   margin: 0;
   max-height: 130px;
   overflow-y: auto;
-  border: 2px solid #fcf400;
+  border: 2px solid #FCF400;
   border-radius: 10px;
   background-color: rgba(0, 94, 35, 0.3);
   width: 100%;
@@ -153,7 +140,6 @@ button {
   margin-top: 4px;
   z-index: 1;
 }
-
 .course-list li {
   padding: 5px;
   cursor: pointer;
@@ -162,9 +148,7 @@ button {
   padding: 5px 15px;
   margin: 8px 15px;
 }
-
 .course-list li:hover {
   background-color: #005E23CF;
 }
-
 </style>

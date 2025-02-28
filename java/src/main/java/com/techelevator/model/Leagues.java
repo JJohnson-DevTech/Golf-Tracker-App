@@ -109,4 +109,6 @@ public class Leagues {
 
     public void setMinPlayers(int maxPlayers) { this.minPlayers = maxPlayers; }
 
+    public void setInviteLink(String s) {
+    }
 }

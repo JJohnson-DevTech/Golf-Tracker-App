@@ -43,7 +43,6 @@ mounted(){
 }
 };
 </script>
-
 <style scoped>
 
 .league-container {
@@ -52,7 +51,6 @@ mounted(){
   height: 100%;
   margin-left: 20%;
 }
-
 .league-image {
   position: fixed;
   top: 0;
@@ -62,19 +60,15 @@ mounted(){
   z-index: -1;
   background: url('@/assets/GolfHole6.png') no-repeat center center;
   background-size: cover;
-  
 }
-
 h1 {
   font-family: 'Fugaz One', serif;
   font-size: 80px;
-  color: #fcf400;
+  color: #FCF400;
   margin-top: 10%;
   border: none;
   background: none;
-  
 }
-
 button {
   font-size: 20px;
   border: 1px solid #fcf400;
@@ -85,5 +79,4 @@ button {
   cursor: pointer;
   margin-top: 10%;
 }
-
 </style>

@@ -206,4 +206,5 @@ public class JdbcLeaguesDao implements LeaguesDao {
         String sql = "UPDATE leagues SET is_active = FALSE WHERE league_id = ?";
         jdbcTemplate.update(sql, leagueId);
     }
+
 }
