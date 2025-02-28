@@ -8,12 +8,14 @@ public interface LeaguesDao {
 
     List<Leagues> getAllLeagues();
 
-    String generateInviteLink(int leagueId, int hostId);
+    String generateInviteLink(int leagueId);
 
-    Leagues createLeague (Leagues league);
+
 
     //TODO later date
 //    void inviteUserToLeague(int leagueId, int hostId, String email);
+
+    int createLeague(Leagues league);
 
     boolean acceptInvitation(String inviteLink, int userId);
 

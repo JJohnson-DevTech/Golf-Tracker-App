@@ -7,7 +7,10 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -48,15 +51,32 @@ public class LeagueController {
     }
 
     @PostMapping()
-    public ResponseEntity<Leagues> createLeague(@RequestBody Leagues league) {
+    public ResponseEntity<Map<String, Object>> createLeague(@RequestBody Leagues league) {
         if(league == null){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", "League data is required"));
         }
         try{
-            Leagues newLeague = jdbcLeaguesDao.createLeague(league);
-            return ResponseEntity.status(HttpStatus.CREATED).body(newLeague);
-        } catch (Exception e){
-            throw new DaoException("Issue with controller method 'createLeague'");
+            int leagueId = jdbcLeaguesDao.createLeague(league);
+
+            // Generate an invitation link using the returned leagueId
+            String inviteLink = jdbcLeaguesDao.generateInviteLink(leagueId);
+
+            // Create a response object with league details and invite link
+            Map<String, Object> response = new HashMap<>();
+            response.put("leagueId", leagueId);
+            response.put("leagueName", league.getLeagueName());
+            response.put("inviteLink", inviteLink);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        } catch (DataAccessException e) {
+            // Log SQL-related issues
+            System.err.println("Database error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "Database error occurred"));
+        } catch (Exception e) {
+            // Log any unexpected issues
+            System.err.println("Unexpected error: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "Unexpected server error"));
         }
     }
 

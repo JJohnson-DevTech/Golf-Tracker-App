@@ -3,6 +3,7 @@ package com.techelevator.dao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Leagues;
 import com.techelevator.model.User;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -21,67 +22,67 @@ public class JdbcLeaguesDao implements LeaguesDao {
 
     @Override
     public List<Leagues> getAllLeagues() {
-        String sql = "SELECT leagues.league_id, leagues.league_name, leagues.league_host, leagues.course_id, leagues.is_active, " +
-                "league_members.member_id, leagues.min_players, users.username, users.first_name, users.last_name, users.user_id  FROM leagues " +
-                "JOIN league_members ON leagues.league_id = league_members.league_id " +
-                "JOIN users ON league_members.member_id = users.user_id";
+        String sql = "SELECT leagues.league_id, leagues.league_name, leagues.league_host, leagues.course_id, leagues.is_active, golf_courses.course_name, " +
+                "league_members.member_id, leagues.min_players, users.username, users.first_name, users.last_name, users.user_id " +
+                "FROM leagues " +
+                "LEFT JOIN league_members ON leagues.league_id = league_members.league_id " + // Changed to LEFT JOIN
+                "LEFT JOIN users ON league_members.member_id = users.user_id " + // Changed to LEFT JOIN
+                "LEFT JOIN golf_courses ON leagues.course_id = golf_courses.course_id"; // Changed to LEFT JOIN
         Map<Integer, Leagues> leaguesMap = new HashMap<>();
         try {
-
             jdbcTemplate.query(sql, (rs) -> {
-
                 int leagueId = rs.getInt("league_id");
-
-                   Leagues league = new Leagues(
+                Leagues league = leaguesMap.get(leagueId);
+                if (league == null) { // Check if league already exists
+                    league = new Leagues(
                             leagueId,
                             rs.getString("league_name"),
                             rs.getInt("league_host"),
                             rs.getInt("course_id"),
                             rs.getBoolean("is_active"),
-                            rs.getInt("min_players")
+                            rs.getInt("min_players"),
+                            rs.getString("course_name")
                     );
-                    leaguesMap.put(leagueId, league);
-
-
+                    leaguesMap.put(leagueId, league); // Add new league to map
+                }
                 int userId = rs.getInt("user_id");
-                if(userId > 0){
+                if (userId > 0) {
                     User user = new User(
                             userId,
                             rs.getString("username"),
                             rs.getString("first_name"),
                             rs.getString("last_name")
                     );
-                    if(league.getLeagueUsers() == null){
-                        league.setLeagueUsers(new ArrayList<>());
+                    if (league.getLeagueUsers() == null) {
+                        league.setLeagueUsers(new ArrayList<>()); // Initialize user list if null
                     }
-                    league.getLeagueUsers().add(user);
+                    league.getLeagueUsers().add(user); // Add user to league
                 }
-
-        });
-        }  catch (EmptyResultDataAccessException e) {
+            });
+        } catch (EmptyResultDataAccessException e) {
             throw new DaoException("Nothing was returned.");
-        } catch (Exception e){
-            throw new DaoException("Issue with getAllLeagues");
+        } catch (Exception e) {
+            throw new DaoException("Issue with getAllLeagues", e);
         }
-        return new ArrayList<>(leaguesMap.values());
+        return new ArrayList<>(leaguesMap.values()); // Return list of leagues
     }
 
     @Override
-    public String generateInviteLink(int leagueId, int hostId) {
+    public String generateInviteLink(int leagueId) {
         String inviteCode = UUID.randomUUID().toString();
-        String baseURL = "https://localhost:9000";
+        String baseURL = "http://localhost:9000";
         String inviteLink = baseURL + "/invite/" + inviteCode;
 
         //stores this invitation link in our database
-        String sql = "INSERT INTO invitations (league_id, host_id, invite_link) VALUES (?, ?, ?);";
-        jdbcTemplate.update(sql, leagueId, hostId, inviteLink);
+        String sql = "INSERT INTO invitations (league_id, invite_link) VALUES (?, ?);";
+        jdbcTemplate.update(sql, leagueId, inviteLink);
         System.out.println(inviteLink);
         return inviteLink;
 
     }
 
     @Override
-    public Leagues createLeague(Leagues league) {
+    public int createLeague(Leagues league) {
         // Checking to make sure course exists before creating a league
         String checkForCourse = "SELECT COUNT(*) FROM golf_courses WHERE course_id = ?";
         Integer courseExists = jdbcTemplate.queryForObject(checkForCourse, Integer.class, league.getCourseId());
@@ -90,12 +91,15 @@ public class JdbcLeaguesDao implements LeaguesDao {
             throw new IllegalArgumentException("Invalid course ID: Course does not exist.");
         }
         String sql = "INSERT INTO leagues (league_name, league_host, course_id, is_active, min_players) " +
-                "VALUES (?, ?, ?, ?, ? ) RETURNING league_id";
-        int newLeagueId = jdbcTemplate.queryForObject(sql, int.class, league.getLeagueName(), league.getLeagueHost(), league.getCourseId(),
-                 league.getIsActive(), league.getMinPlayers());
-        Leagues output = getLeagueById(newLeagueId);
-        output.setInviteLink(generateInviteLink(newLeagueId, league.getLeagueHost()));
-        return output;
+                "VALUES (?, ?, ?, ?, ? ) RETURNING league_id;";
+        try {
+            return jdbcTemplate.queryForObject(sql, Integer.class, league.getLeagueName(),
+                    league.getLeagueHost(), league.getCourseId(),
+                    league.getIsActive(), league.getMinPlayers());
+        } catch (DataAccessException e) {
+            System.err.println("Error inserting league: " + e.getMessage());
+            throw new DaoException("Error inserting league", e);
+        }
     }
 
 
