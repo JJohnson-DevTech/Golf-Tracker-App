@@ -3,7 +3,7 @@
     <div class="form-input-group">
       <div class="admin">
         <label for="host">League Administrator</label>
-        <input type="text" id="host" placeholder="Your Username" v-model="league.host" required autofocus />
+        <input type="text" id="host" v-model="league.host" required autofocus />
       </div>
       <div class="league">
         <label for="leagueName">League Name</label>
@@ -61,10 +61,8 @@ export default {
           courseId: this.league.course,
           leagueHost: this.$store.state.user.id,
         });
-        
         this.league.leagueId = response.data.leagueId;
         this.link = response.data.inviteLink;
-
         console.log("League created successfully:", response.data);
       } catch(error) {
         this.error = error.response ? error.response.data.message : 'Something wrong with createLeague()';
@@ -72,7 +70,6 @@ export default {
       // Logic to create a league
       console.log("League created:", this.league);
     },
-
     copyLink() {
       navigator.clipboard.writeText(this.link).then(() => {
         alert("Invite link copied to clipboard!");
@@ -80,7 +77,6 @@ export default {
         console.error("Failed to copy link:", err);
       });
     },
-
     getCourses() {
       axios
         .get("http://localhost:9000/api/courses")
@@ -107,7 +103,7 @@ export default {
       setTimeout(() => {
         this.showCourseList = false;
       }, 200); // Delay to allow click event to register
-    }
+    },
   },
   mounted() {
     this.getCourses();
@@ -115,32 +111,28 @@ export default {
 };
 </script>
 <style scoped>
-
 .form-input-group {
   font-family: 'Sriracha', serif;
   font-size: 1.5rem;
-  color: #fcf400;  
+  color: #FCF400;
 }
-
 button {
   font-family: 'Sriracha', serif;
   margin-top: -10px;
 }
-
 .link {
   font-family: 'Sriracha', serif;
   font-size: 1.5rem;
   font-style: normal;
   margin-top: -5%;
 }
-
 .course-list {
   list-style-type: none;
   padding: 0;
   margin: 0;
   max-height: 130px;
   overflow-y: auto;
-  border: 2px solid #fcf400;
+  border: 2px solid #FCF400;
   border-radius: 10px;
   background-color: rgba(0, 94, 35, 0.3);
   width: 100%;
@@ -159,5 +151,4 @@ button {
 .course-list li:hover {
   background-color: #005E23CF;
 }
-
 </style>
