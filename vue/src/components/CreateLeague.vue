@@ -33,12 +33,8 @@
 </div>
   </form>
 </template>
-
 <script>
-
 import axios from "axios";
-
-
 export default {
   data() {
     return {
@@ -73,7 +69,6 @@ export default {
       } catch(error) {
         this.error = error.response ? error.response.data.message : 'Something wrong with createLeague()';
       };
-    
       // Logic to create a league
       console.log("League created:", this.league);
     },
@@ -114,15 +109,11 @@ export default {
       }, 200); // Delay to allow click event to register
     }
   },
-  
-  
-  
   mounted() {
     this.getCourses();
   },
 };
 </script>
-
 <style scoped>
 
 .form-input-group {
@@ -157,7 +148,6 @@ button {
   margin-top: 4px;
   z-index: 1;
 }
-
 .course-list li {
   padding: 5px;
   cursor: pointer;
@@ -166,7 +156,6 @@ button {
   padding: 5px 15px;
   margin: 8px 15px;
 }
-
 .course-list li:hover {
   background-color: #005E23CF;
 }
