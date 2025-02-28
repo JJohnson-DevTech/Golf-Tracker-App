@@ -8,9 +8,12 @@
      <button @click="$router.push('/create-league')">Create League</button>
  </div>
 </template>
+
 <script>
+
 import League from '@/components/League.vue';
 import axios from 'axios';
+
 export default {
  components: {
      League
@@ -42,6 +45,7 @@ mounted(){
 </script>
 
 <style scoped>
+
 .league-container {
   position: relative;
   width: 100%;
@@ -72,11 +76,12 @@ h1 {
 }
 
 button {
-background-color: #005e23;
+  font-size: 20px;
+  border: 1px solid #fcf400;
+  background-color: #005e23;
   color: #fcf400;
   padding: 15px 30px;
-  border: none;
-  border-radius: 5px;
+  border-radius: 15px;
   cursor: pointer;
   margin-top: 10%;
 }

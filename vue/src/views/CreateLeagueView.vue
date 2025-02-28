@@ -100,10 +100,11 @@ h1 {
   font-size: 22px;
   background-color: #005e23;
   color: #fcf400;
-  padding: 10px 20px;
-  border: none;
   border-radius: 5px;
   cursor: pointer;
+  border: 1px solid #fcf400;
+  padding: 10px 25px;
+  border-radius: 15px;
 }
 
 #back {

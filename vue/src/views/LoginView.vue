@@ -9,7 +9,7 @@
             <div role="alert" v-if="invalidCredentials">
               Invalid username and password!
             </div>
-            <div role="alert" v-if="this.$route.query.registration">
+            <div class="registration-message" role="alert" v-if="this.$route.query.registration">
               Thank you for registering, please sign in.
             </div>
             <div class="input-group username-group">
@@ -158,6 +158,16 @@ input[type="password"] {
   color: #007bff;
   text-decoration: none;
   margin-left: -100%;
+}
+
+.registration-message {
+  position: absolute;
+  left: 28%; 
+  bottom: 141px;
+  color: #005e23;
+  background: rgba(252, 244, 0, 0.8);
+  padding: 5px 10px;
+  border-radius: 5px;
 }
 
 </style>
