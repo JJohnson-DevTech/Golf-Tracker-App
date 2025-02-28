@@ -20,7 +20,7 @@ CREATE TABLE golf_courses (
     city varchar(50) NOT NULL,
     state_ab char(2) NOT NULL,
     country varchar(30) NOT NULL,
-    par int
+    par int DEFAULT 72
 );
 
 CREATE TABLE user_favorites (

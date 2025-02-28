@@ -12,34 +12,38 @@
         <div role="alert" v-if="registrationErrors">
           {{ registrationErrorMsg }}
         </div>
-        <br>
-        <br>
-        <div class="form-input-group">
-          <label for="firstName">First Name</label>
-          <input type="text" id="firstName" v-model="user.firstName" required autofocus />
+        <div class="inputs">
+          <div class="form-input-group">
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" v-model="user.firstName" required autofocus />
+          </div>
+          <div class="form-input-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" v-model="user.lastName" required />
+          </div>
+          <div class="form-input-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" v-model="user.email" required />
+          </div>
+          <div class="form-input-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" v-model="user.username" required autofocus />
+          </div>
+          <div class="form-input-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" v-model="user.password" required />
+          </div>
+          <div class="form-input-group">
+           <label for="confirmPassword">Confirm Password</label>
+           <input type="password" id="confirmPassword" v-model="user.confirmPassword" required />
+          </div>
+          <div class="buttons">
+            <button type="submit">Create Account</button>
+            <div class="accountExists">
+              <p><router-link id="router-login" v-bind:to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
+            </div>
+          </div>  
         </div>
-        <div class="form-input-group">
-          <label for="lastName">Last Name</label>
-          <input type="text" id="lastName" v-model="user.lastName" required />
-        </div>
-        <div class="form-input-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" v-model="user.email" required />
-        </div>
-        <div class="form-input-group">
-          <label for="username">Username</label>
-          <input type="text" id="username" v-model="user.username" required autofocus />
-        </div>
-        <div class="form-input-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" v-model="user.password" required />
-        </div>
-        <div class="form-input-group">
-          <label for="confirmPassword">Confirm Password</label>
-          <input type="password" id="confirmPassword" v-model="user.confirmPassword" required />
-        </div>
-          <button type="submit">Create Account</button>
-          <p><router-link id="router-login" v-bind:to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
       </form>
     </div>
   </body>
@@ -98,7 +102,6 @@ export default {
 </script>
 
 <style scoped>
-
 .background-image {
   position: fixed;
   top: 0;
@@ -112,9 +115,8 @@ export default {
   width: 100%;
   height: 100%;
 }
-
 .form-input-group {
-  margin-bottom: 0.5rem;
+  margin-bottom: -20%;
   font-family: "Sriracha", serif;
 }
 

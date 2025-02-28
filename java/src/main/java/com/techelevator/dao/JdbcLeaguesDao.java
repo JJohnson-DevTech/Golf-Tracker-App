@@ -60,7 +60,7 @@ public class JdbcLeaguesDao implements LeaguesDao {
                     league.getLeagueUsers().add(user);
                 }
 
-            });
+        });
         }  catch (EmptyResultDataAccessException e) {
             throw new DaoException("Nothing was returned.");
         } catch (Exception e){
@@ -264,4 +264,5 @@ public class JdbcLeaguesDao implements LeaguesDao {
         String sql = "UPDATE leagues SET is_active = FALSE WHERE league_id = ?";
         jdbcTemplate.update(sql, leagueId);
     }
+
 }

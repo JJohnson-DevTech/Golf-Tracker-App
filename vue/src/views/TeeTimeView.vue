@@ -6,7 +6,7 @@
             <div class="tee-time-header">
                 <h1>Upcoming Tee Times</h1>
 
-                <router-link to="/tee-times/add" class="create-tee-time-button">Create Tee Time</router-link>
+                <router-link to="/teetimes/add" class="create-tee-time-button">Create Tee Time</router-link>
             </div>
             <TeeTime :teeTimes="teeTimes" />
         </div>
@@ -26,23 +26,22 @@ export default {
             teeTimes: []
         };
     },
-    mounted() {
-        this.teeTimes = [
-            {
-                tee_time: '02-28-2025 10:00:00 AM',
-                club_name: 'Pebble Beach Golf Club',
-                course_name: 'Pebble Beach',
-                total_players: 4,
-                league_name: 'Pebble Beach League'
-            },
-            {
-                tee_time: '04-14-2025 1:00:00 PM',
-                club_name: 'Grand Traverse Resort',
-                course_name: 'The Bear',
-                total_players: 4,
-                league_name: 'Monday Night League'
-            },
-        ];
+    methods: {
+        async fetchTeeTimes() {
+            try {
+                const response = await APIService.getTeeTimeByUserId(this.$store.state.user.id);
+                console.log('Fetched tee times', response.data);
+                if (Array.isArray(response.data)) {
+                    this.teeTimes = response.data;
+                }
+            } catch (error) {
+                console.error('Error fetching tee times', error);
+            }
+        },
+        
+    },
+    created() {
+        this.fetchTeeTimes();
     }
 };
 </script>

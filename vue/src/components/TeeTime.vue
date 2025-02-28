@@ -10,11 +10,11 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="teeTime in teeTimes" :key="teeTime.tee_time_id">
-                <td>{{ teeTime.tee_time }}</td>
-                <td>{{ teeTime.club_name }}</td>
+            <tr v-for="teeTime in teeTimes" :key="teeTime.teeTimeId">
+                <td>{{ new Date(teeTime.tee_time).toLocaleDateString() }} {{ new Date(teeTime.tee_time).toLocaleTimeString() }}</td>
+                <td>{{ toTitleCase(teeTime.club_name) }}</td>
                 <td>{{ teeTime.course_name }}</td>
-                <td>{{ teeTime.total_players }}</td>
+                <td>{{ teeTime.num_players }}</td>
                 <td>{{ teeTime.league_name }}</td>
             </tr>
         </tbody>
@@ -22,12 +22,21 @@
 </template>
 
 <script>
+
 export default {
     props: {
         teeTimes: {
             type: Array,
             required: true
         }
+    },
+    methods: {
+        toTitleCase(text) {
+            if (!text) return '';
+            return text.replace(/\w\S*/g, (txt) => {
+                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+            });
+        },
     }
 };
 </script>

@@ -122,7 +122,7 @@ export default {
             )
                 .then(() => {
                     // Tee time added successfully, navigate to the tee time list page
-                    this.$router.push('/tee-times');
+                    this.$router.push('/teetimes');
                 })
                 .catch(error => {
                     // Handle the error

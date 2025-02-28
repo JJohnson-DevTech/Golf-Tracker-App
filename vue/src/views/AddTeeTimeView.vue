@@ -3,7 +3,7 @@
         <AddTeeTime />
     </div>
     <div class="nav-back">
-        <router-link id="back" to="/tee-times">Back</router-link>
+        <router-link id="back" to="/teetimes">Back</router-link>
     </div>
 </template>
 
