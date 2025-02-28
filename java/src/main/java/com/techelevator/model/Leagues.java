@@ -19,21 +19,14 @@ public class Leagues {
 
     private List<User> leagueUsers = new ArrayList<>();
 
-    public Leagues(){}
     private String courseName;
 
     private String clubName;
 
-    public String getInviteLink() {
-        return inviteLink;
-    }
-
-    public void setInviteLink(String inviteLink) {
-        this.inviteLink = inviteLink;
-    }
-
     private String inviteLink;
 
+
+    public Leagues(){}
 
     public Leagues(int leagueId, String leagueName, int leagueHost, int courseId, boolean isActive, int minPlayers) {
         this.leagueId = leagueId;
@@ -54,30 +47,6 @@ public class Leagues {
         this.isActive = isActive;
         this.minPlayers = minPlayers;
         this.courseName = courseName;
-    }
-
-    public String getCourseName() {
-        return courseName;
-    }
-
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
-
-    public List<User> getLeagueUsers() {
-        return leagueUsers;
-    }
-
-    public void setLeagueUsers(List<User> leagueUsers) {
-        this.leagueUsers = leagueUsers;
     }
 
     public String getCourseName() {
@@ -140,4 +109,6 @@ public class Leagues {
 
     public void setMinPlayers(int maxPlayers) { this.minPlayers = maxPlayers; }
 
+    public void setInviteLink(String s) {
+    }
 }

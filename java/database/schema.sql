@@ -71,4 +71,17 @@ CREATE TABLE tee_times (
     CONSTRAINT fk_tee_times_league FOREIGN KEY (league_id) REFERENCES leagues(league_id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
+CREATE TABLE scores (
+    score_id SERIAL PRIMARY KEY,
+    player_id INT NOT NULL,
+    league_id INT NOT NULL,
+    tee_time_id INT NOT NULL,
+    course_id INT NOT NULL,
+    score INT,
+    CONSTRAINT fk_scores_users FOREIGN KEY (player_id) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_scores_leagues FOREIGN KEY (league_id) REFERENCES leagues(league_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_scores_tee FOREIGN KEY (tee_time_id) REFERENCES  tee_times(tee_time_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_scores_courses FOREIGN KEY (course_id) REFERENCES golf_courses(course_id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 COMMIT TRANSACTION;

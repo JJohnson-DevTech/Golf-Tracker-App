@@ -23,50 +23,48 @@ public class JdbcLeaguesDao implements LeaguesDao {
     @Override
     public List<Leagues> getAllLeagues() {
         String sql = "SELECT leagues.league_id, leagues.league_name, leagues.league_host, leagues.course_id, leagues.is_active, golf_courses.course_name, " +
-                "league_members.member_id, leagues.min_players, users.username, users.first_name, users.last_name, users.user_id  FROM leagues " +
-                "JOIN league_members ON leagues.league_id = league_members.league_id " +
-                "JOIN users ON league_members.member_id = users.user_id " +
-                "JOIN golf_courses ON leagues.course_id = golf_courses.course_id";
+                "league_members.member_id, leagues.min_players, users.username, users.first_name, users.last_name, users.user_id " +
+                "FROM leagues " +
+                "LEFT JOIN league_members ON leagues.league_id = league_members.league_id " + // Changed to LEFT JOIN
+                "LEFT JOIN users ON league_members.member_id = users.user_id " + // Changed to LEFT JOIN
+                "LEFT JOIN golf_courses ON leagues.course_id = golf_courses.course_id"; // Changed to LEFT JOIN
         Map<Integer, Leagues> leaguesMap = new HashMap<>();
         try {
-
             jdbcTemplate.query(sql, (rs) -> {
-
                 int leagueId = rs.getInt("league_id");
-
-                Leagues league = new Leagues(
-                        leagueId,
-                        rs.getString("league_name"),
-                        rs.getInt("league_host"),
-                        rs.getInt("course_id"),
-                        rs.getBoolean("is_active"),
-                        rs.getInt("min_players"),
-                        rs.getString("course_name")
-                );
-                leaguesMap.put(leagueId, league);
-
-
+                Leagues league = leaguesMap.get(leagueId);
+                if (league == null) { // Check if league already exists
+                    league = new Leagues(
+                            leagueId,
+                            rs.getString("league_name"),
+                            rs.getInt("league_host"),
+                            rs.getInt("course_id"),
+                            rs.getBoolean("is_active"),
+                            rs.getInt("min_players"),
+                            rs.getString("course_name")
+                    );
+                    leaguesMap.put(leagueId, league); // Add new league to map
+                }
                 int userId = rs.getInt("user_id");
-                if(userId > 0){
+                if (userId > 0) {
                     User user = new User(
                             userId,
                             rs.getString("username"),
                             rs.getString("first_name"),
                             rs.getString("last_name")
                     );
-                    if(league.getLeagueUsers() == null){
-                        league.setLeagueUsers(new ArrayList<>());
+                    if (league.getLeagueUsers() == null) {
+                        league.setLeagueUsers(new ArrayList<>()); // Initialize user list if null
                     }
-                    league.getLeagueUsers().add(user);
+                    league.getLeagueUsers().add(user); // Add user to league
                 }
-
-        });
-        }  catch (EmptyResultDataAccessException e) {
+            });
+        } catch (EmptyResultDataAccessException e) {
             throw new DaoException("Nothing was returned.");
-        } catch (Exception e){
-            throw new DaoException("Issue with getAllLeagues");
+        } catch (Exception e) {
+            throw new DaoException("Issue with getAllLeagues", e);
         }
-        return new ArrayList<>(leaguesMap.values());
+        return new ArrayList<>(leaguesMap.values()); // Return list of leagues
     }
 
     @Override
