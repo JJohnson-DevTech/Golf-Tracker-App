@@ -171,25 +171,21 @@ export default {
 
 
 <style scoped>
-.add-course-container {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
 
 h1 {
-    margin: 1px;
+    font-family: 'Fugaz One', serif;
+    font-size: 40px;
+    text-align: center;
+    width: 20%;
+    margin-top: 5%;
     border: none;
+    color: #fcf400;
+    border: 3px solid #005e23;
 }
 
 form {
     width: 60vw;
-    max-width: 80%;
+    max-width: 50%;
     min-width: 300px;
     padding-bottom: 2em;
     display: flex;
@@ -200,8 +196,7 @@ form {
 
 label {
     font-family: 'Sriracha', serif;
-    font-size: 1.1rem;
-    font-weight: 400;
+    font-size: 2rem;
     font-style: normal;
     width: 100%;
     max-width: 300px;
@@ -209,11 +204,14 @@ label {
 }
 
 input {
+    font-size: 20px;
     margin: 5px 0;
-    width: 80%;
-    max-width: 300px;
+    width: 30%;
     min-height: 2em;
     border-radius: 20px;
+    color: #fcf400;
+    border: 1px solid #fcf400;
+    background-color: rgba(0, 94, 35, 0.7);
     outline: none;
     text-align: center;
 }
@@ -222,9 +220,17 @@ input:focus {
     outline: 2px solid #fcf400;
 }
 
+input::placeholder {
+    color: #fcf400;
+}
+
+
 button {
     width: auto;
-    align-self: center;
+    padding: 5px 15px;
+    font-size: 22px;
+    margin-top: 10px;
+    border-radius: 20px;
     background-color: #fcf400;
     color: #005e23;
     font-family: 'Fugaz One', serif;
@@ -243,10 +249,33 @@ button:hover {
     width: 100%;
     height: 100%;
     z-index: -1;
-    background-image: url('@/assets/GolfHole3.png');
+    background: url('@/assets/GolfHole3.png') no-repeat center center;
     background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+}
+
+.filtered-list {
+    width: 100%;
+    max-width: 300px;
+    max-height: 100px;
+    overflow-y: auto;
+    background-color: rgba(0, 94, 35, 0.3);
+    border-radius: 10px;
+    border: 2px solid #fcf400;
+    padding: 10px;
+}
+
+
+.filtered-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.filtered-list::-webkit-scrollbar-thumb {
+    background-color: #fcf400;
+    border-radius: 10px;
+}
+
+.filtered-list::-webkit-scrollbar-track {
+    background-color: rgba(0, 94, 35, 0.3);
 }
 
 .filtered-list ul {
@@ -258,8 +287,10 @@ button:hover {
 .filtered-list li {
     cursor: pointer;
     border-radius: 10px;
+    padding: 5px;
     transition: 0.3s;
     font-family: 'Sriracha', serif;
+    text-align: center;
 }
 
 .filtered-list li:hover {
@@ -274,5 +305,15 @@ button:hover {
     outline: none; 
     text-align: center; 
     margin: 5px 0; 
+    background-color: rgba(0, 94, 35, 0.7);
+    color: #fcf400;
+    font-size: 20px;
+    -moz-appearance: textfield;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(75%) sepia(100%) saturate(300%) hue-rotate(20deg);
+    cursor: pointer;
 }
 </style>

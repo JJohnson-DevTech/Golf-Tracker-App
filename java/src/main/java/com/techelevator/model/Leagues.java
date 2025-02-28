@@ -80,6 +80,30 @@ public class Leagues {
         this.leagueUsers = leagueUsers;
     }
 
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public List<User> getLeagueUsers() {
+        return leagueUsers;
+    }
+
+    public void setLeagueUsers(List<User> leagueUsers) {
+        this.leagueUsers = leagueUsers;
+    }
+
     public int getLeagueId() {
         return leagueId;
     }

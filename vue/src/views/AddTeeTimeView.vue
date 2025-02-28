@@ -19,15 +19,12 @@ export default {
 
 <style scoped>
 #back {
-    margin-top: 20px;
     font-family: 'Fugaz One', serif;
-    font-weight: 400;
-    font-style: normal;
     color: #fcf400;
-    text-decoration: none; /* Ensure no underline */
+    text-decoration: none; 
 }
 
 #back:hover {
-    color: #Ed0030; /* Maintain yellow color on hover */
+    color: #Ed0030;
 }
 </style>
