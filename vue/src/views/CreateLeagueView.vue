@@ -63,7 +63,6 @@ form {
   margin-left: 1%;
 }
 
-
 #course {
   margin-left: 11%;
   width: 100%;
@@ -78,7 +77,7 @@ form {
   margin-top: 10%;
   text-align: center;
   margin-left: 10%;
-  width: 60%;
+  width: 45%;
   font-size: 22px;
 }
 

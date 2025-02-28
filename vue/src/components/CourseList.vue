@@ -89,7 +89,7 @@ export default {
 }
 
 #state {
-    width: 20%;
+    width: 30%;
 }
 
 

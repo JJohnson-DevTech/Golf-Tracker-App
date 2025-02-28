@@ -1,6 +1,5 @@
 <template>
     <div class="filters">
-        
         <div class="league-label">
             <h3>League Name</h3>
         </div>
@@ -10,17 +9,34 @@
         <div class="league-label">
             <h3>Members</h3>
         </div>
+        <ul v-if="leagues.length > 0"    class="leagues-list">
+                <li  v-for="league in leagues" :key="league.id">
+                    <RouterLink class="league-box" :to="{ name: 'LeaderBoard' }"  v-on:click="goToLeaderBoardPage" >{{league.leagueName}}</RouterLink>
+                    <div class="course-box">{{league.courseName}}</div>
+                    <div class="members-box">{{league.minPlayers}}</div>
+                </li>
+            </ul>
     </div>
 </template>
 
 <script>
+
 export default {
     props: {
+        leagues: {
+            type: Array,
+            required: true,
+        },
         filters: {
             type: Object,
             required: true
         }
-    }
+    },
+    methods: {
+        goToLeaderBoardPage() {
+            this.$router.push({ name: 'LeaderBoard' });
+        }
+    },
 };
 </script>
 

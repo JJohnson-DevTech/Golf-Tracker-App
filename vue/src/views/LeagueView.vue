@@ -1,26 +1,43 @@
 <template>
-     <div class="league-container">
-        <div class="league-image"></div>
-
-        <div>
-            <h1>Leagues</h1>
-            <League/>
-        </div>
-        <button @click="$router.push('/create-league')">Create League</button>
-    </div>
+  <div class="league-container">
+     <div class="league-image"></div>
+     <div>
+         <h1>Leagues</h1>
+         <League :leagues="leagues" :filters="filters"/>
+     </div>
+     <button @click="$router.push('/create-league')">Create League</button>
+ </div>
 </template>
-
 <script>
 import League from '@/components/League.vue';
-
+import axios from 'axios';
 export default {
-    components: {
-        League
-    },
-  name: 'LeagueView',
-  data() {
-    return {};
-  },
+ components: {
+     League
+ },
+name: 'LeagueView',
+data() {
+ return {
+   leagues: [],
+   filters: {},
+ };
+},
+methods: {
+ async fetchLeagues() {
+   try{
+     axios.get("http://localhost:9000/api/leagues")
+     .then((response) => {
+       console.log(response.data);
+       this.leagues = response.data;
+     })
+   } catch (error) {
+     console.error('Error fetching leagues:', error);
+   }
+ }
+},
+mounted(){
+ this.fetchLeagues();
+}
 };
 </script>
 

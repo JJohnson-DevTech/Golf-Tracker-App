@@ -51,13 +51,10 @@ CREATE TABLE league_members (
 );
 
 CREATE TABLE invitations (
-    invitation_id INT NOT NULL,
+    invitation_id SERIAL PRIMARY KEY,
     league_id INT NOT NULL,
     host_id INT NOT NULL,
-    email VARCHAR(50),
-    status VARCHAR(50) DEFAULT 'pending',
     invite_link VARCHAR(150) UNIQUE,
-    invite_sent TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_league_invite_id FOREIGN KEY (league_id) REFERENCES leagues(league_id),
     CONSTRAINT fk_host_invite_id FOREIGN KEY (host_id) REFERENCES users(user_id)
 );

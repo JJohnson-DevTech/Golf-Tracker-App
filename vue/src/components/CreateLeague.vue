@@ -27,9 +27,10 @@
     <div class="submit">
       <button type="submit">Create League</button>
     </div>
-    <div class="link">
-      <label for="generated-link">League Link</label>
-    </div>
+    <div v-if="link">
+    <p>Invite Link: <input type="text" v-model="link" readonly></p>
+    <button @click="copyLink">Copy Link</button>
+</div>
   </form>
 </template>
 
@@ -51,19 +52,23 @@ export default {
       courseSearch: "",
       filteredCourses: [],
       showCourseList: false,
+      link: "",
     };
   },
   methods: {
     async createLeague() {
-
       try{
         const response = await axios.post('http://localhost:9000/api/leagues', {
           leagueName: this.league.leagueName,
           minPlayers: this.league.players,
           courseId: this.league.course,
-          leagueHost: this.league.host,
+          leagueHost: this.$store.state.user.id,
         });
-        this.league = response.data;
+        
+        this.league.leagueId = response.data.leagueId;
+        this.link = response.data.inviteLink;
+
+        console.log("League created successfully:", response.data);
       } catch(error) {
         this.error = error.response ? error.response.data.message : 'Something wrong with createLeague()';
       };
@@ -71,6 +76,15 @@ export default {
       // Logic to create a league
       console.log("League created:", this.league);
     },
+
+    copyLink() {
+      navigator.clipboard.writeText(this.link).then(() => {
+        alert("Invite link copied to clipboard!");
+      }).catch(err => {
+        console.error("Failed to copy link:", err);
+      });
+    },
+
     getCourses() {
       axios
         .get("http://localhost:9000/api/courses")

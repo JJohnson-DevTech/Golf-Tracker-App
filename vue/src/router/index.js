@@ -2,7 +2,6 @@ import { createRouter as createRouter, createWebHistory } from 'vue-router'
 import { useStore } from 'vuex'
 
 // Import components
-import HomeView from '../views/HomeView.vue';
 import LoginView from '../views/LoginView.vue';
 import LogoutView from '../views/LogoutView.vue';
 import RegisterView from '../views/RegisterView.vue';
@@ -14,6 +13,7 @@ import AddCourseView from '../views/AddCourseView.vue';
 import LeaderBoard_ScoreView from '../views/LeaderBoard_ScoreView.vue';
 import TeeTimeView from '../views/TeeTimeView.vue';
 import AddTeeTimeView from '../views/AddTeeTimeView.vue';
+import InviteHandler from '../components/InviteHandler.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -26,11 +26,7 @@ import AddTeeTimeView from '../views/AddTeeTimeView.vue';
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView,
-    meta: {
-      requiresAuth: true
-    }
+    redirect: () => '/login'
   },
   {
     path: "/login",
@@ -81,6 +77,14 @@ const routes = [
     }
   },
   {
+    path: '/invite/:inviteCode',
+    name: 'Invite',
+    component: InviteHandler,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
     path: "/leagues",
     name: "Leagues",
     component: LeagueView,
@@ -120,7 +124,6 @@ const routes = [
       requiresAuth: true
     }
   }
-  
 ];
 
 // Create the router

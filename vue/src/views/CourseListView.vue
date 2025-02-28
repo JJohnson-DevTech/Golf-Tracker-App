@@ -116,7 +116,7 @@ h1 {
     text-align: center;
     margin-top: 80px;
     font-size: 55px;
-    width: 18%;
+    width: 20%;
     border: 3px solid #005e23;
 }
 

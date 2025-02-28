@@ -117,12 +117,12 @@ export default {
 
 .username-group {
   top: 23.3%;
-  margin-left: -33.5%;
+  margin-left: -64%;
 }
 
 .password-group {
   top: 30.5%; 
-  margin-left: -33.5%;
+  margin-left: -64%;
 }
 
 input[type="text"],
@@ -138,14 +138,15 @@ input[type="password"] {
 }
 
 .login-button {
-  position: relative;
-  margin-top: 35px;
-  margin-right: 20px;
-  left: 1px;
+  position: absolute;
+  left: 34.2%;
+  transform: translateX(-50%);
   border: 1px solid #FCF400;
   border-radius: 5px;
   background-color: #005e23;
   color: #FCF400;
+  padding: 3px 15px;
+  margin-top: -.8%;
 }
 
 .login-button:hover {
@@ -156,6 +157,7 @@ input[type="password"] {
 .registration-link a {
   color: #007bff;
   text-decoration: none;
+  margin-left: -100%;
 }
 
 </style>
