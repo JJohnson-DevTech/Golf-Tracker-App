@@ -115,43 +115,6 @@ public class JdbcLeaguesDao implements LeaguesDao {
         }
     }
 
-
-    //TODO we could later implement this for more functionality
-//    @Override
-//    public void inviteUserToLeague(int leagueId, int hostId, String email) {
-//        // Checking if user already exists in league to ensure duplicate invites aren't sent
-//        // Alias's u - users and lm - league_members
-//        String checkUser = "SELECT COUNT(*) FROM users u JOIN league_members lm ON u.user_id = lm.member_id " +
-//                           "WHERE lm.league_id = ? AND u.email = ?";
-//        Integer userExists = jdbcTemplate.queryForObject(checkUser, Integer.class, leagueId, email);
-//
-//        if (userExists != null && userExists > 0) {
-//            throw new IllegalStateException("User is already a member of the league.");
-//        }
-//
-//        // Check if an invitation already exists
-//        String checkInviteSql = "SELECT COUNT(*) FROM invitations WHERE league_id = ? AND email = ? AND status = 'pending'";
-//        Integer existingInvite = jdbcTemplate.queryForObject(checkInviteSql, Integer.class, leagueId, email);
-//
-//        if (existingInvite != null && existingInvite > 0) {
-//            throw new IllegalStateException("An invitation for this user already exists.");
-//        }
-//
-//        String inviteLink = generateInviteLink(leagueId, hostId);
-//
-//        String sql = "INSERT INTO invitations (league_id, host_id, email, invite_link) VALUES (?, ?, ?, ?)";
-//        jdbcTemplate.update(sql, leagueId, hostId, email, inviteLink);
-//
-//        sendInvitationEmail(email, inviteLink);
-//    }
-
-
-        //TODO we could implement this later if we want some extra functionality
-//    public void sendInvitationEmail(String email, String inviteLink) {
-//        // Need code block for how to send email invite link
-//    }
-
-
     @Override
     public boolean acceptInvitation(String inviteLink, int userId) {
         String sql = "SELECT league_id FROM invitations WHERE invite_link LIKE ? AND status = 'pending'";
@@ -205,25 +168,6 @@ public class JdbcLeaguesDao implements LeaguesDao {
                         rs.getInt("min_players")
                 ), userId);
     }
-
-    //TODO could add later for extra functionality
-
-//    @Override
-//    public List<Leagues> getActiveLeaguesNotFull() {
-//        // This shows registered users active leagues that are not full
-//        // Alias's = l - leagues
-//        String sql = "SELECT l.* FROM leagues l WHERE l.is_active = TRUE AND l.max_players > " +
-//                "(SELECT COUNT(*) FROM league_members WHERE league_id = l.league_id)";
-//        return jdbcTemplate.query(sql,
-//                (rs, rowNum) -> new Leagues(
-//                        rs.getInt("league_id"),
-//                        rs.getString("league_name"),
-//                        rs.getInt("league_host"),
-//                        rs.getInt("course_id"),
-//                        rs.getTimestamp("match_time"),
-//                        rs.getBoolean("is_active"),
-//                        rs.getInt("max_players")));
-//    }
 
     @Override
     public boolean joinLeague(int leagueId, int userId) {
