@@ -9,24 +9,27 @@
 </template>
 
 <style>
+
 #capstone-app {
   color: #fcf400;
   margin: 0 auto;
   padding: 20px;
   width: 80%;
-  font-size: larger;
 }
 
 #user-link, #logout-link {
   font-family: 'Fugaz One', serif;
-  font-weight: 400;
+  font-size: 40px;
   font-style: normal;
   color: #fcf400;
+  background-color: #005e23;
+  padding: 10px;
+  border-radius: 25px;
+  opacity: 0.8;
 }
 
 #user-link:hover, #logout-link:hover {
   color: #Ed0030;
 }
-
 
 </style>

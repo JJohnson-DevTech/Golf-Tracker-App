@@ -69,14 +69,25 @@ public class JdbcLeaguesDao implements LeaguesDao {
 
     @Override
     public String generateInviteLink(int leagueId) {
+        if (leagueId <= 0) {
+            throw new IllegalArgumentException("Invalid league ID for invite link");
+        }
+
+        String getHostSql = "SELECT league_host FROM leagues WHERE league_id = ?";
+        Integer hostId = jdbcTemplate.queryForObject(getHostSql, Integer.class, leagueId);
+
+        if (hostId == null) {
+            throw new IllegalArgumentException("No host found for league ID: " + leagueId);
+        }
+
         String inviteCode = UUID.randomUUID().toString();
         String baseURL = "http://localhost:9000";
         String inviteLink = baseURL + "/invite/" + inviteCode;
 
         //stores this invitation link in our database
-        String sql = "INSERT INTO invitations (league_id, invite_link) VALUES (?, ?);";
-        jdbcTemplate.update(sql, leagueId, inviteLink);
-        System.out.println(inviteLink);
+        String sql = "INSERT INTO invitations (league_id, host_id, invite_link) VALUES (?, ?, ?);";
+        jdbcTemplate.update(sql, leagueId, hostId, inviteLink);
+        System.out.println("Generated Invite Link: " + inviteLink);
         return inviteLink;
 
     }
@@ -141,9 +152,9 @@ public class JdbcLeaguesDao implements LeaguesDao {
 
     @Override
     public boolean acceptInvitation(String inviteLink, int userId) {
-        String sql = "SELECT league_id FROM invitations WHERE invite_link = ? AND status = 'pending'";
+        String sql = "SELECT league_id FROM invitations WHERE invite_link LIKE ? AND status = 'pending'";
         try {
-            Integer leagueId = jdbcTemplate.queryForObject(sql, Integer.class, inviteLink);
+            Integer leagueId = jdbcTemplate.queryForObject(sql, Integer.class, "%" + inviteLink);
 
             if (leagueId != null) {
                 joinLeague(leagueId, userId);

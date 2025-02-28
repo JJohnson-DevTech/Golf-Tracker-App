@@ -27,18 +27,14 @@
     <div class="submit">
       <button type="submit">Create League</button>
     </div>
-    <div class="link">
-      <label for="generated-link">League Link</label>
-      <textarea v-model="link" id="generated-link"></textarea>
-    </div>
+    <div v-if="link">
+    <p>Invite Link: <input type="text" v-model="link" readonly></p>
+    <button @click="copyLink">Copy Link</button>
+</div>
   </form>
 </template>
-
 <script>
-
 import axios from "axios";
-
-
 export default {
   data() {
     return {
@@ -53,12 +49,11 @@ export default {
       courseSearch: "",
       filteredCourses: [],
       showCourseList: false,
-      link:"",
+      link: "",
     };
   },
   methods: {
     async createLeague() {
-
       try{
         const response = await axios.post('http://localhost:9000/api/leagues', {
           leagueName: this.league.leagueName,
@@ -66,18 +61,26 @@ export default {
           courseId: this.league.course,
           leagueHost: this.$store.state.user.id,
         });
-        this.league = response.data;
-        this.link = this.league.inviteLink;
         
+        this.league.leagueId = response.data.leagueId;
+        this.link = response.data.inviteLink;
+
+        console.log("League created successfully:", response.data);
       } catch(error) {
         this.error = error.response ? error.response.data.message : 'Something wrong with createLeague()';
       };
-    
       // Logic to create a league
       console.log("League created:", this.league);
     },
 
-    
+    copyLink() {
+      navigator.clipboard.writeText(this.link).then(() => {
+        alert("Invite link copied to clipboard!");
+      }).catch(err => {
+        console.error("Failed to copy link:", err);
+      });
+    },
+
     getCourses() {
       axios
         .get("http://localhost:9000/api/courses")
@@ -106,47 +109,55 @@ export default {
       }, 200); // Delay to allow click event to register
     }
   },
-  
-  
-  
   mounted() {
     this.getCourses();
   },
 };
 </script>
-
 <style scoped>
+
 .form-input-group {
   font-family: 'Sriracha', serif;
-    font-size: 1.1rem;
-    font-weight: 400;
-    font-style: normal;
+  font-size: 1.5rem;
+  color: #fcf400;  
 }
+
 button {
   font-family: 'Sriracha', serif;
   margin-top: -10px;
 }
+
 .link {
   font-family: 'Sriracha', serif;
-  font-size: 1.1rem;
-  font-weight: 400;
+  font-size: 1.5rem;
   font-style: normal;
   margin-top: -5%;
 }
+
 .course-list {
   list-style-type: none;
   padding: 0;
   margin: 0;
-}
-
-.course-list li {
-  padding: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+  max-height: 130px;
+  overflow-y: auto;
+  border: 2px solid #fcf400;
   border-radius: 10px;
+  background-color: rgba(0, 94, 35, 0.3);
+  width: 100%;
+  margin-left: 11%;
+  margin-top: 4px;
+  z-index: 1;
 }
-
+.course-list li {
+  padding: 5px;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 10px;
+  padding: 5px 15px;
+  margin: 8px 15px;
+}
 .course-list li:hover {
   background-color: #005E23CF;
 }
+
 </style>

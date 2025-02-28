@@ -66,16 +66,16 @@ export default {
 
 <style scoped>
 
-/* Fullscreen Background */
+
 .logo-container {
   position: absolute;
-  top: 10px; /* Adjust the distance from the top */
-  left: 10px; /* Adjust the distance from the left */
-  width: 30%; /* Adjust the width of the logo */
-  height: 30%; /* Adjust the height of the logo */
+  top: 10px; 
+  left: 10px;
+  width: 30%;
+  height: 30%;
   background: url("@/assets/Logo2-No-Background.png") no-repeat center center;
   background-size: contain;
-  z-index: 10; /* Ensure it stays on top of other elements */
+  z-index: 10;
 }
 
 .background-image {
@@ -92,8 +92,8 @@ export default {
 /* Grouping the form and scorecard image */
 .login-form-container {
   position: absolute;
-  bottom: 5vh; /* Positioned from the bottom */
-  right: 1vw; /* Positioned from the right */
+  bottom: 5vh;
+  right: 1vw;
   z-index: 1;
 }
 
@@ -117,12 +117,12 @@ export default {
 
 .username-group {
   top: 23.3%;
-  margin-left: -33.5%;
+  margin-left: -64%;
 }
 
 .password-group {
   top: 30.5%; 
-  margin-left: -33.5%;
+  margin-left: -64%;
 }
 
 input[type="text"],
@@ -138,14 +138,15 @@ input[type="password"] {
 }
 
 .login-button {
-  position: relative;
-  margin-top: 35px;
-  margin-right: 20px;
-  left: 1px;
+  position: absolute;
+  left: 34.2%;
+  transform: translateX(-50%);
   border: 1px solid #FCF400;
   border-radius: 5px;
   background-color: #005e23;
   color: #FCF400;
+  padding: 3px 15px;
+  margin-top: -.8%;
 }
 
 .login-button:hover {
@@ -156,6 +157,7 @@ input[type="password"] {
 .registration-link a {
   color: #007bff;
   text-decoration: none;
+  margin-left: -100%;
 }
 
 </style>
