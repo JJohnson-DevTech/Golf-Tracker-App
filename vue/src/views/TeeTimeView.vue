@@ -60,10 +60,9 @@ export default {
     width: 100%;
     height: 100%;
     z-index: -1;
-    background-image: url('@/assets/GolfHole3.png');
+    background: url('@/assets/GolfHole3.png') no-repeat center center;
     background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    
 }
 
 .content {
@@ -73,33 +72,36 @@ export default {
 
 h1 {
     font-family: 'Fugaz One', serif;
-    font-weight: 400;
-    font-style: normal;
+    text-align: center;
+    font-size: 40px;
     color: #fcf400;
-    margin-bottom: 4px;
-    border: none;
+    border: 3px solid #005e23;
+    padding: 5px;
+    margin-top: 5%;
+    width: 25%;
 }
 
 .tee-time-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
 }
 
 .create-tee-time-button {
     font-family: 'Fugaz One', serif;
-    font-weight: 400;
-    font-style: normal;
-  background-color: #fcf400;
-  color: #005e23;
-  padding: 5px 10px;
-  text-decoration: none;
-  border-radius: 10px;
+    font-size: 22px;
+    text-align: center;
+    background-color: #fcf400;
+    color: #005e23;
+    padding: 10px;
+    text-decoration: none;
+    border-radius: 10px;
+    width: 12%;
 }
 
 .create-tee-time-button:hover {
-  background-color: #005e23;
-  color: #fcf400;
+    background-color: #005e23;
+    color: #fcf400;
 }
 
 </style>

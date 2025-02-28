@@ -17,7 +17,6 @@
       <router-link class="page-link" to="/teetimes">My Tee Times</router-link>
       <router-link class="page-link" to="/leagues">My Leagues</router-link>
     </div>
-    <h2>Scores:</h2>
   </div>
 </template>
   
@@ -92,32 +91,29 @@ export default {
   width: 100%;
   height: 100%;
   z-index: -1;
-  background-image: url('@/assets/GolfHole4.png');
+  background: url('@/assets/GolfHole4.png') no-repeat center 40%;
   background-size: cover;
-  /* Ensures the image covers the container */
-  background-position: center;
-  /* Centers the image */
-  background-repeat: no-repeat;
-  /* Prevents the image from repeating */
 }
 
 .greeting {
   font-family: 'fugaz one', serif;
 }
 
-
 .logo img {
   position: fixed;
   width: 25%;
   height: 25%;
-  left: 55%;
-  top: 1%
+  left: 45%;
+  top: -1%
 }
 
-
 h1 {
+  font-family: 'Fugaz One', serif;
+  font-size: 70px;
   margin-right: 20%;
+  margin-top: 15%;
   border: none;
+  background: none;
 }
 
 .user-nav-routes {
@@ -129,8 +125,7 @@ h1 {
 
 .page-link {
   font-family: 'Sriracha', serif;
-  font-size: xx-large;
-  font-weight: 400;
+  font-size: 40px;
   font-style: normal;
   color: #fcf400;
   text-decoration: none;
@@ -145,11 +140,13 @@ h1 {
 
 h2 {
   font-family: 'Fugaz One', serif;
-  font-weight: 400;
+  font-size: 60px;
   font-style: normal;
   color: #fcf400;
-  margin-bottom: 0;
   border: none;
+  margin-top: 10%;
+  margin-left: 15%;
+  margin-bottom: 10%;
 }
 
 /* Media query to adjust font size on smaller screens */

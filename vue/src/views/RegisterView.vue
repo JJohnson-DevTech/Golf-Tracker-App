@@ -118,50 +118,28 @@ export default {
 .form-input-group {
   margin-bottom: -20%;
   font-family: "Sriracha", serif;
-  margin-right: 35%;
 }
-label {
-  margin-right: 0.5rem;
-  display: block;
-}
-input[type="text"],
-input[type="email"],
-input[type="password"] {
-  width: 75%;
-  padding: 0.5rem;
+
+
+input[type=text], input[type=email], input[type=password] {
+  width: 50%;
+  padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  opacity: 0.5;
-}
-form {
-  margin: 0 auto;
-  text-align: left;
-  width: 10vw;
-  max-width: 500px;
-  min-width: 300px;
-  margin-right: 60%;
-  margin-top: -10%;
+  border: 2px solid #fcf400;
+  color:#fcf400;
+  font-size: 20px;
+  border-radius: 10px;
+  background-color: rgba(0, 94, 35, 0.5);
 }
 
-.buttons {
-  margin-top: 30%;
-  margin-left: 15%;
-}
-
-.accountExists {
-  margin-top: 10%;
-  margin-left: -25%
-}
 h1 {
   font-family: "Fugaz One", serif;
-  font-weight: 400;
-  font-style: normal;
+  text-align: center;
+  width: 100%;
   color: #fcf400;
-  margin-bottom: -20px;
-  margin-right: 40%;
-  width: auto;
-  padding-left: 3%
 }
+
 .text-center {
   text-align: center;
   margin-top: 10%;
@@ -170,19 +148,55 @@ h1 {
 #router-login {
   color: #fcf400;
 }
+
 #router-login:hover {
   color: #005e23;
 }
+
 .CaddyHack {
   position: absolute;
   height: 25%;
   width: 25%;
   margin-left: 26%;
-  margin-top: -3%;
+  margin-top: -2.5%;
 }
 
 .CaddyHack img {
   width: 100%;
   height: 100%;
 }
+
+.text-center {
+  text-align: center;
+  margin-top: 25%;
+  position: relative;
+}
+
+#register {
+  position: absolute;
+  right: 10%;
+  font-size: 30px;
+  transform: translate(-30%, -50%);
+  width: 100%;
+}
+
+button {
+  background-color: rgba(0, 94, 35, 0.5); /* Green background */
+  color: #fcf400; /* Font color */
+  border: 2px solid #fcf400; /* Solid green border */
+  padding: 10px 20px;
+  font-size: 22px;
+  margin-top: 30px;
+  font-family: "Fugaz One", serif;
+  cursor: pointer;
+  border-radius: 15px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+button:hover {
+  background-color: #fcf400; /* Yellow background */
+  color: rgba(0, 94, 35, 1); /* Green text */
+  border: 2px solid rgba(0, 94, 35, 1);
+}
+
 </style>

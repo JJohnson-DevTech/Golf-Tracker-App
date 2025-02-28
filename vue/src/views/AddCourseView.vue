@@ -18,11 +18,14 @@ export default {
 </script>
 
 <style scoped>
+.nav-back {
+    position: absolute;
+    bottom: 80px;
+}
+
 #back {
-    margin-top: 20px;
+    font-size: 55px;
     font-family: 'Fugaz One', serif;
-    font-weight: 400;
-    font-style: normal;
     color: #fcf400;
     text-decoration: none; /* Ensure no underline */
 }

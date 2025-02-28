@@ -53,6 +53,42 @@ public class Leagues {
         this.courseId = courseId;
         this.isActive = isActive;
         this.minPlayers = minPlayers;
+
+    }
+
+
+    public Leagues(int leagueId, String leagueName, int leagueHost, int courseId, boolean isActive, int minPlayers, String courseName) {
+        this.leagueId = leagueId;
+        this.leagueName = leagueName;
+        this.leagueHost = leagueHost;
+        this.courseId = courseId;
+        this.isActive = isActive;
+        this.minPlayers = minPlayers;
+        this.courseName = courseName;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public List<User> getLeagueUsers() {
+        return leagueUsers;
+    }
+
+    public void setLeagueUsers(List<User> leagueUsers) {
+        this.leagueUsers = leagueUsers;
     }
 
     public String getCourseName() {

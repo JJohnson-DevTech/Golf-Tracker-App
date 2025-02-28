@@ -3,22 +3,22 @@
         <div class="add-course-image"></div>
         <h1>Add Course</h1>
         <form @submit.prevent="addCourse" class="add-course-form">
-            <label for="club_name">Club Name:</label>
+            <label for="club_name">Club Name</label>
             <input type="text" id="club_name" v-model="clubName" placeholder="Enter Club Name" required>
 
-            <label for="course_name">Course Name:</label>
+            <label for="course_name">Course Name</label>
             <input type="text" id="course_name" v-model="courseName" placeholder="Enter Course Name" required>
 
-            <label for="address">Address:</label>
+            <label for="address">Address</label>
             <input type="text" id="address" v-model="location.address" placeholder="Enter Address" required>
 
-            <label for="city">City:</label>
+            <label for="city">City</label>
             <input type="text" id="city" v-model="location.city" placeholder="Enter City" required>
 
-            <label for="state">State:</label>
+            <label for="state">State</label>
             <input type="text" id="state" v-model="location.state" placeholder="Enter State Abbreviation" required>
 
-            <label for="country">Country:</label>
+            <label for="country">Country</label>
             <input type="text" id="country" v-model="location.country" placeholder="Enter Country" required>
 
             <button type="submit">Add Course</button>
@@ -67,20 +67,24 @@ export default {
 </script>
 
 <style scoped>
+
 .add-course-container {
     position: relative;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    text-align: center;
+    margin-top: 10%;
 }
 
 h1 {
     margin: 1px;
-    border: none;
+    margin-bottom: 20px;
+    font-size: 4rem;
+    text-align: center;
+    border: 3px solid #005e23;
+    width: 25%;
 }
 
 form {
@@ -96,33 +100,37 @@ form {
 
 label {
     font-family: 'Sriracha', serif;
-    font-size: 1.1rem;
-    font-weight: 400;
-    font-style: normal;
-    width: 100%;
-    max-width: 300px;
-    text-align: center;
+    font-size: 2rem;
 }
 
 input {
-    margin: 5px 0;
+    margin: 10px 0;
     width: 80%;
     max-width: 300px;
-    min-height: 2em;
+    padding: 10px;
     border-radius: 20px;
-    outline: none;
     text-align: center;
+    color: #fcf400;
+    border: 1px solid #fcf400;
+    background-color: rgba(0, 94, 35, 0.7);
 }
 
 input:focus {
     outline: 2px solid #fcf400;
 }
 
+input::placeholder {
+    color: #fcf400;
+}
+
 button {
     width: auto;
-    align-self: center;
+    font-size: 20px;
+    margin-top: 10px;
     background-color: #fcf400;
     color: #005e23;
+    border: 1px solid #005e23;
+    border-radius: 10px;
     font-family: 'Fugaz One', serif;
 }
 
@@ -144,4 +152,5 @@ button:hover {
     background-position: center;
     background-repeat: no-repeat;
 }
+
 </style>

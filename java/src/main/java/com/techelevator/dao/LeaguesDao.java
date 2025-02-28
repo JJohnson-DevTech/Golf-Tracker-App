@@ -10,7 +10,7 @@ public interface LeaguesDao {
 
     String generateInviteLink(int leagueId, int hostId);
 
-    Leagues createLeague (Leagues league);
+    int createLeague (Leagues league);
 
     //TODO later date
 //    void inviteUserToLeague(int leagueId, int hostId, String email);
