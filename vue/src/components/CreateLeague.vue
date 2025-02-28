@@ -33,12 +33,8 @@
     </div>
   </form>
 </template>
-
 <script>
-
 import axios from "axios";
-
-
 export default {
   data() {
     return {
@@ -58,7 +54,6 @@ export default {
   },
   methods: {
     async createLeague() {
-
       try{
         const response = await axios.post('http://localhost:9000/api/leagues', {
           leagueName: this.league.leagueName,
@@ -68,16 +63,12 @@ export default {
         });
         this.league = response.data;
         this.link = this.league.inviteLink;
-        
       } catch(error) {
         this.error = error.response ? error.response.data.message : 'Something wrong with createLeague()';
       };
-    
       // Logic to create a league
       console.log("League created:", this.league);
     },
-
-    
     getCourses() {
       axios
         .get("http://localhost:9000/api/courses")
@@ -106,15 +97,11 @@ export default {
       }, 200); // Delay to allow click event to register
     }
   },
-  
-  
-  
   mounted() {
     this.getCourses();
   },
 };
 </script>
-
 <style scoped>
 .form-input-group {
   font-family: 'Sriracha', serif;
@@ -138,15 +125,24 @@ button {
   padding: 0;
   margin: 0;
 }
-
 .course-list li {
   padding: 8px;
   cursor: pointer;
   transition: background-color 0.3s;
   border-radius: 10px;
 }
-
 .course-list li:hover {
   background-color: #005E23CF;
 }
 </style>
+
+
+
+
+
+
+
+
+
+
+

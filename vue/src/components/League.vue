@@ -15,7 +15,7 @@
         </div>
         <ul v-if="leagues.length > 0"    class="leagues-list">
                 <li  v-for="league in leagues" :key="league.id">
-                    <RouterLink class="league-box" :to="{ name: 'LeaderBoard' }"  v-on:click="goToLeaderBoardPage" >{{league.leagueName}}</RouterLink>
+                    <div class="league-box">{{league.leagueName}}</div>
                     <div class="course-box">{{league.courseName}}</div>
                     <div class="members-box">{{league.minPlayers}}</div>
                 </li>
