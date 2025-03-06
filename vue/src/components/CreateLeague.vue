@@ -33,8 +33,11 @@
 </div>
   </form>
 </template>
+
 <script>
+
 import axios from "axios";
+
 export default {
   data() {
     return {
@@ -109,23 +112,29 @@ export default {
     this.getCourses();
   },
 };
+
 </script>
+
 <style scoped>
+
 .form-input-group {
   font-family: 'Sriracha', serif;
   font-size: 1.5rem;
   color: #FCF400;
 }
+
 button {
   font-family: 'Sriracha', serif;
   margin-top: -10px;
 }
+
 .link {
   font-family: 'Sriracha', serif;
   font-size: 1.5rem;
   font-style: normal;
   margin-top: -5%;
 }
+
 .course-list {
   list-style-type: none;
   padding: 0;
@@ -140,6 +149,7 @@ button {
   margin-top: 4px;
   z-index: 1;
 }
+
 .course-list li {
   padding: 5px;
   cursor: pointer;
@@ -148,7 +158,9 @@ button {
   padding: 5px 15px;
   margin: 8px 15px;
 }
+
 .course-list li:hover {
   background-color: #005E23CF;
 }
+
 </style>

@@ -308,7 +308,6 @@ button:hover {
     background-color: rgba(0, 94, 35, 0.7);
     color: #fcf400;
     font-size: 20px;
-    -moz-appearance: textfield;
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator,

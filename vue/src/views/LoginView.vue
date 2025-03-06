@@ -2,11 +2,12 @@
   <div class="login-container">
     <div class="logo-container"></div>
     <div class="background-image"></div>
+    <div class="slogan">Drive For Show, Putt For Dough</div>
     <div class="login-form-container">
       <div class="login_form-card">
         <div class="form-content">
           <form v-on:submit.prevent="login">
-            <div role="alert" v-if="invalidCredentials">
+            <div class="registration-message" role="alert" v-if="invalidCredentials">
               Invalid username and password!
             </div>
             <div class="registration-message" role="alert" v-if="this.$route.query.registration">
@@ -87,6 +88,16 @@ export default {
   z-index: -1;
   background: url("@/assets/GolfHole3.png") no-repeat center 90%;
   background-size: cover;
+}
+
+.slogan {
+  font-size: 80px; /* Adjust the size to fit the design */
+  font-weight: bold;
+  color: #005e23; /* Green color */
+  text-shadow: 4px 3px 5px rgba(252, 244, 0, 0.9); /* Yellow outline effect */
+  text-align: start;
+  margin: 40% -8%; /* Adjust to position it where you want */
+  z-index: 10;
 }
 
 /* Grouping the form and scorecard image */

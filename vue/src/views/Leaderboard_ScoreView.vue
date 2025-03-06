@@ -6,8 +6,8 @@
     </div>
   </div>
 </template>
-
 <script>
+
 import LeaderBoard_Score from "../components/LeaderBoard_Score.vue";
 
 export default {
@@ -15,13 +15,15 @@ export default {
     LeaderBoard_Score,
   },
 };
+
 </script>
 
 <style scoped>
+
 .leaderboard-container {
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   overflow: hidden;
 }
 
@@ -34,12 +36,13 @@ export default {
   background-image: url("@/assets/GolgHole1.png");
   background-size: cover;
   background-position: center;
-  z-index: -1; /* Ensure the image is behind other content */
+  z-index: -1; 
 }
 
 .leaderboard-content {
   position: relative;
-  z-index: 1; /* Ensure the content is above the background image */
+  z-index: 1;
   padding: 20px;
 }
+
 </style>

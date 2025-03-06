@@ -9,17 +9,19 @@
     </div>
   </div>
   <div class="userContainer">
-    <h2>My Handicap: </h2>
+    <h2></h2>
     <div class="user-nav-routes">
       <router-link class="page-link" to="/courses">View Courses</router-link>
-      <router-link class="page-link" to="/tee-times">My Tee Times</router-link>
+      <router-link class="page-link" to="/teetimes">My Tee Times</router-link>
       <router-link class="page-link" to="/leagues">My Leagues</router-link>
     </div>
   </div>
 </template>
 <script>
+
 import { ref, onMounted } from "vue";
 import authService from "../services/AuthService";
+
 export default {
   name: "UserProfileView",
   setup() {
@@ -56,8 +58,11 @@ export default {
       });
   },
 };
+
 </script>
+
 <style scoped>
+
 .user-profile-image {
   position: fixed;
   top: 0;
@@ -68,9 +73,11 @@ export default {
   background: url('@/assets/GolfHole4.png') no-repeat center 40%;
   background-size: cover;
 }
+
 .greeting {
   font-family: 'fugaz one', serif;
 }
+
 .logo img {
   position: fixed;
   width: 25%;
@@ -78,6 +85,7 @@ export default {
   left: 45%;
   top: -1%
 }
+
 h1 {
   font-family: 'Fugaz One', serif;
   font-size: 70px;
@@ -86,29 +94,32 @@ h1 {
   border: none;
   background: none;
 }
+
 .user-nav-routes {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
 }
+
 .page-link {
   font-family: 'Sriracha', serif;
-  font-size: 40px;
+  font-size: 60px;
   font-style: normal;
   color: #FCF400;
   text-decoration: none;
   transition: background-color 0.3s;
   border-radius: 10px;
 }
+
 .page-link:hover {
   background-color: #005E23;
   color: #ED0030;
 }
+
 h2 {
   font-family: 'Fugaz One', serif;
   font-size: 60px;
-  font-style: normal;
   color: #FCF400;
   border: none;
   margin-top: 10%;

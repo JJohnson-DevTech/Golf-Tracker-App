@@ -1,13 +1,16 @@
 <template>
     <div>
-        <AddCourse />
-    </div>
-    <div class="nav-back">
-        <router-link id="back" to="/courses">Back</router-link>
+        <div>
+            <AddCourse/>
+        </div>
+        <div class="nav-back">
+            <router-link id="back" to="/courses">Back</router-link>
+        </div>
     </div>
 </template>
 
 <script>
+
 import AddCourse from '@/components/AddCourse.vue';
 
 export default {

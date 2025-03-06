@@ -45,8 +45,9 @@ public class JdbcLeaguesDao implements LeaguesDao {
                     );
                     leaguesMap.put(leagueId, league); // Add new league to map
                 }
+
                 int userId = rs.getInt("user_id");
-                if (userId > 0) {
+                if (!rs.wasNull()) {
                     User user = new User(
                             userId,
                             rs.getString("username"),
@@ -101,16 +102,38 @@ public class JdbcLeaguesDao implements LeaguesDao {
         if (courseExists == null || courseExists == 0) {
             throw new IllegalArgumentException("Invalid course ID: Course does not exist.");
         }
+
+        // Insert the league and get the generated league_id
         String sql = "INSERT INTO leagues (league_name, league_host, course_id, is_active, min_players) " +
                 "VALUES (?, ?, ?, ?, ? ) RETURNING league_id;";
+        int leagueId;
         try {
-            return jdbcTemplate.queryForObject(sql, Integer.class, league.getLeagueName(),
+            leagueId = jdbcTemplate.queryForObject(sql, Integer.class, league.getLeagueName(),
                     league.getLeagueHost(), league.getCourseId(),
                     league.getIsActive(), league.getMinPlayers());
         } catch (DataAccessException e) {
             System.err.println("Error inserting league: " + e.getMessage());
             throw new DaoException("Error inserting league", e);
         }
+
+        // Insert the host or validated users into the league_members table
+        String insertMemberSql = "INSERT INTO league_members (league_id, member_id) VALUES (?, ?)";
+        try {
+            // Add the league host to the league_members table
+            jdbcTemplate.update(insertMemberSql, leagueId, league.getLeagueHost());
+
+            // Add other validated users to the league_members table if any
+            if (league.getLeagueUsers() != null) {
+                for (User user : league.getLeagueUsers()) {
+                    jdbcTemplate.update(insertMemberSql, leagueId, user.getId());
+                }
+            }
+        } catch (DataAccessException e) {
+            System.err.println("Error inserting league members: " + e.getMessage());
+            throw new DaoException("Error inserting league members", e);
+        }
+
+        return leagueId;
     }
 
     @Override

@@ -1,30 +1,32 @@
 <template>
+  <div>
     <div>
-        <AddTeeTime />
+      <AddTeeTime />
     </div>
     <div class="nav-back">
-        <router-link id="back" to="/teetimes">Back</router-link>
+      <router-link id="back" to="/teetimes">Back</router-link>
     </div>
+  </div>
 </template>
 
 <script>
-import AddTeeTime from '../components/AddTeeTime.vue';
+import AddTeeTime from "../components/AddTeeTime.vue";
 
 export default {
-    components: {
-    AddTeeTime
-}
+  components: {
+    AddTeeTime,
+  },
 };
 </script>
 
 <style scoped>
 #back {
-    font-family: 'Fugaz One', serif;
-    color: #fcf400;
-    text-decoration: none; 
+  font-family: "Fugaz One", serif;
+  color: #fcf400;
+  text-decoration: none;
 }
 
 #back:hover {
-    color: #Ed0030;
+  color: #ed0030;
 }
 </style>

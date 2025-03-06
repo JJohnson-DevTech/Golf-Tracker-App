@@ -9,7 +9,7 @@ import UserProfileView from '../views/UserProfileView.vue';
 import LeagueView from '../views/LeagueView.vue';
 import CreateLeagueView from '../views/CreateLeagueView.vue';
 import AddCourseView from '../views/AddCourseView.vue';
-import LeaderBoard_ScoreView from '../views/LeaderBoard_ScoreView.vue';
+import LeaderBoard_ScoreView from '../views/Leaderboard_ScoreView.vue';
 import TeeTimeView from '../views/TeeTimeView.vue';
 import AddTeeTimeView from '../views/AddTeeTimeView.vue';
 import InviteHandler from '../components/InviteHandler.vue';
@@ -99,7 +99,7 @@ const routes = [
     }
   },
   {
-    path: "/tee-times",
+    path: "/teetimes",
     name: "TeeTimes",
     component: TeeTimeView,
     meta: {
@@ -107,7 +107,7 @@ const routes = [
     }
   },
   {
-    path: "/tee-times/add",
+    path: "/teetimes/add",
     name: "AddTeeTime",
     component: AddTeeTimeView,
     meta: {

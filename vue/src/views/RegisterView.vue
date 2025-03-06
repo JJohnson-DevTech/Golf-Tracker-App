@@ -115,18 +115,18 @@ export default {
   width: 100%;
   height: 100%;
 }
+
 .form-input-group {
-  margin-bottom: -20%;
+  margin-bottom: 0.5rem;
   font-family: "Sriracha", serif;
 }
 
-
 input[type=text], input[type=email], input[type=password] {
   width: 50%;
-  padding: 10px;
+  padding: 2px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  border: 2px solid #fcf400;
+  border: 2px solid #FCF400;
   color:#fcf400;
   font-size: 20px;
   border-radius: 10px;
@@ -137,7 +137,8 @@ h1 {
   font-family: "Fugaz One", serif;
   text-align: center;
   width: 100%;
-  color: #fcf400;
+  margin: 8% auto;
+  color: #FCF400;
 }
 
 .text-center {
@@ -146,11 +147,11 @@ h1 {
 }
 
 #router-login {
-  color: #fcf400;
+  color: #FCF400;
 }
 
 #router-login:hover {
-  color: #005e23;
+  color: #005E23;
 }
 
 .CaddyHack {
@@ -175,15 +176,15 @@ h1 {
 #register {
   position: absolute;
   right: 10%;
-  font-size: 30px;
+  font-size: 25px;
   transform: translate(-30%, -50%);
   width: 100%;
 }
 
 button {
   background-color: rgba(0, 94, 35, 0.5); /* Green background */
-  color: #fcf400; /* Font color */
-  border: 2px solid #fcf400; /* Solid green border */
+  color: #FCF400; /* Font color */
+  border: 2px solid #FCF400; /* Solid green border */
   padding: 10px 20px;
   font-size: 22px;
   margin-top: 30px;
@@ -194,9 +195,8 @@ button {
 }
 
 button:hover {
-  background-color: #fcf400; /* Yellow background */
+  background-color: #FCF400; /* Yellow background */
   color: rgba(0, 94, 35, 1); /* Green text */
   border: 2px solid rgba(0, 94, 35, 1);
 }
-
 </style>
